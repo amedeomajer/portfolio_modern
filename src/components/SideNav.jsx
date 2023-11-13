@@ -5,7 +5,8 @@ import { motion } from 'framer-motion'
 const SideNav = () => {
   return (
     <motion.div 
-      animate={{ x: [350, 0], opacity: [0, 1] }}
+    initial={{ x: 350, opacity: 0 }}
+      animate={{ x: 0, opacity: 1 }}
       transition={{ duration: 0.8 }}
       className='w-full flex justify-end items-center h-full'
     >
