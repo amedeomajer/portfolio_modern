@@ -1,20 +1,20 @@
-import { Oswald } from 'next/font/google'
 import './globals.css'
 import { Suspense } from 'react'
 import Loading from './loading'
+import { Darker_Grotesque } from 'next/font/google'
 
-const oswald = Oswald({ subsets: ['latin'] })
+const darkerGrotesque = Darker_Grotesque({subsets: ['latin']})
 
 export const metadata = {
   title: 'Amedeo Majer - Software Engineer',
-  description: 'Amedeo Majer personal portfolio',
+  description: 'My personal portfolio',
 }
 
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <Suspense fallback={<Loading />}>
-        <body className={oswald.className}>{children}</body>
+        <body className={darkerGrotesque.className}>{children}</body>
       </Suspense>
     </html>
   )
