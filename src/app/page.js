@@ -1,11 +1,12 @@
 import LoopingHeader from "@/components/LoopingHeader";
-import SideNav from "@/components/SideNav";
+import Content from "@/components/Content";
 
 export default function Home() {
+
   return (
-    <main className="min-h-screen h-screen bg-dark-holographic bg-cover bg-center overflow-y-hidden">
+    <main className="min-h-screen bg-dark-holographic bg-cover">
       <LoopingHeader />
-      <SideNav />
+      <Content />
     </main>
   )
 }
