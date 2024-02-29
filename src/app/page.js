@@ -4,7 +4,7 @@ import Content from "@/components/Content";
 export default function Home() {
 
   return (
-    <main className="min-h-screen bg-dark-holographic bg-cover">
+    <main className="h-screen bg-dark-holographic bg-cover overflow-hidden">
       <LoopingHeader />
       <Content />
     </main>
