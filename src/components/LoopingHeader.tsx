@@ -2,7 +2,7 @@
 import Marquee from "react-fast-marquee";
 import { motion } from "framer-motion";
 
-const LoopingHeader = () => {
+const LoopingHeader:React.FC = () => {
 
   return (
     <motion.div 
