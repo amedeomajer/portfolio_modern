@@ -3,13 +3,16 @@ import React from 'react'
 import NavItem from './NavItem'
 import { motion } from 'framer-motion'
 
-const SideNav = ({setSection, ...props}) => {
+interface SideNavProps {
+  setSection: (section: number) => void;
+}
+
+const SideNav:React.FC<SideNavProps> = ({setSection}) => {
   return (
     <motion.div 
       initial={{ x: 350, opacity: 0 }}
       animate={{ x: 0, opacity: 1 }}
       transition={{ duration: 0.8 }}
-      {...props}
       className="hidden md:block"
     >
       <ul className='font-black  text-7xl xl:text-8xl flex flex-col gap-4 lg:gap-6 items-end'>
