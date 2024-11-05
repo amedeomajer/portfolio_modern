@@ -10,7 +10,7 @@ const Work = () => {
 
   const projects = projectsData.map((project, index) => (
     <Card key={index} layoutId={project.name} onClick={() => setSelectedProject(project)} className="cursor-pointer">
-      <CardImage image={`/images/${project.image}`} />
+      <CardImage image={`/images/${project.image}`} alt={project.imageAlt} />
       <CardDescription>
         <strong>{project.name}</strong>{project.placeholderDescription}
       </CardDescription>
