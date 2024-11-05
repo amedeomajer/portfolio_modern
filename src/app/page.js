@@ -1,5 +1,5 @@
 import LoopingHeader from "@/components/LoopingHeader.tsx";
-import Content from "@/components/Content";
+import Content from "@/components/Content.tsx";
 
 export default function Home() {
 
