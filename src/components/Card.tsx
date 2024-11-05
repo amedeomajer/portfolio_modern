@@ -1,7 +1,14 @@
-import React from 'react'
+import React, {ReactNode} from 'react'
 import { motion } from 'framer-motion'
 
-const Card = ({ children, layoutId, onClick, className }) => {
+interface CardProps {
+  children: ReactNode;
+  layoutId: string;
+  onClick: () => void;
+  className: string;
+}
+
+const Card: React.FC<CardProps> = ({ children, layoutId, onClick, className }) => {
   const cardShadow = {
     'boxShadow': 'rgb(0 0 0) 0px 0px 20px 0px'
   }

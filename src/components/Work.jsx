@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Card from './Card';
+import Card from './Card.tsx';
 import CardImage from './CardImage';
 import CardDescription from './CardDescription';
 import { motion, AnimatePresence } from 'framer-motion';
