@@ -4,7 +4,7 @@ import Work from './Work'
 import SideNav from './SideNav'
 import SmallNav from './SmallNav'
 
-const Content = () => {
+const Content:React.FC = () => {
   const [section, setSection] = useState(1);
   return (
     <div className='flex flex-row justify-between'>
