@@ -2,15 +2,18 @@
 import React, { useState } from 'react'
 import Work from './Work'
 import SideNav from './SideNav'
+import SmallNav from './SmallNav'
 
 const Content = () => {
-  const [section, setSection] = useState(1)
+  const [section, setSection] = useState(1);
   return (
-    <div className=' mt-10 w-full flex flex-col lg:flex-row-reverse'>
-      <SideNav setSection={setSection} className=""/>
+    <div className='flex flex-row justify-between'>
       {section === 1 && <Work />}
+      <SideNav setSection={setSection} />
+      <SmallNav setSection={setSection} section={section} />
     </div>
-  )
-}
+  );
+};
+
 
 export default Content

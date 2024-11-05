@@ -2,7 +2,7 @@ import React from 'react'
 
 const CardDescription = ({children}) => {
   return (
-    <div className='p-1 text-justify text-md'>
+    <div className='py-2 px-4 text-justify text-xl rounded-sm'>
       <p>{children}</p>
     </div>
   )
