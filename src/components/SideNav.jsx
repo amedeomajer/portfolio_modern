@@ -10,8 +10,9 @@ const SideNav = ({setSection, ...props}) => {
       animate={{ x: 0, opacity: 1 }}
       transition={{ duration: 0.8 }}
       {...props}
+      className="hidden md:block"
     >
-      <ul className='font-black text-6xl md:text-7xl lg:text-7xl xl:text-8xl flex lg:flex-col gap-4 lg:gap-6 lg:items-end'>
+      <ul className='font-black  text-7xl xl:text-8xl flex flex-col gap-4 lg:gap-6 items-end'>
         <NavItem onClick={() => setSection(1)}>work</NavItem>
         <NavItem onClick={() => setSection(2)}>cv</NavItem>
         <NavItem onClick={() => setSection(3)}>about</NavItem>
