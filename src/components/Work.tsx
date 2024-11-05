@@ -1,16 +1,16 @@
 import React, { useState } from 'react';
-import Card from './Card.tsx';
+import Card from './Card';
 import CardImage from './CardImage';
 import CardDescription from './CardDescription';
 import { motion, AnimatePresence } from 'framer-motion';
 import projectsData from '@/data/projectsData';
 
-const Work = () => {
+const Work:React.FC = () => {
   const [selectedProject, setSelectedProject] = useState(null);
 
   const projects = projectsData.map((project, index) => (
     <Card key={index} layoutId={project.name} onClick={() => setSelectedProject(project)} className="cursor-pointer">
-      <CardImage image={`/images/${project.image}`} alt={project.imageAlt} />
+      <CardImage image={`/images/${project.image}`} imageAlt={project.imageAlt} />
       <CardDescription>
         <strong>{project.name}</strong>{project.placeholderDescription}
       </CardDescription>
