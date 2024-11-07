@@ -33,9 +33,9 @@ const SmallNav:React.FC<SmallNavProps> = ({ setSection, section}) => {
       className="fixed bottom-0 md:hidden w-full py-3 z-50 backdrop-blur-md"
     >
       <ul className='font-black flex items-center justify-evenly'>
-        <SmallNavItem onClick={() => setSection(1)} isActive={section === 1}>work</SmallNavItem>
+        <SmallNavItem onClick={() => setSection(3)} isActive={section === 3}>about me</SmallNavItem>
         <SmallNavItem onClick={() => setSection(2)} isActive={section === 2}>cv</SmallNavItem>
-        <SmallNavItem onClick={() => setSection(3)} isActive={section === 3}>about</SmallNavItem>
+        <SmallNavItem onClick={() => setSection(1)} isActive={section === 1}>work</SmallNavItem>
       </ul>
     </motion.div>
   );
