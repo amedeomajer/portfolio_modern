@@ -4,10 +4,10 @@ import { motion } from 'framer-motion';
 
 const CvPicture: React.FC = () => {
   return (
-    <div className='relative w-full h-24 flex justify-center items-center overflow-clip'>
+    <div className='relative w-full h-24 md:h-48 flex justify-center items-center overflow-clip'>
       <motion.div
         className='absolute w-full h-full'
-        initial={{ y: 100 }}
+        initial={{ y: 150 }}
         animate={{ y: 15 }}
         transition={{ 
           type: 'spring', 

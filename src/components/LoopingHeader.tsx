@@ -12,7 +12,7 @@ const LoopingHeader:React.FC = () => {
       id="marquee-container"
     >
       <Marquee className="py-0 overflow-y-hidden">
-        <p className={"font-black text-5xl md:text-6xl lg:text-9xl -mt-3 md:-mt-5 lg:-mt-9"}>AMEDEO MAJER FULL-STACK DEVELOPER&nbsp;</p>
+        <p className={"font-black text-5xl md:text-6xl lg:text-9xl -mt-3 md:-mt-5 lg:-mt-9"}>AMEDEO MAJER FULL-STACK DEVELOPER&nbsp; AMEDEO MAJER FULL-STACK DEVELOPER&nbsp;</p>
       </Marquee>
     </motion.div>
   );

@@ -18,24 +18,40 @@ interface Project {
   tech: string[];
 }
 
-const Work: React.FC = () => {
-  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+interface ProjectCardProps {
+  project: {
+    name: string;
+    image: string;
+    imageAlt: string;
+    placeholderDescription: string;
+  };
+  onClick: () => void;
+}
 
-  const projects = projectsData.map((project: Project, index: number) => (
-    <Card key={index} layoutId={project.name} onClick={() => setSelectedProject(project)} className="cursor-pointer">
+const ProjectCard: React.FC<ProjectCardProps> = ({ project, onClick }) => {
+  return (
+    <Card layoutId={project.name} onClick={onClick} className="cursor-pointer">
       <CardImage image={`/images/${project.image}`} imageAlt={project.imageAlt} />
       <CardDescription>
         <strong>{project.name}</strong>{project.placeholderDescription}
       </CardDescription>
     </Card>
+  );
+};
+
+const Work: React.FC = () => {
+  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+
+  const projects = projectsData.map((project: Project, index: number) => (
+    <ProjectCard key={index} project={project} onClick={() => setSelectedProject(project)} />
   ));
 
   return (
     <motion.div
       className="container mx-auto flex-wrap md:px-6 flex gap-6 justify-around pb-[100px] lg:pb-[200px]"
-      initial={{ opacity: 0, scale: 0.4 }}
-      animate={{ opacity: 1, scale: 1 }}
-      transition={{ duration: 0.5 }}
+      initial={{ x: 400 }}
+      animate={{ x: 0 }}
+      transition={{ duration: 0.7 }}
       >
       <AnimatePresence>
       {projects}

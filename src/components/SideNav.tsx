@@ -13,7 +13,7 @@ const SideNav:React.FC<SideNavProps> = ({setSection}) => {
       initial={{ x: 350, opacity: 0 }}
       animate={{ x: 0, opacity: 1 }}
       transition={{ duration: 0.8 }}
-      className="hidden md:block"
+      className="hidden md:block pt-20"
     >
       <ul className='font-black  text-7xl xl:text-8xl flex flex-col gap-4 lg:gap-6 items-end'>
         <NavItem onClick={() => setSection(1)}>work</NavItem>
