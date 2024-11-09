@@ -11,6 +11,7 @@ const Cv: React.FC = () => {
           className='w-full md:w-1/2 bg-gray-800 rounded-sm p-4 mb-10 pb-8 opacity-80 backdrop-blur-md md:text-xl'
           initial={{ y: 1300}}
           animate={{ y: 0 }}
+          exit={{ y: 1300, transition: { delay: 0.3 } }}
           transition={{ duration: 1 }}
         >
           <h2 className='text-xl md:text-3xl md:pb-5'><strong>Education</strong></h2>

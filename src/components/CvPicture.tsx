@@ -19,6 +19,17 @@ const CvPicture: React.FC = () => {
         className='absolute w-full h-full'
         initial={{ y: initialY }}
         animate={{ y: 15 }}
+        exit={{ 
+          y: initialY,
+          opacity: 0,
+          transition: {
+            type: 'spring',
+            duration: 1,
+            delay: 0,
+            stiffness: 100,
+            damping: damping
+          }
+         }}
         transition={{ 
           type: 'spring',
           duration: 0.5,
