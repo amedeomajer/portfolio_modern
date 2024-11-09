@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import CvPicture from './CvPicture';
 
@@ -9,9 +9,9 @@ const Cv: React.FC = () => {
       <div className='flex flex-col justify-center items-center'>
         <motion.div
           className='w-full md:w-1/2 bg-gray-800 rounded-sm p-4 mb-10 pb-8 opacity-80 backdrop-blur-md md:text-xl'
-          initial={{ y: 1000, scale: 1 }}
-          animate={{ y: 0, scale: 1 }}
-          transition={{ duration: 0.7 }}
+          initial={{ y: 1300}}
+          animate={{ y: 0 }}
+          transition={{ duration: 1 }}
         >
           <h2 className='text-xl md:text-3xl md:pb-5'><strong>Education</strong></h2>
           <p>I started my journey in programming at Hive Helsinki, from where I graduated in February 2023. Here I delved into programming head first by learning C. <br />After completing the common part of the sudies in C I took the web development branch where I completed three projects:</p>

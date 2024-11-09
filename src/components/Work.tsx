@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import Card from './Card';
 import CardImage from './CardImage';
 import CardDescription from './CardDescription';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import projectsData from '@/data/projectsData';
+import { useIsOnPhone } from '@/hooks/useIsOnPhone';
 
 interface Project {
   name: string;
@@ -41,21 +42,17 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, onClick }) => {
 
 const Work: React.FC = () => {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+  const {initialY, initialX} = useIsOnPhone("work");
 
   const projects = projectsData.map((project: Project, index: number) => (
     <ProjectCard key={index} project={project} onClick={() => setSelectedProject(project)} />
   ));
-
+  if (initialY === null || initialX === null) {
+    return null;
+  }
   return (
-    <motion.div
-      className="container mx-auto flex-wrap md:px-6 flex gap-6 justify-around pb-[100px] lg:pb-[200px]"
-      initial={{ x: 400 }}
-      animate={{ x: 0 }}
-      transition={{ duration: 0.7 }}
-      >
-      <AnimatePresence>
-      {projects}
-        {selectedProject && (
+    <>
+      {selectedProject && (
           <motion.div layoutId={selectedProject.name} className="fixed min-h-screen inset-0 z-50 bg-black bg-opacity-75 backdrop-blur-md flex flex-col" onTap={() => setSelectedProject(null)} onClick={() => setSelectedProject(null)}>
             <motion.div className="p-4 w-full rounded-sm container mx-auto lg:max-w-[40%]" onClick={(e) => e.stopPropagation()}>
               <motion.img src={`/images/${selectedProject.image}`} alt={selectedProject.name} className="w-full max-w-[700px] h-auto rounded-t-sm"/>
@@ -63,7 +60,6 @@ const Work: React.FC = () => {
               <motion.div className="lg:text-lg mt-4">
                 <strong>{selectedProject.name}</strong>
                 <p>{selectedProject.longDescription.intro}</p>
-
                 <h3 className="mt-4 font-semibold">My Contributions:</h3>
                 <ul className="list-disc ml-6 mt-2 space-y-1">
                   {selectedProject.longDescription.contributions.map((contribution, index) => (
@@ -86,8 +82,15 @@ const Work: React.FC = () => {
             </motion.div>
           </motion.div>
         )}
-      </AnimatePresence>
-    </motion.div>
+      <motion.div
+        className="container mx-auto flex-wrap flex gap-6 md:gap-10 justify-center pb-[100px] lg:pb-[200px] md:mt-32"
+        initial={{ x: initialX, y: initialY }}
+        animate={{ x: 0, y: 0 }}
+        transition={{ duration: 0.7 }}
+        >
+        {projects}
+      </motion.div>
+    </>
   );
 };
 

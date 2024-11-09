@@ -6,7 +6,7 @@ import SmallNav from './SmallNav'
 import Cv from './Cv'
 
 const Content:React.FC = () => {
-  const [section, setSection] = useState(2);
+  const [section, setSection] = useState(1);
   return (
     <div className='flex flex-row justify-between'>
       {section === 1 && <Work />}
