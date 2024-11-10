@@ -124,7 +124,7 @@ const Work: React.FC = () => {
         </DrawerContent>
       )}
       <motion.div
-        className="container mx-auto flex-wrap flex gap-6 md:gap-10 justify-center pb-[100px] lg:pb-[200px] md:mt-32"
+        className="container mx-auto flex-wrap flex gap-6 md:gap-10 justify-center pb-[100px] md:mt-32"
         initial={{ x: initialX, y: initialY }}
         animate={{ x: 0, y: 0 }}
         exit={{ x: initialX, y: initialY, transition: { duration: 0.3 } }}
