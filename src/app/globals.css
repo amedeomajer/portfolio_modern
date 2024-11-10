@@ -36,3 +36,20 @@ body {
   scrollbar-width: none;  /* Firefox */
   -ms-overflow-style: none;  /* IE and Edge */
 }
+
+@keyframes bounceOnce {
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-25%);
+  }
+}
+
+.bounce-once {
+  animation: bounceOnce 1s ease 2;
+  animation-delay: 0.5s;
+}

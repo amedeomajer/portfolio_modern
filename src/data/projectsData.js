@@ -1,46 +1,3 @@
-// const projectsData = [
-//   {
-//     name: 'Hire a Hiver',
-//     placeholderDescription: ' is a platform that connects businesses with talented students from Hive Helsinki.',
-//     longDescription: `Hire a Hiver stands as an innovative platform crafted to bridge the gap between businesses and the highly skilled students from Hive Helsinki. Born from the necessity for a trusted, Hive-branded platform within the Finnish technology sector, Hire a Hiver facilitates seamless connections, fostering opportunities for both emerging talent and forward-thinking companies.
-
-//     My Contributions:
-
-//     System Enhancements and Automation: Led the integration of SendGrid to automate email communications, streamlining the process of connecting students with potential employers and ensuring timely updates and notifications.
-
-//     User Experience and Interface Design: Undertook a comprehensive overhaul of the user interface and experience, focusing on intuitive navigation and aesthetic appeal. This included a complete revamp of the landing page, making it more engaging and informative for both students and recruiters.
-
-//     Advanced Feature Implementation. Developed and implemented a range of features to enhance user interaction and functionality. This included:
-
-//     Custom error pages to improve user experience during unforeseen errors.
-//     Avatar and CV file upload capabilities, allowing users to personalise their profiles and share their qualifications with potential employers.
-//     Dockerisation of the application, ensuring consistency across development, testing, and production environments.
-//     A comprehensive FAQ page, addressing common queries and enhancing the platform's usability.
-//     Recruiter Experience Optimisation: Focused on enhancing the recruiter experience through significant UI and UX improvements, making it easier for companies to find and connect with top talent.
-
-//     Real-Time Notifications: Established a Discord integration to send real-time notifications to a dedicated student server about new job postings, ensuring immediate visibility of opportunities.
-
-//     Infrastructure and Deployment: Configured Rails settings for a robust deployed production environment, ensuring high availability and reliability of the Hire a Hiver platform.
-
-//     Continuous Improvement: Demonstrated a commitment to excellence and continuous improvement by resolving a wide range of bugs and implementing UI fixes across the platform, culminating in the successful closure of 80 pull requests.
-
-//     Impact:
-//     My contributions to Hire a Hiver have significantly enhanced the platform's functionality, usability, and reliability, establishing it as a cornerstone for technology industry recruitment in Finland. By improving the connection between businesses and the talented students of Hive Helsinki, Hire a Hiver has become a trusted resource for fostering meaningful career opportunities.
-//     `,
-//     image: 'hire-a-hiver-hero.png',
-//     imageAlt: "screenshot of Hire a Hiver landing page",
-//     tech: ['Ruby on Rails', 'haml', 'Sidekiq', 'Redis', 'Tailwind CSS', 'javaScript', 'Postgresql', 'Stimulus', 'Docker' ]
-//   },
-//   {
-//     name: 'Tech report',
-//     placeholderDescription: ' is a ticketing system for hardware issues in Hive Helsinki campus. The idea is to clear up the discord ask-staff channel from issues that are not urgent and be able to collect data on the most common issues.',
-//     longDescription: ' is a platform that connects businesses with talented students from Hive Helsinki. The platform is built with Ruby on Rails and uses Sidekiq for background jobs. The front-end is built with haml and Tailwind CSS. The platform uses Redis for caching and Postgresql for the database.',
-//     image: 'karen-form-page.png',
-//     imageAlt: "Screenshot of Karen homepage",
-//     tech: ['Next.js', 'Tailwind CSS', 'Prisma']
-//   },
-
-// ];
 const projectsData = [
   {
     name: 'Hire a Hiver',
@@ -58,7 +15,8 @@ const projectsData = [
     },
     image: 'hire-a-hiver-hero.png',
     imageAlt: "screenshot of Hire a Hiver landing page",
-    tech: ['Ruby on Rails', 'haml', 'Sidekiq', 'Redis', 'Tailwind CSS', 'JavaScript', 'Postgresql', 'Stimulus', 'Docker']
+    tech: ['Ruby on Rails', 'haml', 'Sidekiq', 'Redis', 'Tailwind CSS', 'JavaScript', 'Postgresql', 'Stimulus', 'Docker'],
+    url: "https://hire.hive.fi"
   },
   {
     name: 'Tech report',
@@ -75,7 +33,8 @@ const projectsData = [
     },
     image: 'karen-form-page.png',
     imageAlt: "Screenshot of Karen homepage",
-    tech: ['Next.js', 'Tailwind CSS', 'Prisma']
+    tech: ['Next.js', 'Tailwind CSS', 'Prisma'],
+    url: null
   },
   {
     name: 'Sorting hat',
@@ -90,7 +49,8 @@ const projectsData = [
     },
     image: 'sorting-hat-pinky.png',
     imageAlt: "Screenshot of Sorting Hat app",
-    tech: ['Next.js', 'Tailwind CSS', 'Prisma']
+    tech: ['Next.js', 'Tailwind CSS', 'Prisma'],
+    url: null
   },
 ];
 
