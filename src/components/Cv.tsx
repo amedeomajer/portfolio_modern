@@ -26,7 +26,7 @@ const Cv: React.FC = () => {
 
           <h2 className='text-xl md:text-3xl md:pb-5'><strong>Work</strong></h2>
           <p className='md:text-2xl'><strong>Hive Helsinki</strong> April 2023 - ongoing</p>
-          <p>At Hive I'm working as a software developer, creating, maintaining and improving various websites and software. On top of that I am improving the school pedagogy and ensuring a good experience for the students and the rest of the staff.</p>
+          <p>At Hive I&apos;m working as a software developer, creating, maintaining and improving various websites and software. On top of that I am improving the school pedagogy and ensuring a good experience for the students and the rest of the staff.</p>
           <h3 className='text-lg text-justify text-white mt-4 md:text-2xl'>
             <strong>Main technologies:</strong>
           </h3>
