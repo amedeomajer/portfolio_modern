@@ -60,8 +60,8 @@ const About: React.FC = () => {
           I focus on making my work maintainable, so that anyone jumping in can
           understand it quickly.
           <br />
-          I also put a lot of effort into clear communication—whether it's
-          sharing ideas, giving feedback, or just making sure we're all on the
+          I also put a lot of effort into clear communication—whether it&apos;s
+          sharing ideas, giving feedback, or just making sure we&apos;re all on the
           same page.
           <br />
           <br />
