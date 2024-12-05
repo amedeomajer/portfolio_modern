@@ -1,8 +1,8 @@
-'use client'
-import React from 'react';
-import Image from 'next/image';
-import { motion } from 'framer-motion';
-import { useIsOnPhone } from '@/hooks/useIsOnPhone';
+"use client";
+import React from "react";
+import Image from "next/image";
+import { motion } from "framer-motion";
+import { useIsOnPhone } from "@/hooks/useIsOnPhone";
 
 const CvPicture: React.FC = () => {
   const { initialY, damping } = useIsOnPhone("cv-picture");
@@ -14,34 +14,40 @@ const CvPicture: React.FC = () => {
   }
 
   return (
-    <div className='relative w-full h-24 md:h-48 flex justify-center items-center overflow-clip'>
+    <div className="relative w-full h-24 md:h-48 flex justify-center items-center overflow-clip">
       <motion.div
-        className='absolute w-full h-full'
+        className="absolute w-full h-full"
         initial={{ y: initialY }}
         animate={{ y: 15 }}
-        exit={{ 
+        exit={{
           y: initialY,
           opacity: 0,
           transition: {
-            type: 'spring',
+            type: "spring",
             duration: 1,
             delay: 0,
             stiffness: 100,
-            damping: damping
-          }
-         }}
-        transition={{ 
-          type: 'spring',
+            damping: damping,
+          },
+        }}
+        transition={{
+          type: "spring",
           duration: 0.5,
           delay: 1,
           stiffness: 100,
-          damping: damping 
+          damping: damping,
         }}
       >
-        <Image alt="something" loading="lazy" src={"/images/ame.png"} fill={true} className='object-contain' />
+        <Image
+          alt="picture of the author"
+          loading="lazy"
+          src={"/images/ame.png"}
+          fill={true}
+          className="object-contain"
+        />
       </motion.div>
     </div>
   );
-}
+};
 
 export default CvPicture;

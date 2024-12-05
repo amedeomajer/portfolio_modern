@@ -31,7 +31,7 @@ interface Project {
 
 const Work: React.FC = () => {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
-  const { isOnPhone, initialY, initialX } = useIsOnPhone("work");
+  const { initialY, initialX } = useIsOnPhone("work");
 
   const projects = projectsData.map((project: Project, index: number) => (
     <ProjectCard
@@ -52,7 +52,7 @@ const Work: React.FC = () => {
       }}
     >
       {selectedProject && (
-        <DrawerContent className="max-h-full bg-black bg-opacity-30 backdrop-blur-lg pb-12">
+        <DrawerContent className="max-h-full bg-black bg-opacity-30 backdrop-blur-lg container mx-auto min-h-[90%]">
           <DrawerClose>
             <div className="w-full rounded-t-lg pt-4 bounce-once">
               <FontAwesomeIcon icon={faChevronDown} className="w-4 h-4" />
