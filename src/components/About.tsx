@@ -13,7 +13,7 @@ const About: React.FC = () => {
   }
   return (
     <motion.div
-      className="container mx-auto md:mt-36 mb-[100px] px-3 md:px-0"
+      className="container mx-auto md:mt-36 mb-[100px] px-3 md:px-11"
       initial={{ x: -screenWidth }}
       animate={{ x: 0 }}
       exit={{
@@ -69,22 +69,21 @@ const About: React.FC = () => {
           projects running smoothly.
         </p>
       </div>
-
-      <div className="flex justify-center gap-6 mt-8 md:mt-20">
+      <div className="flex justify-center gap-6 mt-8 lg:mt-20 mb-8">
         <a
-          href="mailto:your.email@example.com"
+          href="mailto:amedeo.majer@gmail.com"
           className="flex items-center gap-2"
         >
           <FontAwesomeIcon icon={faEnvelope} className="w-6 h-6" />
         </a>
         <a
-          href="https://linkedin.com/in/your-profile"
+          href="https://linkedin.com/in/amedeo-majer-5b80b1159"
           className="flex items-center gap-2"
         >
           <FontAwesomeIcon icon={faLinkedin} className="w-6 h-6" />
         </a>
         <a
-          href="https://github.com/your-profile"
+          href="https://github.com/amedeomajer"
           className="flex items-center gap-2"
         >
           <FontAwesomeIcon icon={faGithub} className="w-6 h-6" />

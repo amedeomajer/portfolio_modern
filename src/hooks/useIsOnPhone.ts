@@ -27,12 +27,9 @@ export const useIsOnPhone = (component: string) : UseIsOnPhoneRetrun => {
       setInitialX(isOnPhone ? 400 : 0);
       return;
     } else if (component === "about") {
-      setInitialY(isOnPhone ? 0 : -1000);
-      setInitialX(isOnPhone ? -400 : 0);
       setScreenWidth(window.innerWidth);
-      return;
     }
   }, []);
 
-  return { isOnPhone, initialY, initialX, damping, screenWidth };
+  return { initialY, initialX, damping, screenWidth };
 }
