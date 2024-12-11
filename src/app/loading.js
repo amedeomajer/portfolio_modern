@@ -1,6 +1,6 @@
-
-
 export default function Loading() {
   // You can add any UI inside Loading, including a Skeleton.
-  return <div className="min-h-screen h-screen bg-dark-holographic bg-cover bg-center overflow-y-hidden" />
+  return (
+    <div className="min-h-screen h-screen bg-cover bg-center bg-no-repeat bg-fixed overflow-y-hidden" />
+  );
 }

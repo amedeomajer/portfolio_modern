@@ -4,7 +4,6 @@ import { motion } from "framer-motion";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLinkedin, faGithub } from "@fortawesome/free-brands-svg-icons";
 import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
-
 import { useIsOnPhone } from "@/hooks/useIsOnPhone";
 
 const About: React.FC = () => {
@@ -45,11 +44,11 @@ const About: React.FC = () => {
             src="/images/ame.png"
             width={900}
             height={900}
-            className="h-24 md:h-64 w-24 md:w-64 rounded-full border-2 border-amber-100/60 max-w-none"
+            className="h-24 md:h-64 w-24 md:w-64 rounded-full border-2 max-w-none"
           />
         </motion.div>
         <div className="mt-6 md:mt-0">
-          <h1 className="text-4xl md:text-6xl font-black">
+          <h1 className="text-4xl md:text-6xl font-black text-center">
             I&apos;m Amedeo a full-stack web developer who loves writing clean,
             easy-to-read and maintainable code.
           </h1>
@@ -61,8 +60,8 @@ const About: React.FC = () => {
           I focus on making my work maintainable, so that anyone jumping in can
           understand it quickly.
           <br />
-          I also put a lot of effort into clear communication—whether it's
-          sharing ideas, giving feedback, or just making sure we're all on the
+          I also put a lot of effort into clear communication—whether it&apos;s
+          sharing ideas, giving feedback, or just making sure we&apos;re all on the
           same page.
           <br />
           <br />

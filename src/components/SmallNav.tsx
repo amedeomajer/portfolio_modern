@@ -1,6 +1,6 @@
-'use client'
-import React from 'react'
-import { motion } from 'framer-motion'
+"use client";
+import React from "react";
+import { motion } from "framer-motion";
 
 interface SmallNavItemProps {
   children: string;
@@ -8,7 +8,11 @@ interface SmallNavItemProps {
   isActive: boolean;
 }
 
-const SmallNavItem:React.FC<SmallNavItemProps> = ({ children, onClick, isActive }) => {
+const SmallNavItem: React.FC<SmallNavItemProps> = ({
+  children,
+  onClick,
+  isActive,
+}) => {
   return (
     <li
       className={`cursor-pointer ${
@@ -26,7 +30,7 @@ interface SmallNavProps {
   section: number;
 }
 
-const SmallNav:React.FC<SmallNavProps> = ({ setSection, section}) => {
+const SmallNav: React.FC<SmallNavProps> = ({ setSection, section }) => {
   return (
     <motion.div
       initial={{ y: 50, opacity: 0 }}
@@ -49,4 +53,4 @@ const SmallNav:React.FC<SmallNavProps> = ({ setSection, section}) => {
   );
 };
 
-export default SmallNav
+export default SmallNav;
