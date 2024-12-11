@@ -4,12 +4,14 @@ type UseIsOnPhoneRetrun = {
   initialY: number | null;
   initialX: number | null;
   damping: number | null;
+  screenWidth: number | null;
 }
 
 export const useIsOnPhone = (component: string) : UseIsOnPhoneRetrun => {
   const [initialY, setInitialY] = useState<number | null>(null);
   const [initialX, setInitialX] = useState<number | null>(null);
   const [damping, setDamping] = useState<number | null>(null);
+  const [screenWidth, setScreenWidth] = useState<number | null>(null);
 
   useEffect(() => {
     const isOnPhone = window.innerWidth < 768;
@@ -21,8 +23,10 @@ export const useIsOnPhone = (component: string) : UseIsOnPhoneRetrun => {
       setInitialY(isOnPhone ? 0 : 1000);
       setInitialX(isOnPhone ? 400 : 0);
       return;
+    } else if (component === "about") {
+      setScreenWidth(window.innerWidth);
     }
   }, []);
 
-  return { initialY, initialX, damping };
+  return { initialY, initialX, damping, screenWidth };
 }
