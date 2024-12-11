@@ -31,5 +31,5 @@ export const useIsOnPhone = (component: string) : UseIsOnPhoneRetrun => {
     }
   }, []);
 
-  return { initialY, initialX, damping, screenWidth };
+  return { isOnPhone, initialY, initialX, damping, screenWidth };
 }
