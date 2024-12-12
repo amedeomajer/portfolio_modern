@@ -16,7 +16,7 @@ const Content: React.FC = () => {
         {section === 3 && <About key="about" />}
         {section === 2 && <Cv key="cv" />}
       </AnimatePresence>
-      <SideNav setSection={setSection} />
+      <SideNav setSection={setSection} section={section} />
       <SmallNav setSection={setSection} section={section} />
     </div>
   );
