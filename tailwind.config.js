@@ -12,7 +12,7 @@ module.exports = {
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
         holographic: 'url("/background.jpg")',
-        "dark-holographic": 'url("/dark_background.png")',
+        "dark-holographic": 'url("/dark_background.webp")',
       },
     },
   },

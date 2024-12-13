@@ -7,8 +7,6 @@ import { useIsOnPhone } from "@/hooks/useIsOnPhone";
 const CvPicture: React.FC = () => {
   const { initialY, damping } = useIsOnPhone("cv-picture");
 
-  console.log(initialY, damping);
-
   if (initialY === null || damping === null) {
     return null;
   }
@@ -34,14 +32,14 @@ const CvPicture: React.FC = () => {
           type: "spring",
           duration: 0.5,
           delay: 1,
-          stiffness: 100,
+          stiffness: 150,
           damping: damping,
         }}
       >
         <Image
           alt="picture of the author"
           loading="lazy"
-          src={"/images/ame.png"}
+          src={"/images/ame.webp"}
           fill={true}
           className="object-contain"
         />

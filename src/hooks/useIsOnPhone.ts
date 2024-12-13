@@ -20,7 +20,7 @@ export const useIsOnPhone = (component: string) : UseIsOnPhoneRetrun => {
     setIsOnPhone(isOnPhone);
     if (component === "cv-picture") {
       setInitialY(isOnPhone ? 100 : 1000);
-      setDamping(isOnPhone ? 10 : 20);
+      setDamping(isOnPhone ? 10 : 19);
       return;
     } else if (component === "work") {
       setInitialY(isOnPhone ? 0 : 1000);

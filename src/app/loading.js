@@ -1,6 +1,8 @@
 export default function Loading() {
-  // You can add any UI inside Loading, including a Skeleton.
   return (
-    <div className="min-h-screen h-screen bg-cover bg-center bg-no-repeat bg-fixed overflow-y-hidden" />
+    <div className="flex items-center justify-center min-h-screen">
+      {/* <LoadingSkeleton /> */}
+      fndjksnfjkdsnjkfd
+    </div>
   );
 }

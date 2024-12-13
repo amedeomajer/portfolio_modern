@@ -41,9 +41,9 @@ const About: React.FC = () => {
           <Image
             alt="picture of the author"
             loading="lazy"
-            src="/images/ame.png"
-            width={900}
-            height={900}
+            src="/images/ame.webp"
+            width={256}
+            height={256}
             className="h-24 md:h-64 w-24 md:w-64 rounded-full border-2 max-w-none"
           />
         </motion.div>
@@ -61,8 +61,8 @@ const About: React.FC = () => {
           understand it quickly.
           <br />
           I also put a lot of effort into clear communication—whether it&apos;s
-          sharing ideas, giving feedback, or just making sure we&apos;re all on the
-          same page.
+          sharing ideas, giving feedback, or just making sure we&apos;re all on
+          the same page.
           <br />
           <br />
           For me, clear code and good communication go hand in hand to keep
