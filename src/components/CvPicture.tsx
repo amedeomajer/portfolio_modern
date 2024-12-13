@@ -38,7 +38,6 @@ const CvPicture: React.FC = () => {
       >
         <Image
           alt="picture of the author"
-          loading="lazy"
           src={"/images/ame.webp"}
           fill={true}
           className="object-contain"
