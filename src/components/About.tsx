@@ -1,13 +1,14 @@
-import React from "react";
-import Image from "next/image";
-import { motion } from "framer-motion";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faLinkedin, faGithub } from "@fortawesome/free-brands-svg-icons";
-import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
-import { useIsOnPhone } from "@/hooks/useIsOnPhone";
+import React from 'react';
+import Image from 'next/image';
+import { motion } from 'framer-motion';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faLinkedin, faGithub } from '@fortawesome/free-brands-svg-icons';
+import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
+
+import { useIsOnPhone } from '@/hooks/useIsOnPhone';
 
 const About: React.FC = () => {
-  const { screenWidth } = useIsOnPhone("about");
+  const { screenWidth } = useIsOnPhone('about');
   if (screenWidth === null) {
     return null;
   }
@@ -32,7 +33,7 @@ const About: React.FC = () => {
             transition: { duration: 0.4 },
           }}
           transition={{
-            type: "spring",
+            type: 'spring',
             duration: 0.5,
             delay: 1,
             stiffness: 100,
@@ -48,7 +49,7 @@ const About: React.FC = () => {
           />
         </motion.div>
         <div className="mt-6 md:mt-0">
-          <h1 className="text-4xl md:text-6xl font-black text-center">
+          <h1 className="text-4xl md:text-6xl font-black">
             I&apos;m Amedeo a full-stack web developer who loves writing clean,
             easy-to-read and maintainable code.
           </h1>

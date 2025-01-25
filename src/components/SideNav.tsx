@@ -1,7 +1,7 @@
-"use client";
-import React from "react";
-import NavItem from "./NavItem";
-import { motion } from "framer-motion";
+'use client';
+import React from 'react';
+import NavItem from './NavItem';
+import { motion } from 'framer-motion';
 
 interface SideNavProps {
   setSection: (section: number) => void;
