@@ -1,11 +1,11 @@
-"use client";
-import React from "react";
-import Image from "next/image";
-import { motion } from "framer-motion";
-import { useIsOnPhone } from "@/hooks/useIsOnPhone";
+'use client';
+import React from 'react';
+import Image from 'next/image';
+import { motion } from 'framer-motion';
+import { useIsOnPhone } from '@/hooks/useIsOnPhone';
 
 const CvPicture: React.FC = () => {
-  const { initialY, damping } = useIsOnPhone("cv-picture");
+  const { initialY, damping } = useIsOnPhone('cv-picture');
 
   if (initialY === null || damping === null) {
     return null;
@@ -21,7 +21,7 @@ const CvPicture: React.FC = () => {
           y: initialY,
           opacity: 0,
           transition: {
-            type: "spring",
+            type: 'spring',
             duration: 1,
             delay: 0,
             stiffness: 100,
@@ -29,7 +29,7 @@ const CvPicture: React.FC = () => {
           },
         }}
         transition={{
-          type: "spring",
+          type: 'spring',
           duration: 0.5,
           delay: 1,
           stiffness: 150,
@@ -39,7 +39,7 @@ const CvPicture: React.FC = () => {
         <Image
           alt="picture of the author"
           loading="lazy"
-          src={"/images/ame.webp"}
+          src={'/images/ame.webp'}
           fill={true}
           className="object-contain"
         />

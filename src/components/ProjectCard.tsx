@@ -1,7 +1,7 @@
-import Card from "./Card";
-import CardDescription from "./CardDescription";
-import CardImage from "./CardImage";
-import { DrawerTrigger } from "./Drawer";
+import Card from './Card';
+import CardDescription from './CardDescription';
+import CardImage from './CardImage';
+import { DrawerTrigger } from './Drawer';
 
 interface ProjectCardProps {
   project: {

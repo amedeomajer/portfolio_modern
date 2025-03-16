@@ -42,10 +42,10 @@ const About: React.FC = () => {
           <Image
             alt="picture of the author"
             loading="lazy"
-            src="/images/ame.webp"
-            width={256}
-            height={256}
-            className="h-24 md:h-64 w-24 md:w-64 rounded-full border-2 max-w-none"
+            src="/images/ame.png"
+            width={900}
+            height={900}
+            className="h-24 md:h-64 w-24 md:w-64 rounded-full border-2 border-amber-100/60 max-w-none"
           />
         </motion.div>
         <div className="mt-6 md:mt-0">

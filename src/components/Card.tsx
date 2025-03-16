@@ -1,5 +1,5 @@
-import React, { ReactNode } from "react";
-import { motion } from "framer-motion";
+import React, { ReactNode } from 'react';
+import { motion } from 'framer-motion';
 
 interface CardProps {
   children: ReactNode;
@@ -15,7 +15,7 @@ const Card: React.FC<CardProps> = ({
   className,
 }) => {
   const cardShadow = {
-    boxShadow: "rgb(0 0 0) 0px 0px 20px 0px",
+    boxShadow: 'rgb(0 0 0) 0px 0px 20px 0px',
   };
 
   return (

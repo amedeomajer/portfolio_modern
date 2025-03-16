@@ -1,6 +1,6 @@
-"use client";
-import React from "react";
-import { motion } from "framer-motion";
+'use client';
+import React from 'react';
+import { motion } from 'framer-motion';
 
 interface SmallNavItemProps {
   children: string;
@@ -16,7 +16,7 @@ const SmallNavItem: React.FC<SmallNavItemProps> = ({
   return (
     <li
       className={`cursor-pointer ${
-        isActive ? "text-red-500" : "text-white"
+        isActive ? 'text-red-500' : 'text-white'
       } px-4 py-1`}
       onClick={onClick}
     >

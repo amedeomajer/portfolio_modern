@@ -1,19 +1,18 @@
-import React, { useState } from "react";
-import { motion } from "framer-motion";
-import projectsData from "@/data/projectsData";
-import { useIsOnPhone } from "@/hooks/useIsOnPhone";
-import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
-import { faLink } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import ProjectCard from "./ProjectCard";
+import React, { useState } from 'react';
+import { motion } from 'framer-motion';
+import projectsData from '@/data/projectsData';
+import { useIsOnPhone } from '@/hooks/useIsOnPhone';
+import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
+import { faLink } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import ProjectCard from './ProjectCard';
 import {
   Drawer,
   DrawerClose,
   DrawerContent,
-  DrawerFooter,
   DrawerHeader,
   DrawerTitle,
-} from "./Drawer";
+} from './Drawer';
 
 interface Project {
   name: string;
@@ -31,7 +30,7 @@ interface Project {
 
 const Work: React.FC = () => {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
-  const { initialY, initialX } = useIsOnPhone("work");
+  const { initialY, initialX } = useIsOnPhone('work');
 
   const projects = projectsData.map((project: Project, index: number) => (
     <ProjectCard
@@ -98,7 +97,7 @@ const Work: React.FC = () => {
                   {selectedProject.longDescription.contributions.map(
                     (contribution, index) => (
                       <li key={index}>
-                        <strong>{contribution.title}:</strong>{" "}
+                        <strong>{contribution.title}:</strong>{' '}
                         {contribution.description}
                       </li>
                     )
