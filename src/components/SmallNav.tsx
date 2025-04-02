@@ -36,7 +36,7 @@ const SmallNav: React.FC<SmallNavProps> = ({ setSection, section }) => {
       initial={{ y: 50, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.8 }}
-      className="fixed bottom-0 md:hidden w-full pb-3 pt-2 z-50 bg-black bg-opacity-20 backdrop-blur-md"
+      className="fixed bottom-0 md:hidden w-full pb-3 pt-2 bg-black bg-opacity-20 backdrop-blur-md z-[100]"
     >
       <ul className="font-black flex items-center justify-evenly text-lg">
         <SmallNavItem onClick={() => setSection(3)} isActive={section === 3}>
