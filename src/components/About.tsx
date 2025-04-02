@@ -42,7 +42,7 @@ const About: React.FC = () => {
           <Image
             alt="picture of the author"
             loading="lazy"
-            src="/images/ame.png"
+            src="/images/ame.webp"
             width={900}
             height={900}
             className="h-24 md:h-64 w-24 md:w-64 rounded-full border-2 border-amber-100/60 max-w-none"
