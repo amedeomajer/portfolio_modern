@@ -1,5 +1,37 @@
 const projectsData = [
   {
+    name: 'Hive Helsinki Alumni Certificates',
+    placeholderDescription:
+      ' are official certificates, realesed to our alumni, that prove their graduation from Hive Helsinki.',
+    longDescription: {
+      intro:
+        'After prooving its concept, with alumni hired by over 100 companies, I felt that aan official certificate would be a great addition to the alumni experience. I designed and developed the whole process of creating, sending the certificates.',
+      contributions: [
+        {
+          title: 'Ideation',
+          description:
+            'The idea came from a business issue we were having and by coming up with this idea not only I have saved Hive Helsinki thousands of euros, but I also have solved teh problem at hand.',
+        },
+        {
+          title: 'Design',
+          description:
+            'Idesigned teh certificates to look prestigious and to be wasily recognisable.',
+        },
+        {
+          title: 'Development',
+          description:
+            'Paying for certificates was not an option so I developed the whole system myself. Once a student becomes an alumni they receive the certificate automatically and they can easily share thatnks to the integration with LinkedIn.',
+        },
+      ],
+      impact:
+        "The impact of this project has been significant, as it not only enhances the alumni experience but also serves as a valuable marketing tool for Hive Helsinki. The certificates are now a symbol of achievement and recognition, further solidifying the school's reputation in the tech industry.",
+    },
+    image: 'certificate.png',
+    imageAlt: 'screenshot of a hive alumni certificate',
+    tech: ['FastAPI', 'Next.js', 'Docker', 'Tailwind CSS', 'Postgresql'],
+    url: 'https://certificates.hive.fi/63ecbf92-1e70-4cff-a735-040fbf34170d',
+  },
+  {
     name: 'Hire a Hiver',
     placeholderDescription:
       ' is a platform that connects businesses with talented students from Hive Helsinki.',
