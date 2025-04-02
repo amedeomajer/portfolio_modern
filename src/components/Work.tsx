@@ -13,6 +13,7 @@ import {
   DrawerHeader,
   DrawerTitle,
 } from './Drawer';
+import Image from 'next/image';
 
 interface Project {
   name: string;
@@ -51,7 +52,7 @@ const Work: React.FC = () => {
       }}
     >
       {selectedProject && (
-        <DrawerContent className="max-h-full bg-black bg-opacity-30 backdrop-blur-lg container mx-auto min-h-[90%]">
+        <DrawerContent className="max-h-full bg-black bg-opacity-30 backdrop-blur-lg container mx-auto min-h-[90%] pb-16">
           <DrawerClose>
             <div className="w-full rounded-t-lg pt-4 bounce-once">
               <FontAwesomeIcon icon={faChevronDown} className="w-4 h-4" />
@@ -108,7 +109,7 @@ const Work: React.FC = () => {
                 <p>{selectedProject.longDescription.impact}</p>
               </div>
 
-              <div className="flex flex-wrap gap-2 mt-2 md:mt-6">
+              <div className="flex flex-wrap gap-2 my-2 md:my-6">
                 {selectedProject.tech.map((tech: string, index: number) => (
                   <div
                     key={index}
