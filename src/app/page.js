@@ -3,7 +3,7 @@ import Content from '@/components/Content.tsx';
 
 export default function Home() {
   return (
-    <main className="min-h-screen relative">
+    <main>
       <LoopingHeader />
       <Content />
     </main>

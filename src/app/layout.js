@@ -15,14 +15,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <Suspense fallback={<Loading />}>
-        <body
-          className={cn(
-            darkerGrotesque.className,
-            'bg-dark-holographic bg-cover bg-center bg-no-repeat bg-fixed'
-          )}
-        >
-          {children}
-        </body>
+        <body className={cn(darkerGrotesque.className, '')}>{children}</body>
       </Suspense>
     </html>
   );

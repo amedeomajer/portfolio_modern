@@ -51,24 +51,23 @@ const Work: React.FC = () => {
       }}
     >
       {selectedProject && (
-        <DrawerContent className="max-h-full bg-black bg-opacity-30 backdrop-blur-lg container mx-auto min-h-[90%]">
+        <DrawerContent className="drawer-content bg-opacity-30 backdrop-blur-lg container">
           <DrawerClose>
-            <div className="w-full rounded-t-lg pt-4 bounce-once">
+            <div className="drawer-close">
               <FontAwesomeIcon icon={faChevronDown} className="w-4 h-4" />
             </div>
           </DrawerClose>
           <DrawerHeader>
             <DrawerTitle>
-              <h1 className="text-center md:text-2xl">
+              <h1 className="drawer-title">
                 {selectedProject.url ? (
                   <a
                     href={selectedProject.url}
                     target="_blank"
                     rel="noreferrer"
-                    className="underline underline-offset-2 cursor-pointer"
                   >
                     {selectedProject.name}
-                    <FontAwesomeIcon icon={faLink} className="ml-2 w-4 h-4" />
+                    <FontAwesomeIcon icon={faLink} className="link-icon" />
                   </a>
                 ) : (
                   selectedProject.name
@@ -77,20 +76,21 @@ const Work: React.FC = () => {
             </DrawerTitle>
           </DrawerHeader>
           <div
-            className="overflow-y-scroll"
+            className="project-wrapper"
             onClick={() => setSelectedProject(null)}
           >
             <div
-              className="p-4 w-full rounded-sm container mx-auto lg:max-w-[40%]"
+              className="project container"
               onClick={(e) => e.stopPropagation()}
             >
               <img
                 src={`/images/${selectedProject.image}`}
                 alt={selectedProject.name}
-                className="w-full h-auto rounded-t-sm"
               />
 
-              <div className="lg:text-xl mt-4">
+              <div className="project-description-wrapper">
+                {' '}
+                // left here
                 <p>{selectedProject.longDescription.intro}</p>
                 <h3 className="mt-4 font-semibold">My Contributions:</h3>
                 <ul className="list-disc ml-6 mt-2 space-y-1">
@@ -103,7 +103,6 @@ const Work: React.FC = () => {
                     )
                   )}
                 </ul>
-
                 <h3 className="mt-4 font-semibold">Impact:</h3>
                 <p>{selectedProject.longDescription.impact}</p>
               </div>

@@ -1,0 +1,84 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: 1 100% 95%;
+  --foreground: 1 5% 6%;
+  --card: 1 50% 90%;
+  --card-foreground: 1 5% 10%;
+  --popover: 1 100% 95%;
+  --popover-foreground: 1 100% 6%;
+  --primary: 1 78% 41%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 1 30% 70%;
+  --secondary-foreground: 0 0% 0%;
+  --muted: -37 30% 85%;
+  --muted-foreground: 1 5% 35%;
+  --accent: -37 30% 80%;
+  --accent-foreground: 1 5% 10%;
+  --destructive: 0 100% 30%;
+  --destructive-foreground: 1 5% 90%;
+  --border: 1 30% 50%;
+  --input: 1 30% 18%;
+  --ring: 1 78% 41%;
+  --radius: 1rem;
+}
+
+.dark {
+  --background: 1 50% 6%;
+  --foreground: 1 5% 90%;
+  --card: 1 50% 6%;
+  --card-foreground: 1 5% 90%;
+  --popover: 1 50% 5%;
+  --popover-foreground: 1 5% 90%;
+  --primary: 1 78% 41%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 1 30% 10%;
+  --secondary-foreground: 0 0% 100%;
+  --muted: -37 30% 15%;
+  --muted-foreground: 1 5% 60%;
+  --accent: -37 30% 15%;
+  --accent-foreground: 1 5% 90%;
+  --destructive: 0 100% 30%;
+  --destructive-foreground: 1 5% 90%;
+  --border: 1 30% 18%;
+  --input: 1 30% 18%;
+  --ring: 1 78% 41%;
+  --radius: 1rem;
+}
+
+body {
+  color: rgb(var(--foreground-rgb));
+  background: linear-gradient(
+      to bottom,
+      transparent,
+      rgb(var(--background-end-rgb))
+    )
+    rgb(var(--background-start-rgb));
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+*::-webkit-scrollbar {
+  display: none;
+}
+* {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+}
+
+@keyframes bounceOnce {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-25%);
+  }
+}
+
+.bounce-once {
+  animation: bounceOnce 1s ease 2;
+  animation-delay: 0.5s;
+}

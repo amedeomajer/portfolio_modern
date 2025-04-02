@@ -8,9 +8,9 @@ import About from './About';
 import { AnimatePresence } from 'framer-motion';
 
 const Content: React.FC = () => {
-  const [section, setSection] = useState(3);
+  const [section, setSection] = useState(1);
   return (
-    <div className="w-full flex md:flex-row md:justify-between">
+    <div className="content">
       <AnimatePresence mode="wait">
         {section === 1 && <Work key="work" />}
         {section === 3 && <About key="about" />}

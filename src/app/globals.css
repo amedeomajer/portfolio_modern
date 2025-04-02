@@ -3,37 +3,144 @@
 @tailwind utilities;
 
 :root {
-  --foreground-rgb: 255, 255, 255;
-  --background-start-rgb: 0, 0, 0;
-  --background-end-rgb: 0, 0, 0;
+  --background: #170808;
+  --foreground: #e5dede;
+  --card: #0a0102;
+  --card-foreground: #e5dede;
+  --popover: #080102;
+  --popover-foreground: #e5dede;
+  --primary: #c21a31;
+  --primary-foreground: #ffffff;
+  --secondary: #1a0607;
+  --secondary-foreground: #ffffff;
+  --muted: #382d26;
+  --muted-foreground: #997e81;
+  --accent: #382d26;
+  --accent-foreground: #e5dede;
+  --destructive: #990000;
+  --destructive-foreground: #e5dede;
+  --border: #301113;
+  --input: #301113;
+  --ring: #c21a31;
+  --radius: 1rem;
 }
-
-/* @media (prefers-color-scheme: dark) {
-  :root {
-  
-  }
-} */
-
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
-}
-
 /* Hide scrollbar for Chrome, Safari and Opera */
 *::-webkit-scrollbar {
   display: none;
 }
+
 * {
-  scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none;
+  /* Firefox */
+  -ms-overflow-style: none;
+  /* IE and Edge */
 }
 
-@keyframes bounceOnce {
+body {
+  color: var(--foreground);
+  background-color: var(--background);
+}
+
+main {
+  min-height: 100vh;
+  position: relative;
+}
+
+.marquee {
+  padding-top: 0;
+  overflow-y: hidden;
+}
+.marquee-text {
+  font-weight: 900;
+  font-size: 3rem;
+  line-height: 1;
+  margin-top: -0.75rem;
+}
+
+.content {
+  width: 100%;
+  display: flex;
+}
+
+.small-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding-bottom: 0.75rem;
+  padding-top: 0.5rem;
+  z-index: 1000;
+  background-color: black 0.2;
+}
+.small-nav ul {
+  font-weight: 900;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  font-size: 1.125rem;
+  line-height: 1.75rem;
+}
+.small-nav ul li {
+  cursor: pointer;
+  padding: 0.25rem 1rem
+}
+.small-nav ul li[data-active="true"] {
+  color: var(--primary);
+}
+.side-nav {
+  display: none;
+}
+
+.drawer-content {
+  max-height: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  min-height: 90%;
+}
+.project-wrapper {
+  overflow-y: scroll;
+}
+.project {
+  padding: 16px;
+  width: 100%;
+  border-radius: 2px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.project img {
+  width: 100%;
+  height: auto;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+}
+.project-description-wrapper {
+  margin-top: 16px;
+}
+
+.drawer-close {
+  width: 100%;
+  border-top-left-radius: 0.5rem;
+  border-top-right-radius: 0.5rem;
+  padding-top: 1rem;
+  animation: bounce 1s ease 2;
+  animation-delay: 0.5s;
+}
+.drawer-title {
+  text-align: center;
+}
+.drawer-title a {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  cursor: pointer;
+}
+.drawer-title a .link-icon {
+  width: 16px;
+  height: 16px;
+  margin-left: 8px;
+}
+
+
+@keyframes bounce {
   0%,
   100% {
     transform: translateY(0);
@@ -44,7 +151,76 @@ body {
   }
 }
 
-.bounce-once {
-  animation: bounceOnce 1s ease 2;
+.bounce-twice {
+  animation: bounce 1s ease 2;
   animation-delay: 0.5s;
+}
+/* md */
+@media (min-width: 768px) {
+  .marquee-text {
+    font-size: 90px;
+    margin-top: -27px;
+  }
+  .content {
+    justify-content: space-between;
+  }
+  .small-nav {
+    display: none;
+  }
+  .side-nav {
+    display: block;
+    padding-top: 100px;
+  }
+  .side-nav ul {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    align-items: flex-end;
+  }
+  .side-nav ul li {
+    transition: all 0.3s ease-in-out;
+    cursor: pointer;
+  }
+  .side-nav ul li:hover {
+    opacity: 0.75;
+    transform: translateX(-20px);
+  }
+  .side-nav ul li[data-active="true"] {
+    color: var(--primary);
+    transform: translateX(-20px);
+  }
+  .side-nav ul li:focus {
+    outline: 1px solid var(--primary);
+  }
+  .drawer-title {
+    font-size: 1.5rem;
+    line-height: 2rem;
+  }
+}
+/* lg */
+@media (min-width: 1024px) {
+  .marquee-text {
+    font-size: 128px;
+    margin-top: -2.25rem;
+  }
+  .side-nav ul {
+    font-weight: 900;
+    font-size: 2.25rem;
+    line-height: 2.5rem;
+    gap: 24px;
+  }
+  .project {
+    max-width: 50%;
+  }
+  .project-description-wrapper {
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+  }
+}
+/* xl */
+@media (min-width: 1280px) {
+.side-nav ul {
+    font-size: 3.75rem;
+    line-height: 1;
+  }
 }
