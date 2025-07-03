@@ -41,7 +41,7 @@ export const metadata = {
     siteName: 'Amedeo Majer Portfolio',
     images: [
       {
-        url: '/images/ame.webp',
+        url: '/images/amepng.png',
         width: 1200,
         height: 630,
         alt: 'Amedeo Majer - Full-Stack Web Developer',
@@ -54,7 +54,7 @@ export const metadata = {
     card: 'summary_large_image',
     title: 'Amedeo Majer - Full-Stack Web Developer',
     description: 'Full-stack web developer specializing in clean, maintainable code and clear communication.',
-    images: ['/images/ame.webp'],
+    images: ['/images/amepng.png'],
     creator: '@amedeomajer',
   },
   robots: {

@@ -1,5 +1,5 @@
 export default function sitemap() {
-  const baseUrl = 'https://amedeomajer.com';
+  const baseUrl = 'https://amedeomajer.it';
   
   return [
     {

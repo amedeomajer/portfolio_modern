@@ -8,8 +8,8 @@ export default function Home() {
     "name": "Amedeo Majer",
     "jobTitle": "Full-Stack Web Developer",
     "description": "Full-stack web developer specializing in clean, maintainable code and clear communication. Experienced with React, Next.js, Ruby on Rails, and modern web technologies.",
-    "url": "https://amedeomajer.com",
-    "image": "https://amedeomajer.com/images/ame.webp",
+    "url": "https://amedeomajer.it",
+    "image": "https://amedeomajer.it/images/amedeo.png",
     "sameAs": [
       "https://linkedin.com/in/amedeo-majer-5b80b1159",
       "https://github.com/amedeomajer"
