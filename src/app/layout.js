@@ -54,7 +54,7 @@ export const metadata = {
     card: 'summary_large_image',
     title: 'Amedeo Majer - Full-Stack Web Developer',
     description: 'Full-stack web developer specializing in clean, maintainable code and clear communication.',
-    images: ['/images/amepng.png'],
+    images: ['/images/amedeo.png'],
     creator: '@amedeomajer',
   },
   robots: {
