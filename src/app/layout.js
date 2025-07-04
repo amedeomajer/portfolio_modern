@@ -69,7 +69,7 @@ export const metadata = {
     },
   },
   verification: {
-    google: 'your-google-verification-code', // Add your Google Search Console verification code
+    // google: 'your-google-verification-code', // Add your Google Search Console verification code
   },
 };
 
