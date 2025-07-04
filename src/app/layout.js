@@ -41,7 +41,7 @@ export const metadata = {
     siteName: 'Amedeo Majer Portfolio',
     images: [
       {
-        url: '/images/amepng.png',
+        url: '/images/amedeo.png',
         width: 1200,
         height: 630,
         alt: 'Amedeo Majer - Full-Stack Web Developer',
