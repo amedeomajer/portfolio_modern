@@ -32,7 +32,6 @@ const Work: React.FC = () => {
 			key={index}
 			project={project}
 			onClick={() => setSelectedProject(project)}
-			className='border-2 border-red-500'
 		/>
 	));
 	if (initialY === null || initialX === null) {

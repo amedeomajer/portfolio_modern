@@ -15,6 +15,10 @@ const SideNav: React.FC<SideNavProps> = ({ setSection, section }) => {
 		{ id: 2, label: "cv", section: "CV" },
 	];
 
+	const handleSectionSelect = (sectionId: number) => {
+		setSection(sectionId);
+	};
+
 	return (
 		<motion.nav
 			initial={{ x: 350, opacity: 0 }}
@@ -35,7 +39,7 @@ const SideNav: React.FC<SideNavProps> = ({ setSection, section }) => {
 						role='none'
 					>
 						<NavItem
-							onClick={() => setSection(item.id)}
+							onClick={() => handleSectionSelect(item.id)}
 							isActive={section === item.id}
 							aria-label={`Navigate to ${item.section} section`}
 						>
