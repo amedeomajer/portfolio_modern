@@ -38,8 +38,8 @@ export default function Home() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
       />
-      <main className="min-h-screen relative">
         <LoopingHeader />
+      <main className="min-h-screen relative">
         <Content />
       </main>
     </>

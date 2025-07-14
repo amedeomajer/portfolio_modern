@@ -32,6 +32,7 @@ const Work: React.FC = () => {
 			key={index}
 			project={project}
 			onClick={() => setSelectedProject(project)}
+			className='border-2 border-red-500'
 		/>
 	));
 	if (initialY === null || initialX === null) {
@@ -46,7 +47,7 @@ const Work: React.FC = () => {
 			}}
 		>
 			{selectedProject && (
-				<DrawerContent className='max-h-full bg-black bg-opacity-30 backdrop-blur-lg container mx-auto min-h-[90%] pb-16'>
+				<DrawerContent className='max-h-full bg-black bg-opacity-30 backdrop-blur-lg container mx-auto min-h-[90%]'>
 					<DrawerClose>
 						<div className='w-full rounded-t-lg pt-4 bounce-once'>
 							<FontAwesomeIcon
@@ -123,7 +124,7 @@ const Work: React.FC = () => {
 				</DrawerContent>
 			)}
 			<motion.div
-				className='container mx-auto flex-wrap flex gap-6 md:gap-10 justify-center md:mt-32'
+				className='container mx-auto flex-wrap flex gap-6 md:gap-10 justify-center md:mt-32 mb-10'
 				initial={{ x: initialX, y: initialY }}
 				animate={{ x: 0, y: 0 }}
 				exit={{ x: initialX, y: initialY, transition: { duration: 0.3 } }}
