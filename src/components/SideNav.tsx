@@ -34,18 +34,14 @@ const SideNav: React.FC<SideNavProps> = ({ setSection, section }) => {
 				aria-orientation='vertical'
 			>
 				{navItems.map((item) => (
-					<li
+					<NavItem
 						key={item.id}
-						role='none'
+						onClick={() => handleSectionSelect(item.id)}
+						isActive={section === item.id}
+						aria-label={`Navigate to ${item.section} section`}
 					>
-						<NavItem
-							onClick={() => handleSectionSelect(item.id)}
-							isActive={section === item.id}
-							aria-label={`Navigate to ${item.section} section`}
-						>
-							{item.label}
-						</NavItem>
-					</li>
+						{item.label}
+					</NavItem>
 				))}
 			</ul>
 		</motion.nav>
