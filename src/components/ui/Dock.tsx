@@ -172,7 +172,7 @@ export default function Dock({
   items,
   className = "",
   spring = { mass: 0.1, stiffness: 150, damping: 12 },
-  magnification = 50,
+  magnification = 70,
   distance = 200,
   panelHeight = 80,
   dockHeight = 256,
@@ -187,9 +187,6 @@ export default function Dock({
   );
   const heightRow = useTransform(isHovered, [0, 1], [panelHeight, maxHeight]);
   const height = useSpring(heightRow, spring);
-
-  // Calculate width based on items
-  const panelWidth = items.length * (baseItemSize + 12) + 16;
 
   return (
     <motion.div
@@ -208,16 +205,20 @@ export default function Dock({
         }}
       >
         <GlassSurface
-          width={panelWidth}
-          height={panelHeight}
-          borderRadius={9999}
-          borderWidth={0.1}
-          brightness={30}
-          opacity={0.9}
+          width="90vw"
+          height={80}
+          borderRadius={50}
+          borderWidth={0.07}
+          brightness={50}
+          opacity={0.93}
           blur={15}
+          displace={0.5}
+          distortionScale={-180}
+          redOffset={0}
+          greenOffset={20}
+          blueOffset={30}
           backgroundOpacity={0.1}
-          saturation={1.2}
-          distortionScale={-120}
+          saturation={1}
           className="dock-glass-panel"
         >
           <div

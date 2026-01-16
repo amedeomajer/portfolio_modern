@@ -1,10 +1,24 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import dynamic from "next/dynamic";
 import GlitchText from "./ui/GlitchText";
 import BlurText from "./ui/BlurText";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
+
+// Dynamic import for 3D viewer - prevents SSR hydration issues
+const Logo3DViewer = dynamic(
+  () => import("./ui/three/Logo3DViewer").then((mod) => mod.Logo3DViewer),
+  {
+    ssr: false,
+    loading: () => (
+      <div className="three-canvas-container h-[200px] md:h-[280px] flex items-center justify-center">
+        <div className="animate-pulse bg-white/5 rounded-full w-24 h-24" />
+      </div>
+    ),
+  }
+);
 
 const Hero = () => {
   const [showScrollIndicator, setShowScrollIndicator] = useState(true);
@@ -36,6 +50,17 @@ const Hero = () => {
     >
       {/* Content */}
       <div className="relative flex flex-col items-center justify-center text-center px-4">
+        {/* <Logo3DViewer
+          modelPath="/am_logo_2.glb"
+          autoRotate={true}
+          rotationSpeed={0.008}
+          enableHover={true}
+          enableFloat={true}
+          enableDrag={false}
+          scale={1.2}
+          className="h-[200px] md:h-[280px] w-full max-w-[400px] mb-4"
+        /> */}
+
         <div className="flex mb-4 glitch-group cursor-default">
           <GlitchText
             speed={0.8}

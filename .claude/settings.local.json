@@ -16,7 +16,12 @@
       "WebFetch(domain:github.com)",
       "Bash(npm uninstall:*)",
       "Bash(pnpm ls:*)",
-      "Bash(pnpm install:*)"
+      "Bash(pnpm install:*)",
+      "Bash(pnpm add:*)",
+      "Bash(pnpm remove:*)",
+      "WebFetch(domain:reactbits.dev)",
+      "mcp__plugin_playwright_playwright__browser_navigate",
+      "mcp__plugin_playwright_playwright__browser_press_key"
     ]
   }
 }

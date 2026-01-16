@@ -7,6 +7,7 @@ import {
   faBriefcase,
   faFileAlt,
   faEnvelope,
+  faHome,
 } from "@fortawesome/free-solid-svg-icons";
 
 const Navigation = () => {
@@ -18,6 +19,11 @@ const Navigation = () => {
   };
 
   const dockItems = [
+    {
+      icon: <FontAwesomeIcon icon={faHome} className="w-5 h-5" />,
+      label: "Home",
+      onClick: () => scrollToSection("hero"),
+    },
     {
       icon: <FontAwesomeIcon icon={faUser} className="w-5 h-5" />,
       label: "About",

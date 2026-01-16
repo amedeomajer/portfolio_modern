@@ -490,3 +490,15 @@ body {
   z-index: 3;
   overflow: hidden;
 }
+
+/* Three.js Canvas Container */
+.three-canvas-container {
+  position: relative;
+  width: 100%;
+}
+
+.three-canvas-container canvas {
+  display: block;
+  width: 100% !important;
+  height: 100% !important;
+}
