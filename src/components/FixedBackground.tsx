@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import LiquidChrome from './ui/LiquidChrome';
+import LiquidChrome from "./ui/LiquidChrome";
 
 const FixedBackground = () => {
   return (
@@ -11,7 +11,7 @@ const FixedBackground = () => {
         amplitude={0.4}
         frequencyX={2.5}
         frequencyY={2.5}
-        interactive={true}
+        interactive={false}
       />
     </div>
   );

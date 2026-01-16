@@ -12,7 +12,9 @@
       "WebFetch(domain:api.github.com)",
       "Bash(curl:*)",
       "Bash(npm install:*)",
-      "Bash(npm ls:*)"
+      "Bash(npm ls:*)",
+      "WebFetch(domain:github.com)",
+      "Bash(npm uninstall:*)"
     ]
   }
 }
