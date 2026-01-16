@@ -14,7 +14,9 @@
       "Bash(npm install:*)",
       "Bash(npm ls:*)",
       "WebFetch(domain:github.com)",
-      "Bash(npm uninstall:*)"
+      "Bash(npm uninstall:*)",
+      "Bash(pnpm ls:*)",
+      "Bash(pnpm install:*)"
     ]
   }
 }
