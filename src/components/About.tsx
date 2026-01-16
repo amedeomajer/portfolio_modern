@@ -70,6 +70,7 @@ const About: React.FC = () => {
 				<a
 					href='mailto:amedeo.majer@gmail.com'
 					className='flex items-center gap-2'
+					aria-label='Send email to Amedeo'
 				>
 					<FontAwesomeIcon
 						icon={faEnvelope}
@@ -78,7 +79,10 @@ const About: React.FC = () => {
 				</a>
 				<a
 					href='https://linkedin.com/in/amedeo-majer-5b80b1159'
+					target='_blank'
+					rel='noopener noreferrer'
 					className='flex items-center gap-2'
+					aria-label='Visit LinkedIn profile'
 				>
 					<FontAwesomeIcon
 						icon={faLinkedin}
@@ -87,7 +91,10 @@ const About: React.FC = () => {
 				</a>
 				<a
 					href='https://github.com/amedeomajer'
+					target='_blank'
+					rel='noopener noreferrer'
 					className='flex items-center gap-2'
+					aria-label='Visit GitHub profile'
 				>
 					<FontAwesomeIcon
 						icon={faGithub}

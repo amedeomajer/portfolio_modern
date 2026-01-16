@@ -2,25 +2,25 @@ const projectsData = [
   {
     name: 'Hive Helsinki Alumni Certificates',
     placeholderDescription:
-      ' are official certificates, realesed to our alumni, that prove their graduation from Hive Helsinki.',
+      ' are official certificates, released to our alumni, that prove their graduation from Hive Helsinki.',
     longDescription: {
       intro:
-        'After prooving its concept, with alumni hired by over 100 companies, I felt that aan official certificate would be a great addition to the alumni experience. I designed and developed the whole process of creating, sending the certificates.',
+        'After proving its concept, with alumni hired by over 100 companies, I felt that an official certificate would be a great addition to the alumni experience. I designed and developed the whole process of creating, sending the certificates.',
       contributions: [
         {
           title: 'Ideation',
           description:
-            'The idea came from a business issue we were having and by coming up with this idea not only I have saved Hive Helsinki thousands of euros, but I also have solved teh problem at hand.',
+            'The idea came from a business issue we were having and by coming up with this idea not only I have saved Hive Helsinki thousands of euros, but I also have solved the problem at hand.',
         },
         {
           title: 'Design',
           description:
-            'Idesigned teh certificates to look prestigious and to be wasily recognisable.',
+            'I designed the certificates to look prestigious and to be easily recognisable.',
         },
         {
           title: 'Development',
           description:
-            'Paying for certificates was not an option so I developed the whole system myself. Once a student becomes an alumni they receive the certificate automatically and they can easily share thatnks to the integration with LinkedIn.',
+            'Paying for certificates was not an option so I developed the whole system myself. Once a student becomes an alumni they receive the certificate automatically and they can easily share thanks to the integration with LinkedIn.',
         },
       ],
       impact:
@@ -121,7 +121,7 @@ const projectsData = [
       ' is a fun website used to run the sorting ceremony for the new Hive students in their coalition. This is part of the gamified experience that students experience in Hive Helsinki.',
     longDescription: {
       intro:
-        'Hive helsinki is a peer to peer coding school with some added gamification features. One of these features is the coalitions, something like the Harry Potter houses. Developing the Sorting Hat app and the Sorting Ceremony was aimed at engaging more the students into this colaitions thing.',
+        'Hive Helsinki is a peer to peer coding school with some added gamification features. One of these features is the coalitions, something like the Harry Potter houses. Developing the Sorting Hat app and the Sorting Ceremony was aimed at engaging more the students into this coalitions thing.',
       contributions: [
         {
           title: 'Design',
@@ -131,7 +131,7 @@ const projectsData = [
         {
           title: 'Development',
           description:
-            'Like the Teach report I design and developed this app from scratch, leading my own work and managing my own tasks, building indipendence and resposibility.',
+            'Like the Tech report I designed and developed this app from scratch, leading my own work and managing my own tasks, building independence and responsibility.',
         },
       ],
       impact:

@@ -1,6 +1,7 @@
 "use client";
 import React from "react";
 import { motion } from "framer-motion";
+import { SECTIONS, Section } from "./Content";
 
 interface SmallNavItemProps {
 	children: string;
@@ -20,8 +21,8 @@ const SmallNavItem: React.FC<SmallNavItemProps> = ({ children, onClick, isActive
 };
 
 interface SmallNavProps {
-	setSection: (section: number) => void;
-	section: number;
+	setSection: (section: Section) => void;
+	section: Section;
 }
 
 const SmallNav: React.FC<SmallNavProps> = ({ setSection, section }) => {
@@ -34,20 +35,20 @@ const SmallNav: React.FC<SmallNavProps> = ({ setSection, section }) => {
 		>
 			<ul className='font-black flex items-center justify-evenly text-lg'>
 				<SmallNavItem
-					onClick={() => setSection(3)}
-					isActive={section === 3}
+					onClick={() => setSection(SECTIONS.ABOUT)}
+					isActive={section === SECTIONS.ABOUT}
 				>
 					about
 				</SmallNavItem>
 				<SmallNavItem
-					onClick={() => setSection(2)}
-					isActive={section === 2}
+					onClick={() => setSection(SECTIONS.CV)}
+					isActive={section === SECTIONS.CV}
 				>
 					cv
 				</SmallNavItem>
 				<SmallNavItem
-					onClick={() => setSection(1)}
-					isActive={section === 1}
+					onClick={() => setSection(SECTIONS.WORK)}
+					isActive={section === SECTIONS.WORK}
 				>
 					work
 				</SmallNavItem>

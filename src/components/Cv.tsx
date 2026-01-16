@@ -23,7 +23,7 @@ const Cv: React.FC = () => {
 
 						{[...cvData.work.positions].reverse().map((position, positionIndex, positions) => (
 							<div
-								key={positionIndex}
+								key={position.company}
 								className={`${positionIndex > 0 ? "mt-8" : ""} group/job`}
 							>
 								<p className='md:text-2xl group-hover/job:text-red-500 transition-colors duration-300'>
@@ -35,8 +35,8 @@ const Cv: React.FC = () => {
 									<strong>Main technologies:</strong>
 								</h3>
 								<ul className='list-disc ml-6 mt-2 space-y-1'>
-									{position.mainTechnologies.map((tech, techIndex) => (
-										<li key={techIndex}>{tech}</li>
+									{position.mainTechnologies.map((tech) => (
+										<li key={tech}>{tech}</li>
 									))}
 								</ul>
 
@@ -44,8 +44,8 @@ const Cv: React.FC = () => {
 									<strong>Impact:</strong>
 								</p>
 								<ul className='list-disc ml-6 mt-2 space-y-1'>
-									{position.impact.map((impact, impactIndex) => (
-										<li key={impactIndex}>
+									{position.impact.map((impact) => (
+										<li key={impact.description}>
 											{impact.description} <br />
 											{impact.note && <em>{impact.note}</em>}
 										</li>
@@ -57,8 +57,8 @@ const Cv: React.FC = () => {
 											<strong>Initiatives:</strong>
 										</p>
 										<ul className='list-disc ml-6 mt-2 space-y-1'>
-											{position.initiatives.map((initiative, initiativeIndex) => (
-												<li key={initiativeIndex}>{initiative}</li>
+											{position.initiatives.map((initiative) => (
+												<li key={initiative}>{initiative}</li>
 											))}
 										</ul>
 									</>
@@ -80,8 +80,8 @@ const Cv: React.FC = () => {
 							{cvData.education.additionalInfo}
 						</p>
 						<ul className='list-disc ml-6 mt-2 space-y-1'>
-							{cvData.education.projects.map((project, index) => (
-								<li key={index}>{project}</li>
+							{cvData.education.projects.map((project) => (
+								<li key={project}>{project}</li>
 							))}
 						</ul>
 					</div>

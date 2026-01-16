@@ -8,28 +8,15 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import ProjectCard from "./ProjectCard";
 import { Drawer, DrawerClose, DrawerContent, DrawerHeader, DrawerTitle } from "./Drawer";
 import Image from "next/image";
-
-interface Project {
-	name: string;
-	image: string;
-	imageAlt: string;
-	placeholderDescription: string;
-	longDescription: {
-		intro: string;
-		contributions: { title: string; description: string }[];
-		impact: string;
-	};
-	tech: string[];
-	url: string | null;
-}
+import { Project } from "@/types/project";
 
 const Work: React.FC = () => {
 	const [selectedProject, setSelectedProject] = useState<Project | null>(null);
 	const { initialY, initialX } = useIsOnPhone("work");
 
-	const projects = projectsData.map((project: Project, index: number) => (
+	const projects = projectsData.map((project: Project) => (
 		<ProjectCard
-			key={index}
+			key={project.name}
 			project={project}
 			onClick={() => setSelectedProject(project)}
 		/>
@@ -62,7 +49,7 @@ const Work: React.FC = () => {
 									<a
 										href={selectedProject.url}
 										target='_blank'
-										rel='noreferrer'
+										rel='noopener noreferrer'
 										className='underline underline-offset-2 cursor-pointer'
 									>
 										{selectedProject.name}
@@ -97,8 +84,8 @@ const Work: React.FC = () => {
 								<p>{selectedProject.longDescription.intro}</p>
 								<h3 className='mt-4 font-semibold'>My Contributions:</h3>
 								<ul className='list-disc ml-6 mt-2 space-y-1'>
-									{selectedProject.longDescription.contributions.map((contribution, index) => (
-										<li key={index}>
+									{selectedProject.longDescription.contributions.map((contribution) => (
+										<li key={contribution.title}>
 											<strong>{contribution.title}:</strong> {contribution.description}
 										</li>
 									))}
@@ -109,9 +96,9 @@ const Work: React.FC = () => {
 							</div>
 
 							<div className='flex flex-wrap gap-2 my-2 md:my-6'>
-								{selectedProject.tech.map((tech: string, index: number) => (
+								{selectedProject.tech.map((tech: string) => (
 									<div
-										key={index}
+										key={tech}
 										className='bg-emerald-950 py-2 px-3 rounded-sm md:text-xl'
 									>
 										{tech}

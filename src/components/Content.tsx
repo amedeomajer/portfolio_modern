@@ -7,14 +7,22 @@ import Cv from "./Cv";
 import About from "./About";
 import { AnimatePresence } from "framer-motion";
 
+export const SECTIONS = {
+	ABOUT: "about",
+	WORK: "work",
+	CV: "cv",
+} as const;
+
+export type Section = (typeof SECTIONS)[keyof typeof SECTIONS];
+
 const Content: React.FC = () => {
-	const [section, setSection] = useState(3);
+	const [section, setSection] = useState<Section>(SECTIONS.ABOUT);
 	return (
 		<div className='w-full flex md:flex-row md:justify-between lg:min-h-0 min-h-screen overflow-hidden'>
 			<AnimatePresence mode='wait'>
-				{section === 1 && <Work key='work' />}
-				{section === 3 && <About key='about' />}
-				{section === 2 && <Cv key='cv' />}
+				{section === SECTIONS.WORK && <Work key='work' />}
+				{section === SECTIONS.ABOUT && <About key='about' />}
+				{section === SECTIONS.CV && <Cv key='cv' />}
 			</AnimatePresence>
 			<SideNav
 				setSection={setSection}

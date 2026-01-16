@@ -2,20 +2,21 @@
 import React from "react";
 import NavItem from "./NavItem";
 import { motion } from "framer-motion";
+import { SECTIONS, Section } from "./Content";
 
 interface SideNavProps {
-	setSection: (section: number) => void;
-	section: number;
+	setSection: (section: Section) => void;
+	section: Section;
 }
 
 const SideNav: React.FC<SideNavProps> = ({ setSection, section }) => {
 	const navItems = [
-		{ id: 3, label: "about", section: "About" },
-		{ id: 1, label: "work", section: "Work" },
-		{ id: 2, label: "cv", section: "CV" },
+		{ id: SECTIONS.ABOUT, label: "about", sectionName: "About" },
+		{ id: SECTIONS.WORK, label: "work", sectionName: "Work" },
+		{ id: SECTIONS.CV, label: "cv", sectionName: "CV" },
 	];
 
-	const handleSectionSelect = (sectionId: number) => {
+	const handleSectionSelect = (sectionId: Section) => {
 		setSection(sectionId);
 	};
 
@@ -38,7 +39,7 @@ const SideNav: React.FC<SideNavProps> = ({ setSection, section }) => {
 						key={item.id}
 						onClick={() => handleSectionSelect(item.id)}
 						isActive={section === item.id}
-						aria-label={`Navigate to ${item.section} section`}
+						aria-label={`Navigate to ${item.sectionName} section`}
 					>
 						{item.label}
 					</NavItem>
