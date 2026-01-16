@@ -1,5 +1,10 @@
-import LoopingHeader from '@/components/LoopingHeader.tsx';
-import Content from '@/components/Content.tsx';
+import Hero from '@/components/Hero';
+import About from '@/components/About';
+import Work from '@/components/Work';
+import Experience from '@/components/Experience';
+import Footer from '@/components/Footer';
+import Navigation from '@/components/Navigation';
+import FixedBackground from '@/components/FixedBackground';
 
 export default function Home() {
   const structuredData = {
@@ -28,7 +33,7 @@ export default function Home() {
     ],
     "worksFor": {
       "@type": "Organization",
-      "name": "Freelance"
+      "name": "Wolt"
     }
   };
 
@@ -38,10 +43,23 @@ export default function Home() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
       />
-        <LoopingHeader />
-      <main className="min-h-screen relative">
-        <Content />
+
+      {/* Fixed LiquidChrome background */}
+      <FixedBackground />
+
+      {/* Grain overlay for texture */}
+      <div className="grain-overlay" aria-hidden="true" />
+
+      <main className="relative z-10">
+        <Hero />
+        <About />
+        <Work />
+        <Experience />
+        <Footer />
       </main>
+
+      {/* Fixed bottom navigation */}
+      <Navigation />
     </>
   );
 }

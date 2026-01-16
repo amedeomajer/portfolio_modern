@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(tree:*)",
+      "Bash(npm run lint:*)",
+      "Bash(npm run build:*)",
+      "WebFetch(domain:www.reactbits.dev)",
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "WebSearch",
+      "WebFetch(domain:cdn.jsdelivr.net)",
+      "Bash(npx jsrepo:*)",
+      "WebFetch(domain:api.github.com)",
+      "Bash(curl:*)",
+      "Bash(npm install:*)",
+      "Bash(npm ls:*)"
+    ]
+  }
+}

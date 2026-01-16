@@ -1,10 +1,19 @@
 import './globals.css';
 import { Suspense } from 'react';
 import Loading from './loading';
-import { Darker_Grotesque } from 'next/font/google';
+import { Darker_Grotesque, Bricolage_Grotesque, Syne } from 'next/font/google';
 import { cn } from '@/lib/utils';
 
 const darkerGrotesque = Darker_Grotesque({ subsets: ['latin'] });
+const bricolageGrotesque = Bricolage_Grotesque({
+  subsets: ['latin'],
+  variable: '--font-bricolage'
+});
+const syne = Syne({
+  subsets: ['latin'],
+  weight: '800',
+  variable: '--font-syne'
+});
 
 export const metadata = {
   title: 'Amedeo Majer - Full-Stack Web Developer',
@@ -84,14 +93,16 @@ export default function RootLayout({ children }) {
         <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
         <link rel="manifest" href="/site.webmanifest" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta name="theme-color" content="#000000" />
+        <meta name="theme-color" content="#0a0a0a" />
         <meta name="color-scheme" content="dark" />
       </head>
       <Suspense fallback={<Loading />}>
         <body
           className={cn(
             darkerGrotesque.className,
-            'bg-dark-holographic bg-cover bg-center bg-no-repeat bg-fixed'
+            bricolageGrotesque.variable,
+            syne.variable,
+            'bg-bg-black'
           )}
         >
           {children}
