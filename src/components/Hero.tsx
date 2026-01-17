@@ -46,7 +46,7 @@ const Hero = () => {
   return (
     <section
       id="hero"
-      className="section relative flex flex-col items-center justify-center overflow-hidden"
+      className="section relative flex flex-col items-center justify-center overflow-hidden bg-slate-400"
     >
       {/* Content */}
       <div className="relative flex flex-col items-center justify-center text-center px-4">

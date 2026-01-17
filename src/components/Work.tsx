@@ -1,19 +1,25 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { motion } from 'framer-motion';
-import Image from 'next/image';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronDown, faLink } from '@fortawesome/free-solid-svg-icons';
-import Aurora from './ui/Aurora';
-import projectsData from '@/data/projectsData';
-import { Drawer, DrawerClose, DrawerContent, DrawerHeader, DrawerTitle } from './Drawer';
-import { Project } from '@/types/project';
+import { useState } from "react";
+import { motion } from "framer-motion";
+import Image from "next/image";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faChevronDown, faLink } from "@fortawesome/free-solid-svg-icons";
+import Aurora from "./ui/Aurora";
+import projectsData from "@/data/projectsData";
+import {
+  Drawer,
+  DrawerClose,
+  DrawerContent,
+  DrawerHeader,
+  DrawerTitle,
+} from "./Drawer";
+import { Project } from "@/types/project";
 
 const ProjectCard = ({
   project,
   onClick,
-  index
+  index,
 }: {
   project: Project;
   onClick: () => void;
@@ -24,7 +30,7 @@ const ProjectCard = ({
       className="glass-card glass-card-hover cursor-pointer overflow-hidden group w-full sm:w-[280px] md:w-[320px]"
       initial={{ opacity: 0, y: 50 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: '-50px' }}
+      viewport={{ once: true, margin: "-50px" }}
       transition={{ duration: 0.5, delay: index * 0.1 }}
       onClick={onClick}
       whileHover={{ scale: 1.02 }}
@@ -72,11 +78,14 @@ const Work = () => {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
 
   return (
-    <section id="work" className="section relative py-20 overflow-hidden">
+    <section
+      id="work"
+      className="section relative py-20 overflow-hidden bg-green-400"
+    >
       {/* Aurora Background */}
       <div className="absolute inset-0 z-0 opacity-60">
         <Aurora
-          colorStops={['#1a1a1a', '#2a2a2a', '#1a1a1a']}
+          colorStops={["#1a1a1a", "#2a2a2a", "#1a1a1a"]}
           amplitude={0.8}
           blend={0.6}
           speed={0.5}
@@ -139,14 +148,23 @@ const Work = () => {
                   </p>
 
                   <div>
-                    <h3 className="text-lg font-semibold mb-3">My Contributions</h3>
+                    <h3 className="text-lg font-semibold mb-3">
+                      My Contributions
+                    </h3>
                     <ul className="space-y-3">
-                      {selectedProject.longDescription.contributions.map((contribution) => (
-                        <li key={contribution.title} className="text-text-muted">
-                          <strong className="text-white">{contribution.title}:</strong>{' '}
-                          {contribution.description}
-                        </li>
-                      ))}
+                      {selectedProject.longDescription.contributions.map(
+                        (contribution) => (
+                          <li
+                            key={contribution.title}
+                            className="text-text-muted"
+                          >
+                            <strong className="text-white">
+                              {contribution.title}:
+                            </strong>{" "}
+                            {contribution.description}
+                          </li>
+                        )
+                      )}
                     </ul>
                   </div>
 

@@ -18,6 +18,7 @@
 /* Base styles */
 html {
   scroll-behavior: smooth;
+  scroll-snap-type: y mandatory;
 }
 
 body {
@@ -78,6 +79,8 @@ body {
 .section {
   min-height: 100vh;
   position: relative;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
 }
 
 /* Grayscale to color hover effect for images */

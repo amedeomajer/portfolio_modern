@@ -1,19 +1,22 @@
-'use client';
+"use client";
 
-import Image from 'next/image';
-import { motion } from 'framer-motion';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faLinkedin, faGithub } from '@fortawesome/free-brands-svg-icons';
-import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
+import Image from "next/image";
+import { motion } from "framer-motion";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faLinkedin, faGithub } from "@fortawesome/free-brands-svg-icons";
+import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
 
 const About = () => {
   return (
-    <section id="about" className="section flex items-center justify-center py-20 px-4">
+    <section
+      id="about"
+      className="section flex items-center justify-center py-20 px-4 bg-red-400"
+    >
       <motion.div
         className="glass-card glass-card-hover glass-glow p-8 md:p-12 max-w-4xl w-full"
         initial={{ opacity: 0, y: 50 }}
         whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: '-100px' }}
+        viewport={{ once: true, margin: "-100px" }}
         transition={{ duration: 0.6 }}
       >
         <div className="flex flex-col lg:flex-row items-center gap-8 lg:gap-12">
@@ -56,8 +59,9 @@ const About = () => {
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 0.4 }}
             >
-              I&apos;m a full-stack web developer who loves writing clean, easy-to-read and maintainable code.
-              I focus on making my work accessible, so that anyone jumping in can understand it quickly.
+              I&apos;m a full-stack web developer who loves writing clean,
+              easy-to-read and maintainable code. I focus on making my work
+              accessible, so that anyone jumping in can understand it quickly.
             </motion.p>
           </div>
         </div>
@@ -71,9 +75,10 @@ const About = () => {
           transition={{ duration: 0.5, delay: 0.5 }}
         >
           <p className="text-text-muted leading-relaxed text-center lg:text-left">
-            I put a lot of effort into clear communication—whether it&apos;s sharing ideas, giving feedback, or just
-            making sure we&apos;re all on the same page. For me, clear code and good communication go hand in hand
-            to keep projects running smoothly.
+            I put a lot of effort into clear communication—whether it&apos;s
+            sharing ideas, giving feedback, or just making sure we&apos;re all
+            on the same page. For me, clear code and good communication go hand
+            in hand to keep projects running smoothly.
           </p>
         </motion.div>
 
