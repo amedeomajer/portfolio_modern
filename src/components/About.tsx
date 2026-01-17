@@ -10,7 +10,7 @@ const About = () => {
   return (
     <section
       id="about"
-      className="section flex items-center justify-center py-20 px-4 bg-red-400"
+      className="section flex items-center justify-center py-20 px-4"
     >
       <motion.div
         className="glass-card glass-card-hover glass-glow p-8 md:p-12 max-w-4xl w-full"

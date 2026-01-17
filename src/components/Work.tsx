@@ -80,18 +80,8 @@ const Work = () => {
   return (
     <section
       id="work"
-      className="section relative py-20 overflow-hidden bg-green-400"
+      className="section flex items-center justify-center py-20 px-4"
     >
-      {/* Aurora Background */}
-      <div className="absolute inset-0 z-0 opacity-60">
-        <Aurora
-          colorStops={["#1a1a1a", "#2a2a2a", "#1a1a1a"]}
-          amplitude={0.8}
-          blend={0.6}
-          speed={0.5}
-        />
-      </div>
-
       <Drawer
         open={!!selectedProject}
         onOpenChange={(open) => {

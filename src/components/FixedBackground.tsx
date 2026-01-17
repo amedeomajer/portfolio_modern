@@ -1,17 +1,22 @@
 "use client";
 
-import LiquidChrome from "./ui/LiquidChrome";
+import Waves from "./ui/Waves";
 
 const FixedBackground = () => {
   return (
     <div className="fixed inset-0 z-0">
-      <LiquidChrome
-        baseColor={[0.05, 0.05, 0.05]}
-        speed={0.15}
-        amplitude={0.4}
-        frequencyX={2.5}
-        frequencyY={2.5}
-        interactive={false}
+      <Waves
+        lineColor="rgba(255, 255, 255, 0.15)"
+        backgroundColor="#0a0a0a"
+        waveSpeedX={0.02}
+        waveSpeedY={0.01}
+        waveAmpX={40}
+        waveAmpY={20}
+        xGap={12}
+        yGap={36}
+        friction={0.9}
+        tension={0.01}
+        maxCursorMove={120}
       />
     </div>
   );
