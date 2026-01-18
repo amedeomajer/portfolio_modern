@@ -3,6 +3,7 @@ import { Suspense } from 'react';
 import Loading from './loading';
 import { Darker_Grotesque, Bricolage_Grotesque, Syne } from 'next/font/google';
 import { cn } from '@/lib/utils';
+import Providers from '@/components/Providers';
 
 const darkerGrotesque = Darker_Grotesque({ subsets: ['latin'] });
 const bricolageGrotesque = Bricolage_Grotesque({
@@ -105,7 +106,7 @@ export default function RootLayout({ children }) {
             'bg-bg-black'
           )}
         >
-          {children}
+          <Providers>{children}</Providers>
         </body>
       </Suspense>
     </html>

@@ -1,26 +1,27 @@
-import Hero from '@/components/Hero';
-import About from '@/components/About';
-import Work from '@/components/Work';
-import Experience from '@/components/Experience';
-import Footer from '@/components/Footer';
-import Navigation from '@/components/Navigation';
-import FixedBackground from '@/components/FixedBackground';
+import Hero from "@/components/Hero";
+import About from "@/components/About";
+import Work from "@/components/Work";
+import Experience from "@/components/Experience";
+import Footer from "@/components/Footer";
+import Navigation from "@/components/Navigation";
+import FixedBackground from "@/components/FixedBackground";
 
 export default function Home() {
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "Person",
-    "name": "Amedeo Majer",
-    "jobTitle": "Full-Stack Web Developer",
-    "description": "Full-stack web developer specializing in clean, maintainable code and clear communication. Experienced with React, Next.js, Ruby on Rails, and modern web technologies.",
-    "url": "https://amedeomajer.it",
-    "image": "https://amedeomajer.it/images/amedeo.png",
-    "sameAs": [
+    name: "Amedeo Majer",
+    jobTitle: "Full-Stack Web Developer",
+    description:
+      "Full-stack web developer specializing in clean, maintainable code and clear communication. Experienced with React, Next.js, Ruby on Rails, and modern web technologies.",
+    url: "https://amedeomajer.it",
+    image: "https://amedeomajer.it/images/amedeo.png",
+    sameAs: [
       "https://linkedin.com/in/amedeo-majer-5b80b1159",
-      "https://github.com/amedeomajer"
+      "https://github.com/amedeomajer",
     ],
-    "email": "amedeo.majer@gmail.com",
-    "knowsAbout": [
+    email: "amedeo.majer@gmail.com",
+    knowsAbout: [
       "React",
       "Next.js",
       "TypeScript",
@@ -29,12 +30,12 @@ export default function Home() {
       "Web Development",
       "Full-Stack Development",
       "Frontend Development",
-      "Backend Development"
+      "Backend Development",
     ],
-    "worksFor": {
+    worksFor: {
       "@type": "Organization",
-      "name": "Wolt"
-    }
+      name: "Wolt",
+    },
   };
 
   return (
@@ -58,7 +59,6 @@ export default function Home() {
         <Footer />
       </main>
 
-      {/* Fixed bottom navigation */}
       <Navigation />
     </>
   );

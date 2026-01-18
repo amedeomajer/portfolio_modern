@@ -219,3 +219,35 @@ Updated project dependencies to fix security vulnerabilities and deprecation war
 - ESLint flat config migration
 - Using compatibility utilities for plugin migration
 - Reading peer dependency warnings and understanding their meaning
+
+---
+
+## 2026-01-18: Background Switcher Feature
+
+Added a UI feature to switch between different animated backgrounds.
+
+### What was built:
+
+**New Files:**
+- `src/context/BackgroundContext.tsx` - React context for managing background state
+- `src/components/Providers.tsx` - Client component wrapper for context providers
+- `src/components/BackgroundSwitcher.tsx` - Dropdown menu to select backgrounds
+
+**Modified Files:**
+- `src/components/FixedBackground.tsx` - Now renders selected background from context
+- `src/app/layout.js` - Added Providers wrapper
+- `src/app/page.js` - Added BackgroundSwitcher component
+
+### Available Backgrounds:
+1. Waves (default) - Interactive wave lines
+2. Aurora - Colorful aurora effect
+3. Liquid Chrome - Chrome/liquid metallic effect
+4. Light Rays - Animated light rays
+5. Gradient Blinds - Animated gradient blinds
+
+### Skills Practiced:
+- React Context API for global state management
+- Component composition (Providers pattern)
+- Dropdown menu with click-outside detection
+- Framer Motion for menu animations
+- TypeScript union types for background options

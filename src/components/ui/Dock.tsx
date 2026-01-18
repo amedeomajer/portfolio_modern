@@ -19,6 +19,7 @@ import {
   ReactNode,
 } from "react";
 import GlassSurface from "./GlassSurface";
+import BackgroundSwitcher from "../BackgroundSwitcher";
 
 interface DockItemChildProps {
   isHovered?: MotionValue<number>;
@@ -241,6 +242,16 @@ export default function Dock({
                 <DockLabel>{item.label}</DockLabel>
               </DockItem>
             ))}
+            <DockItem
+              mouseX={mouseX}
+              spring={spring}
+              distance={distance}
+              magnification={magnification}
+              baseItemSize={baseItemSize}
+            >
+              <BackgroundSwitcher />
+              <DockLabel>Background</DockLabel>
+            </DockItem>
           </div>
         </GlassSurface>
       </div>
