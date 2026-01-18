@@ -537,3 +537,34 @@ body {
 .embla__slide {
   padding-left: var(--slide-spacing);
 }
+
+/* Accessibility Mode */
+.accessibility-mode {
+  --text-muted: #d0d0d0;
+  --glass: rgba(255, 255, 255, 0.15);
+  --glass-border: rgba(255, 255, 255, 0.25);
+  --glass-border-hover: rgba(255, 255, 255, 0.4);
+}
+
+.accessibility-mode .glass-card {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.25);
+}
+
+.accessibility-mode .glass-surface--svg,
+.accessibility-mode .glass-surface--fallback {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.accessibility-mode .dock-item {
+  background: rgba(80, 80, 80, 0.8);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.accessibility-mode .dock-item:hover {
+  background: rgba(120, 120, 120, 0.9);
+}
+
+.accessibility-mode .grain-overlay {
+  display: none;
+}

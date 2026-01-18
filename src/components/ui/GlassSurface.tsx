@@ -9,6 +9,7 @@ import {
   CSSProperties,
   ReactNode,
 } from "react";
+import { useBackground } from "@/context/BackgroundContext";
 
 interface GlassSurfaceProps {
   children?: ReactNode;
@@ -62,6 +63,13 @@ const GlassSurface = ({
 
   const [svgSupported, setSvgSupported] = useState(false);
 
+  // Check for accessibility mode and reduce distortion
+  const { accessibilityMode } = useBackground();
+  const effectiveDistortionScale = accessibilityMode ? -20 : distortionScale;
+  const effectiveRedOffset = accessibilityMode ? 0 : redOffset;
+  const effectiveGreenOffset = accessibilityMode ? 2 : greenOffset;
+  const effectiveBlueOffset = accessibilityMode ? 4 : blueOffset;
+
   const containerRef = useRef<HTMLDivElement>(null);
   const feImageRef = useRef<SVGFEImageElement>(null);
   const redChannelRef = useRef<SVGFEDisplacementMapElement>(null);
@@ -108,14 +116,14 @@ const GlassSurface = ({
   useEffect(() => {
     updateDisplacementMap();
     [
-      { ref: redChannelRef, offset: redOffset },
-      { ref: greenChannelRef, offset: greenOffset },
-      { ref: blueChannelRef, offset: blueOffset },
+      { ref: redChannelRef, offset: effectiveRedOffset },
+      { ref: greenChannelRef, offset: effectiveGreenOffset },
+      { ref: blueChannelRef, offset: effectiveBlueOffset },
     ].forEach(({ ref, offset }) => {
       if (ref.current) {
         ref.current.setAttribute(
           "scale",
-          (distortionScale + offset).toString()
+          (effectiveDistortionScale + offset).toString()
         );
         ref.current.setAttribute("xChannelSelector", xChannel);
         ref.current.setAttribute("yChannelSelector", yChannel);
@@ -132,13 +140,14 @@ const GlassSurface = ({
     opacity,
     blur,
     displace,
-    distortionScale,
-    redOffset,
-    greenOffset,
-    blueOffset,
+    effectiveDistortionScale,
+    effectiveRedOffset,
+    effectiveGreenOffset,
+    effectiveBlueOffset,
     xChannel,
     yChannel,
     mixBlendMode,
+    accessibilityMode,
   ]);
 
   useEffect(() => {

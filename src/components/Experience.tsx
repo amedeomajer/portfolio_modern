@@ -7,7 +7,7 @@ const Experience = () => {
   return (
     <section
       id="experience"
-      className="section flex items-center justify-center py-20 px-4 bg-purple-500"
+      className="section flex items-center justify-center py-20 px-4"
     >
       <motion.div
         className="glass-card glass-card-hover glass-glow p-6 md:p-10 max-w-4xl w-full"

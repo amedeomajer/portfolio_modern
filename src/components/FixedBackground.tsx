@@ -67,7 +67,11 @@ const backgrounds: Record<BackgroundType, React.ReactNode> = {
 };
 
 const FixedBackground = () => {
-  const { background } = useBackground();
+  const { background, accessibilityMode } = useBackground();
+
+  if (accessibilityMode) {
+    return null;
+  }
 
   return <div className="fixed inset-0 z-0">{backgrounds[background]}</div>;
 };
