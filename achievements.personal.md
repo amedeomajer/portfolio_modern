@@ -195,3 +195,27 @@ Updated project dependencies to fix security vulnerabilities and deprecation war
 **Framer Motion v12 Upgrade:**
 - framer-motion 10.18.0 → 12.26.2 (2 major versions!)
 - No code changes required - APIs used (motion, useMotionValue, useSpring, useTransform, AnimatePresence) remained stable
+
+**React 19 + Next.js 15 Upgrade (BIG ONE!):**
+- react 18.3.1 → 19.2.3
+- react-dom 18.3.1 → 19.2.3
+- next 14.2.35 → 15.5.9
+- @types/react 18.3.27 → 19.2.8
+- @types/react-dom → 19.2.3
+- eslint-config-next 14.2.35 → 15.5.9
+
+**React Three Packages (unlocked by React 19):**
+- @react-three/fiber 8.18.0 → 9.5.0
+- @react-three/drei 9.122.0 → 10.7.7
+
+**ESLint 9 + Flat Config:**
+- eslint 8.57.1 → 9.39.2
+- @typescript-eslint/parser 6.21.0 → 8.53.0
+- Converted `.eslintrc.json` to `eslint.config.mjs` (flat config format)
+- Used `@eslint/compat` with `fixupConfigRules` to fix rule compatibility
+
+### Additional Skills Practiced:
+- Understanding dependency chains (React 19 → unlocks Next.js 15 → unlocks ESLint 9 → unlocks React Three 9/10)
+- ESLint flat config migration
+- Using compatibility utilities for plugin migration
+- Reading peer dependency warnings and understanding their meaning

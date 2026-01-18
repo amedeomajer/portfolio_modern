@@ -8,7 +8,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
 
 // Dynamic import for 3D viewer - prevents SSR hydration issues
-const Logo3DViewer = dynamic(
+const _Logo3DViewer = dynamic(
   () => import("./ui/three/Logo3DViewer").then((mod) => mod.Logo3DViewer),
   {
     ssr: false,

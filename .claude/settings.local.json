@@ -25,7 +25,8 @@
       "WebFetch(domain:docs.fontawesome.com)",
       "WebFetch(domain:motion.dev)",
       "Bash(pnpm view:*)",
-      "Bash(pnpm build:*)"
+      "Bash(pnpm build:*)",
+      "Bash(pnpm lint)"
     ]
   }
 }
