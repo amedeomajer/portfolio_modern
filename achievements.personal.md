@@ -118,3 +118,47 @@ Completed a full redesign of the portfolio with a striking black & white theme c
 - TypeScript: Component props interfaces
 - Animation: Framer Motion animations, intersection observers
 - Design systems: Creating cohesive visual language
+
+---
+
+## 2026-01-18: Scroll Snapping + Waves Background + Work Carousel
+
+Added polish and interactivity to the portfolio with scroll snapping, a new animated background, and a project carousel.
+
+### What was built:
+
+**Scroll Snapping:**
+- Added CSS `scroll-snap-type: y mandatory` to html element
+- Each section now snaps into place with `scroll-snap-align: start`
+- Creates a "magnetic" feel when scrolling between sections
+
+**Waves Background (from reactbits.dev):**
+- Created `Waves.tsx` - Canvas-based animated wave lines using Perlin noise
+- Interactive: waves respond to mouse/touch movement
+- Configured with subtle white lines on dark background
+- Replaced LiquidChrome as the fixed background
+
+**Work Section Carousel:**
+- Installed `embla-carousel-react` for smooth carousel functionality
+- One project card visible at a time (full width)
+- Navigation: drag/swipe, arrow buttons, dot indicators
+- Arrow buttons use GlassSurface component for consistent glass styling
+- Buttons positioned outside the carousel for clean look
+
+### Files Created:
+- `src/components/ui/Waves.tsx`
+
+### Files Modified:
+- `src/app/globals.css` - Added scroll-snap styles, Waves CSS, Embla CSS
+- `src/components/FixedBackground.tsx` - Swapped LiquidChrome for Waves
+- `src/components/Work.tsx` - Converted to Embla carousel with GlassSurface buttons
+
+### Dependencies Added:
+- `embla-carousel-react` - Lightweight carousel library
+
+### Skills Practiced:
+- CSS: scroll-snap properties for section locking
+- Canvas API: Perlin noise animation
+- React: Embla carousel hooks (useEmblaCarousel, callbacks)
+- Component reuse: Using GlassSurface for consistent styling
+- Debugging: Spotted and fixed button positioning bug
