@@ -162,3 +162,36 @@ Added polish and interactivity to the portfolio with scroll snapping, a new anim
 - React: Embla carousel hooks (useEmblaCarousel, callbacks)
 - Component reuse: Using GlassSurface for consistent styling
 - Debugging: Spotted and fixed button positioning bug
+
+---
+
+## 2026-01-18: Package Updates & Security Fixes
+
+Updated project dependencies to fix security vulnerabilities and deprecation warnings.
+
+### What was updated:
+
+**Safe Updates (pnpm update):**
+- typescript 5.6.3 → 5.9.3
+- tailwindcss 3.3.0 → 3.4.19
+- postcss, autoprefixer, vaul, clsx, and more
+
+**Next.js Security Fix:**
+- next 14.0.2 → 14.2.35 (fixed security vulnerability)
+- eslint-config-next 14.0.2 → 14.2.35 (kept in sync)
+
+**FontAwesome v7 Upgrade:**
+- @fortawesome/react-fontawesome 0.2.6 → 3.1.1
+- @fortawesome/fontawesome-svg-core 6.7.2 → 7.1.0
+- @fortawesome/free-solid-svg-icons 6.7.2 → 7.1.0
+- @fortawesome/free-brands-svg-icons 6.7.2 → 7.1.0
+
+### Skills Practiced:
+- Package management: Understanding pnpm update vs explicit version installs
+- Semantic versioning: Knowing when updates are safe (patch/minor) vs risky (major)
+- Security: Identifying and fixing vulnerabilities via deprecation warnings
+- Migration: Successfully upgrading a major version (FontAwesome 6→7) with no code changes
+
+**Framer Motion v12 Upgrade:**
+- framer-motion 10.18.0 → 12.26.2 (2 major versions!)
+- No code changes required - APIs used (motion, useMotionValue, useSpring, useTransform, AnimatePresence) remained stable
