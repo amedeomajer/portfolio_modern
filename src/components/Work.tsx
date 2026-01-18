@@ -1,11 +1,16 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faChevronDown, faLink } from "@fortawesome/free-solid-svg-icons";
-import Aurora from "./ui/Aurora";
+import {
+  faChevronDown,
+  faChevronLeft,
+  faChevronRight,
+  faLink,
+} from "@fortawesome/free-solid-svg-icons";
+import useEmblaCarousel from "embla-carousel-react";
 import projectsData from "@/data/projectsData";
 import {
   Drawer,
@@ -15,47 +20,40 @@ import {
   DrawerTitle,
 } from "./Drawer";
 import { Project } from "@/types/project";
+import GlassSurface from "./ui/GlassSurface";
 
 const ProjectCard = ({
   project,
   onClick,
-  index,
 }: {
   project: Project;
   onClick: () => void;
-  index: number;
 }) => {
   return (
-    <motion.div
-      className="glass-card glass-card-hover cursor-pointer overflow-hidden group w-full sm:w-[280px] md:w-[320px]"
-      initial={{ opacity: 0, y: 50 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-50px" }}
-      transition={{ duration: 0.5, delay: index * 0.1 }}
+    <div
+      className="glass-card glass-card-hover cursor-pointer overflow-hidden group h-full"
       onClick={onClick}
-      whileHover={{ scale: 1.02 }}
-      whileTap={{ scale: 0.98 }}
     >
-      <div className="relative h-40 md:h-48 overflow-hidden">
+      <div className="relative h-64 md:h-80 lg:h-96 overflow-hidden">
         <Image
           src={`/images/${project.image}`}
           alt={project.imageAlt}
           fill
-          className="object-cover grayscale-hover transition-all duration-500 group-hover:scale-105"
+          className="object-cover grayscale-hover transition-all duration-[3000] group-hover:scale-105"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-bg-black/80 to-transparent" />
       </div>
 
-      <div className="p-4 md:p-5">
-        <h3 className="text-lg md:text-xl font-bold mb-2 group-hover:text-glow transition-all">
+      <div className="p-5 md:p-6">
+        <h3 className="text-xl md:text-2xl font-bold mb-3 group-hover:text-glow transition-all">
           {project.name}
         </h3>
-        <p className="text-text-muted text-sm line-clamp-2">
+        <p className="text-text-muted text-sm md:text-base line-clamp-3 mb-4">
           {project.placeholderDescription}
         </p>
 
-        <div className="flex flex-wrap gap-2 mt-4">
-          {project.tech.slice(0, 3).map((tech) => (
+        <div className="flex flex-wrap gap-2">
+          {project.tech.slice(0, 4).map((tech) => (
             <span
               key={tech}
               className="text-xs px-2 py-1 rounded-md border border-glass-border bg-glass"
@@ -63,24 +61,67 @@ const ProjectCard = ({
               {tech}
             </span>
           ))}
-          {project.tech.length > 3 && (
+          {project.tech.length > 4 && (
             <span className="text-xs px-2 py-1 text-text-muted">
-              +{project.tech.length - 3}
+              +{project.tech.length - 4}
             </span>
           )}
         </div>
       </div>
-    </motion.div>
+    </div>
   );
 };
 
 const Work = () => {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+  const [selectedIndex, setSelectedIndex] = useState(0);
+  const [canScrollPrev, setCanScrollPrev] = useState(false);
+  const [canScrollNext, setCanScrollNext] = useState(false);
+
+  const [emblaRef, emblaApi] = useEmblaCarousel({
+    align: "center",
+    loop: true,
+    skipSnaps: false,
+    dragFree: false,
+  });
+
+  const scrollPrev = useCallback(() => {
+    if (emblaApi) emblaApi.scrollPrev();
+  }, [emblaApi]);
+
+  const scrollNext = useCallback(() => {
+    if (emblaApi) emblaApi.scrollNext();
+  }, [emblaApi]);
+
+  const scrollTo = useCallback(
+    (index: number) => {
+      if (emblaApi) emblaApi.scrollTo(index);
+    },
+    [emblaApi]
+  );
+
+  const onSelect = useCallback(() => {
+    if (!emblaApi) return;
+    setSelectedIndex(emblaApi.selectedScrollSnap());
+    setCanScrollPrev(emblaApi.canScrollPrev());
+    setCanScrollNext(emblaApi.canScrollNext());
+  }, [emblaApi]);
+
+  useEffect(() => {
+    if (!emblaApi) return;
+    onSelect();
+    emblaApi.on("select", onSelect);
+    emblaApi.on("reInit", onSelect);
+    return () => {
+      emblaApi.off("select", onSelect);
+      emblaApi.off("reInit", onSelect);
+    };
+  }, [emblaApi, onSelect]);
 
   return (
     <section
       id="work"
-      className="section flex items-center justify-center py-20 px-4"
+      className="section flex flex-col items-center justify-center py-20"
     >
       <Drawer
         open={!!selectedProject}
@@ -182,7 +223,7 @@ const Work = () => {
         )}
 
         {/* Section Content */}
-        <div className="relative z-10 container mx-auto px-4">
+        <div className="relative z-10 w-full max-w-6xl mx-auto px-4">
           <motion.h2
             className="text-3xl md:text-4xl font-bold text-center mb-12"
             initial={{ opacity: 0, y: 30 }}
@@ -193,13 +234,96 @@ const Work = () => {
             My Work
           </motion.h2>
 
-          <div className="flex flex-wrap justify-center gap-6 md:gap-8">
-            {projectsData.map((project: Project, index: number) => (
-              <ProjectCard
-                key={project.name}
-                project={project}
-                onClick={() => setSelectedProject(project)}
-                index={index}
+          {/* Carousel Container */}
+          <div className="relative">
+            {/* Embla Viewport */}
+            <div className="embla overflow-hidden" ref={emblaRef}>
+              <div className="embla__container flex">
+                {projectsData.map((project: Project) => (
+                  <div
+                    key={project.name}
+                    className="embla__slide flex-[0_0_100%] min-w-0 px-4 md:px-12"
+                  >
+                    <ProjectCard
+                      project={project}
+                      onClick={() => setSelectedProject(project)}
+                    />
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Arrow Buttons */}
+            <button
+              onClick={scrollPrev}
+              className="absolute -left-6 md:-left-20 top-1/2 -translate-y-1/2 z-10 w-12 h-12 md:w-14 md:h-14 rounded-full flex items-center justify-center hover:scale-110 transition-all duration-300 shadow-lg"
+              aria-label="Previous project"
+            >
+              <GlassSurface
+                width={60}
+                height={60}
+                borderRadius={50}
+                borderWidth={0.07}
+                brightness={50}
+                opacity={0.93}
+                blur={15}
+                displace={0.5}
+                distortionScale={-180}
+                redOffset={0}
+                greenOffset={20}
+                blueOffset={30}
+                backgroundOpacity={0.1}
+                saturation={1}
+                className="dock-glass-panel"
+              >
+                <FontAwesomeIcon
+                  icon={faChevronLeft}
+                  className="w-5 h-5 md:w-6 md:h-6"
+                />
+              </GlassSurface>
+            </button>
+            <button
+              onClick={scrollNext}
+              className="absolute -right-6 md:-right-20 top-1/2 -translate-y-1/2 z-10 w-12 h-12 md:w-14 md:h-14 rounded-full flex items-center justify-center hover:scale-110 transition-all duration-300 shadow-lg"
+              aria-label="Next project"
+            >
+              <GlassSurface
+                width={60}
+                height={60}
+                borderRadius={50}
+                borderWidth={0.07}
+                brightness={50}
+                opacity={0.93}
+                blur={15}
+                displace={0.5}
+                distortionScale={-180}
+                redOffset={0}
+                greenOffset={20}
+                blueOffset={30}
+                backgroundOpacity={0.1}
+                saturation={1}
+                className="dock-glass-panel"
+              >
+                <FontAwesomeIcon
+                  icon={faChevronRight}
+                  className="w-5 h-5 md:w-6 md:h-6"
+                />
+              </GlassSurface>
+            </button>
+          </div>
+
+          {/* Dot Indicators */}
+          <div className="flex justify-center gap-2 mt-8">
+            {projectsData.map((_, index) => (
+              <button
+                key={index}
+                onClick={() => scrollTo(index)}
+                className={`w-2 h-2 md:w-3 md:h-3 rounded-full transition-all duration-300 ${
+                  index === selectedIndex
+                    ? "bg-white scale-125"
+                    : "bg-white/30 hover:bg-white/50"
+                }`}
+                aria-label={`Go to project ${index + 1}`}
               />
             ))}
           </div>

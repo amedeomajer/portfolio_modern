@@ -523,3 +523,17 @@ body {
   width: 100%;
   height: 100%;
 }
+
+/* Embla Carousel */
+.embla {
+  --slide-spacing: 1rem;
+}
+
+.embla__container {
+  backface-visibility: hidden;
+  touch-action: pan-y pinch-zoom;
+}
+
+.embla__slide {
+  padding-left: var(--slide-spacing);
+}
