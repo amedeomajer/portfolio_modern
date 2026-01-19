@@ -1,6 +1,7 @@
 "use client";
 
 import Dock from "./ui/Dock";
+import MobileMenu from "./MobileMenu";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faUser,
@@ -46,7 +47,12 @@ const Navigation = () => {
     },
   ];
 
-  return <Dock items={dockItems} />;
+  return (
+    <>
+      <Dock items={dockItems} />
+      <MobileMenu />
+    </>
+  );
 };
 
 export default Navigation;
