@@ -31,7 +31,7 @@ const ProjectCard = ({
 }) => {
   return (
     <div
-      className="glass-card glass-card-hover cursor-pointer overflow-hidden group h-full"
+      className="glass-card glass-card-hover effects-budget-soft cursor-pointer overflow-hidden group h-full"
       onClick={onClick}
     >
       <div className="relative h-64 md:h-80 lg:h-96 overflow-hidden">
@@ -48,7 +48,7 @@ const ProjectCard = ({
         <h3 className="text-xl md:text-2xl font-bold mb-3 group-hover:text-glow transition-all">
           {project.name}
         </h3>
-        <p className="text-text-muted text-sm md:text-base line-clamp-3 mb-4">
+        <p className="text-white/80 text-sm md:text-base line-clamp-3 mb-4">
           {project.placeholderDescription}
         </p>
 
@@ -170,7 +170,7 @@ const Work = () => {
                 </div>
 
                 <div className="glass-card p-6 space-y-6">
-                  <p className="text-text-muted leading-relaxed">
+                  <p className="text-white/80 leading-relaxed">
                     {selectedProject.longDescription.intro}
                   </p>
 
@@ -183,7 +183,7 @@ const Work = () => {
                         (contribution) => (
                           <li
                             key={contribution.title}
-                            className="text-text-muted"
+                            className="text-white/80"
                           >
                             <strong className="text-white">
                               {contribution.title}:
@@ -197,7 +197,7 @@ const Work = () => {
 
                   <div>
                     <h3 className="text-lg font-semibold mb-3">Impact</h3>
-                    <p className="text-text-muted leading-relaxed">
+                    <p className="text-white/80 leading-relaxed">
                       {selectedProject.longDescription.impact}
                     </p>
                   </div>

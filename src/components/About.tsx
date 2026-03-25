@@ -13,7 +13,7 @@ const About = () => {
       className="section flex items-center justify-center py-20 px-4"
     >
       <motion.div
-        className="glass-card glass-card-hover glass-glow p-8 md:p-12 max-w-4xl w-full"
+        className="glass-card glass-card-hover glass-glow effects-budget-soft p-8 md:p-12 max-w-4xl w-full"
         initial={{ opacity: 0, y: 50 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-100px" }}
@@ -53,7 +53,7 @@ const About = () => {
               About Me
             </motion.h2>
             <motion.p
-              className="type-section-subtitle text-text-muted"
+              className="type-section-subtitle text-white/85"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -74,7 +74,7 @@ const About = () => {
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.5 }}
         >
-          <p className="type-body-md text-text-muted text-center lg:text-left">
+          <p className="type-body-md text-white/75 text-center lg:text-left">
             I put a lot of effort into clear communication—whether it&apos;s
             sharing ideas, giving feedback, or just making sure we&apos;re all
             on the same page. For me, clear code and good communication go hand

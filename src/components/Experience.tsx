@@ -10,7 +10,7 @@ const Experience = () => {
       className="section flex items-center justify-center py-20 px-4"
     >
       <motion.div
-        className="glass-card glass-card-hover glass-glow p-6 md:p-10 max-w-4xl w-full"
+        className="glass-card glass-card-hover glass-glow effects-budget-soft p-6 md:p-10 max-w-4xl w-full"
         initial={{ opacity: 0, y: 50 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-100px" }}
@@ -44,12 +44,12 @@ const Experience = () => {
                   <h3 className="text-xl md:text-2xl font-semibold">
                     {position.company}
                   </h3>
-                  <p className="text-text-muted text-sm">{position.period}</p>
-                  <p className="text-text-muted mt-2">{position.description}</p>
+                  <p className="text-white/70 text-sm">{position.period}</p>
+                  <p className="text-white/80 mt-2">{position.description}</p>
                 </div>
 
                 <div className="mb-4">
-                  <h4 className="text-sm font-semibold uppercase tracking-wider text-text-muted mb-2">
+                  <h4 className="text-sm font-semibold uppercase tracking-wider text-white/75 mb-2">
                     Technologies
                   </h4>
                   <div className="flex flex-wrap gap-2">
@@ -65,14 +65,14 @@ const Experience = () => {
                 </div>
 
                 <div className="mb-4">
-                  <h4 className="text-sm font-semibold uppercase tracking-wider text-text-muted mb-2">
+                  <h4 className="text-sm font-semibold uppercase tracking-wider text-white/75 mb-2">
                     Impact
                   </h4>
                   <ul className="space-y-2">
                     {position.impact.map((item, i) => (
                       <li
                         key={i}
-                        className="text-text-muted text-sm flex items-start gap-2"
+                        className="text-white/80 text-sm flex items-start gap-2"
                       >
                         <span className="text-white/40 mt-1.5">-</span>
                         <span>
@@ -90,14 +90,14 @@ const Experience = () => {
 
                 {position.initiatives && (
                   <div>
-                    <h4 className="text-sm font-semibold uppercase tracking-wider text-text-muted mb-2">
+                  <h4 className="text-sm font-semibold uppercase tracking-wider text-white/75 mb-2">
                       Initiatives
                     </h4>
                     <ul className="space-y-2">
                       {position.initiatives.map((initiative, i) => (
                         <li
                           key={i}
-                          className="text-text-muted text-sm flex items-start gap-2"
+                          className="text-white/80 text-sm flex items-start gap-2"
                         >
                           <span className="text-white/40 mt-1.5">-</span>
                           <span>{initiative}</span>
@@ -128,10 +128,10 @@ const Experience = () => {
           <div className="relative pl-6 border-l-2 border-glass-border">
             <div className="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-bg-dark border-2 border-glass-border" />
 
-            <p className="text-text-muted mb-4">
+            <p className="text-white/80 mb-4">
               {cvData.education.description}
             </p>
-            <p className="text-text-muted mb-4">
+            <p className="text-white/80 mb-4">
               {cvData.education.additionalInfo}
             </p>
 
@@ -139,7 +139,7 @@ const Experience = () => {
               {cvData.education.projects.map((project, i) => (
                 <li
                   key={i}
-                  className="text-text-muted text-sm flex items-start gap-2"
+                  className="text-white/80 text-sm flex items-start gap-2"
                 >
                   <span className="text-white/40 mt-1.5">-</span>
                   <span>{project}</span>
