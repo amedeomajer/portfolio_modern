@@ -13,13 +13,13 @@ const About = () => {
       className="section flex items-center justify-center py-20 px-space-5"
     >
       <motion.div
-        className="glass-card glass-card--primary glass-card-hover glass-glow effects-budget-soft p-space-6 md:p-space-7 max-w-4xl w-full"
+        className="glass-card glass-card--primary effects-budget-soft p-space-6 md:p-space-7 max-w-3xl w-full shadow-[0_14px_40px_rgba(0,0,0,0.35)]"
         initial={{ opacity: 0, y: 50 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-100px" }}
         transition={{ duration: 0.6 }}
       >
-        <div className="flex flex-col lg:flex-row items-center gap-space-6 lg:gap-space-7">
+        <div className="flex flex-col sm:flex-row items-center sm:items-start gap-space-6">
           {/* Profile Image */}
           <motion.div
             className="relative"
@@ -28,23 +28,21 @@ const About = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.2 }}
           >
-            <div className="w-32 h-32 md:w-48 md:h-48 rounded-full overflow-hidden border-2 border-glass-border">
+            <div className="w-28 h-28 md:w-32 md:h-32 rounded-full overflow-hidden border border-glass-border">
               <Image
                 alt="picture of the author"
                 src="/images/ame.webp"
                 width={200}
                 height={200}
-                className="w-full h-full object-cover grayscale-hover"
+                className="w-full h-full object-cover grayscale"
               />
             </div>
-            {/* Glow effect behind image */}
-            <div className="absolute inset-0 -z-10 rounded-full bg-white/5 blur-xl" />
           </motion.div>
 
           {/* Bio */}
-          <div className="flex-1 text-center lg:text-left">
+          <div className="flex-1 text-center sm:text-left">
             <motion.h2
-              className="type-section-title font-bold mb-space-4"
+              className="type-section-title font-bold text-white mb-space-4"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -53,7 +51,7 @@ const About = () => {
               About Me
             </motion.h2>
             <motion.p
-              className="type-section-subtitle text-white/85"
+              className="type-body-md text-white/92"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -74,7 +72,7 @@ const About = () => {
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.5 }}
         >
-          <p className="type-body-md text-white/75 text-center lg:text-left">
+          <p className="type-body-md text-white/82 text-center sm:text-left">
             I put a lot of effort into clear communication—whether it&apos;s
             sharing ideas, giving feedback, or just making sure we&apos;re all
             on the same page. For me, clear code and good communication go hand
@@ -84,7 +82,7 @@ const About = () => {
 
         {/* Social Links */}
         <motion.div
-          className="flex justify-center lg:justify-start gap-space-4 mt-space-6"
+          className="flex flex-wrap justify-center sm:justify-start gap-space-3 mt-space-6"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -92,28 +90,31 @@ const About = () => {
         >
           <a
             href="mailto:amedeo.majer@gmail.com"
-            className="p-space-3 rounded-lg border border-glass-border hover:border-white/20 hover:bg-glass transition-all"
+            className="inline-flex items-center gap-2 px-space-4 py-space-3 rounded-lg border border-glass-border text-white/90 hover:border-white/25 hover:bg-white/5 transition-all text-sm"
             aria-label="Send email to Amedeo"
           >
             <FontAwesomeIcon icon={faEnvelope} className="w-5 h-5" />
+            <span>Email</span>
           </a>
           <a
             href="https://linkedin.com/in/amedeo-majer-5b80b1159"
             target="_blank"
             rel="noopener noreferrer"
-            className="p-space-3 rounded-lg border border-glass-border hover:border-white/20 hover:bg-glass transition-all"
+            className="inline-flex items-center gap-2 px-space-4 py-space-3 rounded-lg border border-glass-border text-white/90 hover:border-white/25 hover:bg-white/5 transition-all text-sm"
             aria-label="Visit LinkedIn profile"
           >
             <FontAwesomeIcon icon={faLinkedin} className="w-5 h-5" />
+            <span>LinkedIn</span>
           </a>
           <a
             href="https://github.com/amedeomajer"
             target="_blank"
             rel="noopener noreferrer"
-            className="p-space-3 rounded-lg border border-glass-border hover:border-white/20 hover:bg-glass transition-all"
+            className="inline-flex items-center gap-2 px-space-4 py-space-3 rounded-lg border border-glass-border text-white/90 hover:border-white/25 hover:bg-white/5 transition-all text-sm"
             aria-label="Visit GitHub profile"
           >
             <FontAwesomeIcon icon={faGithub} className="w-5 h-5" />
+            <span>GitHub</span>
           </a>
         </motion.div>
       </motion.div>

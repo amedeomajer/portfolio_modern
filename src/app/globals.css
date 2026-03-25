@@ -128,18 +128,15 @@ body {
   background: var(--glass);
   backdrop-filter: blur(var(--fx-blur, 20px));
   -webkit-backdrop-filter: blur(var(--fx-blur, 20px));
-  border: 1px solid var(--glass-border);
   border-radius: 16px;
 }
 
 .glass-card--primary {
   background: color-mix(in srgb, #ffffff 12%, transparent);
-  border-color: color-mix(in srgb, #ffffff 20%, transparent);
 }
 
 .glass-card--secondary {
   background: color-mix(in srgb, #ffffff 6%, transparent);
-  border-color: color-mix(in srgb, #ffffff 12%, transparent);
 }
 
 .glass-card-hover {
@@ -147,7 +144,6 @@ body {
 }
 
 .glass-card-hover:hover {
-  border-color: var(--glass-border-hover);
   box-shadow: 0 0 30px rgba(255, 255, 255, var(--fx-glow-opacity, 0.05));
 }
 
