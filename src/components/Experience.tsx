@@ -31,14 +31,14 @@ const Experience = () => {
             {[...cvData.work.positions].reverse().map((position, index) => (
               <motion.div
                 key={position.company}
-                className="relative pl-space-6 border-l-2 border-glass-border hover:border-white/30 transition-colors"
+                className="group relative pl-space-6 border-l-2 border-white/30 hover:border-white transition-colors"
                 initial={{ opacity: 0, x: -20 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.4, delay: 0.1 * index }}
               >
                 {/* Timeline dot */}
-                <div className="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-bg-dark border-2 border-glass-border" />
+                <div className="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-bg-dark border-2 border-white/30 group-hover:border-white transition-colors" />
 
                 <div className="mb-space-4">
                   <h3 className="text-xl md:text-2xl font-semibold">
@@ -90,7 +90,7 @@ const Experience = () => {
 
                 {position.initiatives && (
                   <div>
-                  <h4 className="text-sm font-semibold uppercase tracking-wider text-white/75 mb-2">
+                    <h4 className="text-sm font-semibold uppercase tracking-wider text-white/75 mb-2">
                       Initiatives
                     </h4>
                     <ul className="space-y-2">
@@ -125,12 +125,10 @@ const Experience = () => {
             {cvData.education.title}
           </h2>
 
-          <div className="relative pl-space-6 border-l-2 border-glass-border">
-            <div className="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-bg-dark border-2 border-glass-border" />
+          <div className="group relative pl-space-6 border-l-2 border-white/30 hover:border-white transition-colors">
+            <div className="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-bg-dark border-2 border-white/30 group-hover:border-white transition-colors" />
 
-            <p className="text-white/80 mb-4">
-              {cvData.education.description}
-            </p>
+            <p className="text-white/80 mb-4">{cvData.education.description}</p>
             <p className="text-white/80 mb-4">
               {cvData.education.additionalInfo}
             </p>
