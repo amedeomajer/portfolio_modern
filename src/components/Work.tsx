@@ -31,7 +31,7 @@ const ProjectCard = ({
 }) => {
   return (
     <div
-      className="glass-card glass-card-hover effects-budget-soft cursor-pointer overflow-hidden group h-full"
+      className="glass-card glass-card--primary glass-card-hover effects-budget-soft cursor-pointer overflow-hidden group h-full"
       onClick={onClick}
     >
       <div className="relative h-64 md:h-80 lg:h-96 overflow-hidden">
@@ -169,7 +169,7 @@ const Work = () => {
                   />
                 </div>
 
-                <div className="glass-card p-6 space-y-6">
+                <div className="glass-card glass-card--secondary p-6 space-y-6">
                   <p className="text-white/80 leading-relaxed">
                     {selectedProject.longDescription.intro}
                   </p>
@@ -316,8 +316,8 @@ const Work = () => {
                 onClick={() => scrollTo(index)}
                 className={`w-2 h-2 md:w-3 md:h-3 rounded-full transition-all duration-300 ${
                   index === selectedIndex
-                    ? "bg-white scale-125"
-                    : "bg-white/30 hover:bg-white/50"
+                    ? "bg-white scale-125 shadow-[0_0_14px_rgba(255,255,255,0.35)]"
+                    : "bg-white/20 hover:bg-white/40"
                 }`}
                 aria-label={`Go to project ${index + 1}`}
               />

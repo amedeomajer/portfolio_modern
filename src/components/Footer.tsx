@@ -7,7 +7,7 @@ import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
 const Footer = () => {
   return (
     <footer id="contact" className="section flex flex-col items-center justify-center py-20 px-4">
-      <div className="glass-card glass-card-hover effects-budget-soft p-8 md:p-12 max-w-2xl w-full text-center">
+      <div className="glass-card glass-card--secondary glass-card-hover effects-budget-soft p-8 md:p-12 max-w-2xl w-full text-center">
         <h2 className="text-3xl md:text-4xl font-bold mb-4">Get in Touch</h2>
         <p className="text-white/80 mb-8">
           Interested in working together? Let&apos;s connect.

@@ -132,6 +132,16 @@ body {
   border-radius: 16px;
 }
 
+.glass-card--primary {
+  background: color-mix(in srgb, #ffffff 12%, transparent);
+  border-color: color-mix(in srgb, #ffffff 20%, transparent);
+}
+
+.glass-card--secondary {
+  background: color-mix(in srgb, #ffffff 6%, transparent);
+  border-color: color-mix(in srgb, #ffffff 12%, transparent);
+}
+
 .glass-card-hover {
   transition: all 0.3s ease;
 }

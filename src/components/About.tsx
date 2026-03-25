@@ -13,7 +13,7 @@ const About = () => {
       className="section flex items-center justify-center py-20 px-4"
     >
       <motion.div
-        className="glass-card glass-card-hover glass-glow effects-budget-soft p-8 md:p-12 max-w-4xl w-full"
+        className="glass-card glass-card--primary glass-card-hover glass-glow effects-budget-soft p-8 md:p-12 max-w-4xl w-full"
         initial={{ opacity: 0, y: 50 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-100px" }}
