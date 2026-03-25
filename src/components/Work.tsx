@@ -29,9 +29,11 @@ const ProjectCard = ({
   project: Project;
   onClick: () => void;
 }) => {
+  const projectContext = project.tech.slice(0, 2).join(" • ");
+
   return (
     <div
-      className="glass-card glass-card--primary glass-card-hover effects-budget-soft cursor-pointer overflow-hidden group h-full"
+      className="cursor-pointer overflow-hidden group h-full rounded-2xl bg-black/75 shadow-[0_14px_35px_rgba(0,0,0,0.4)] transition-transform duration-300 ease-out hover:scale-[1.01]"
       onClick={onClick}
     >
       <div className="relative h-64 md:h-80 lg:h-96 overflow-hidden">
@@ -39,12 +41,18 @@ const ProjectCard = ({
           src={`/images/${project.image}`}
           alt={project.imageAlt}
           fill
-          className="object-cover grayscale-hover transition-all duration-[3000] group-hover:scale-105"
+          className="object-cover grayscale"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-bg-black/80 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent" />
+        <div className="absolute left-space-5 top-space-5 rounded-full bg-black/65 px-space-3 py-space-2 text-xs uppercase tracking-[0.16em] text-white/75">
+          Featured project
+        </div>
       </div>
 
       <div className="p-space-5 md:p-space-6">
+        <p className="mb-space-3 text-xs uppercase tracking-[0.16em] text-white/60">
+          {projectContext}
+        </p>
         <h3 className="text-xl md:text-2xl font-bold mb-space-3 group-hover:text-glow transition-all">
           {project.name}
         </h3>
@@ -52,11 +60,11 @@ const ProjectCard = ({
           {project.placeholderDescription}
         </p>
 
-        <div className="flex flex-wrap gap-2">
+        <div className="flex flex-wrap gap-2 mb-space-5">
           {project.tech.slice(0, 4).map((tech) => (
             <span
               key={tech}
-              className="text-xs px-2 py-1 rounded-md border border-glass-border bg-glass"
+              className="text-xs px-2 py-1 rounded-md bg-white/10 text-white/80"
             >
               {tech}
             </span>
@@ -66,6 +74,11 @@ const ProjectCard = ({
               +{project.tech.length - 4}
             </span>
           )}
+        </div>
+
+        <div className="inline-flex items-center gap-2 text-sm font-medium text-white/90">
+          <span>Open case study</span>
+          <FontAwesomeIcon icon={faChevronRight} className="w-3 h-3" />
         </div>
       </div>
     </div>
@@ -165,11 +178,11 @@ const Work = () => {
                     alt={selectedProject.name}
                     width={800}
                     height={600}
-                    className="w-full h-auto"
+                    className="w-full h-auto grayscale"
                   />
                 </div>
 
-                <div className="glass-card glass-card--secondary p-space-6 space-y-space-6">
+                <div className="rounded-2xl bg-black/70 p-space-6 space-y-space-6 shadow-[0_12px_30px_rgba(0,0,0,0.35)]">
                   <p className="text-white/80 leading-relaxed">
                     {selectedProject.longDescription.intro}
                   </p>
