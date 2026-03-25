@@ -44,7 +44,7 @@ const About = () => {
           {/* Bio */}
           <div className="flex-1 text-center lg:text-left">
             <motion.h2
-              className="text-3xl md:text-4xl font-bold mb-4"
+              className="type-section-title font-bold mb-4"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -53,7 +53,7 @@ const About = () => {
               About Me
             </motion.h2>
             <motion.p
-              className="text-lg md:text-xl text-text-muted leading-relaxed"
+              className="type-section-subtitle text-text-muted"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -74,7 +74,7 @@ const About = () => {
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.5 }}
         >
-          <p className="text-text-muted leading-relaxed text-center lg:text-left">
+          <p className="type-body-md text-text-muted text-center lg:text-left">
             I put a lot of effort into clear communication—whether it&apos;s
             sharing ideas, giving feedback, or just making sure we&apos;re all
             on the same page. For me, clear code and good communication go hand

@@ -85,7 +85,7 @@ const Hero = () => {
           delay={100}
           animateBy="words"
           direction="top"
-          className="text-xl md:text-2xl text-text-muted font-light tracking-wider"
+          className="type-section-subtitle text-text-muted font-light tracking-wider"
         />
       </div>
 

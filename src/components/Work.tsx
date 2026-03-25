@@ -221,7 +221,7 @@ const Work = () => {
         {/* Section Content */}
         <div className="relative z-10 w-full max-w-6xl mx-auto px-4">
           <motion.h2
-            className="text-3xl md:text-4xl font-bold text-center mb-12"
+            className="type-section-title font-bold text-center mb-12"
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
