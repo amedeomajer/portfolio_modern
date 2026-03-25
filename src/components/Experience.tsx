@@ -7,10 +7,10 @@ const Experience = () => {
   return (
     <section
       id="experience"
-      className="section flex items-center justify-center py-20 px-4"
+      className="section flex items-center justify-center py-20 px-space-5"
     >
       <motion.div
-        className="glass-card glass-card--secondary glass-card-hover effects-budget-soft p-6 md:p-10 max-w-4xl w-full"
+        className="glass-card glass-card--secondary glass-card-hover effects-budget-soft p-space-6 md:p-space-7 max-w-4xl w-full"
         initial={{ opacity: 0, y: 50 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-100px" }}
@@ -23,15 +23,15 @@ const Experience = () => {
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.2 }}
         >
-          <h2 className="text-2xl md:text-3xl font-bold mb-8">
+          <h2 className="text-2xl md:text-3xl font-bold mb-space-6">
             {cvData.work.title}
           </h2>
 
-          <div className="space-y-8">
+          <div className="space-y-space-6">
             {[...cvData.work.positions].reverse().map((position, index) => (
               <motion.div
                 key={position.company}
-                className="relative pl-6 border-l-2 border-glass-border hover:border-white/30 transition-colors"
+                className="relative pl-space-6 border-l-2 border-glass-border hover:border-white/30 transition-colors"
                 initial={{ opacity: 0, x: -20 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
@@ -40,7 +40,7 @@ const Experience = () => {
                 {/* Timeline dot */}
                 <div className="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-bg-dark border-2 border-glass-border" />
 
-                <div className="mb-4">
+                <div className="mb-space-4">
                   <h3 className="text-xl md:text-2xl font-semibold">
                     {position.company}
                   </h3>
@@ -48,7 +48,7 @@ const Experience = () => {
                   <p className="text-white/80 mt-2">{position.description}</p>
                 </div>
 
-                <div className="mb-4">
+                <div className="mb-space-4">
                   <h4 className="text-sm font-semibold uppercase tracking-wider text-white/75 mb-2">
                     Technologies
                   </h4>
@@ -64,7 +64,7 @@ const Experience = () => {
                   </div>
                 </div>
 
-                <div className="mb-4">
+                <div className="mb-space-4">
                   <h4 className="text-sm font-semibold uppercase tracking-wider text-white/75 mb-2">
                     Impact
                   </h4>
@@ -112,7 +112,7 @@ const Experience = () => {
         </motion.div>
 
         {/* Divider */}
-        <div className="my-10 border-t border-glass-border" />
+        <div className="my-space-7 border-t border-glass-border" />
 
         {/* Education Section */}
         <motion.div
@@ -121,11 +121,11 @@ const Experience = () => {
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.4 }}
         >
-          <h2 className="text-2xl md:text-3xl font-bold mb-6">
+          <h2 className="text-2xl md:text-3xl font-bold mb-space-6">
             {cvData.education.title}
           </h2>
 
-          <div className="relative pl-6 border-l-2 border-glass-border">
+          <div className="relative pl-space-6 border-l-2 border-glass-border">
             <div className="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-bg-dark border-2 border-glass-border" />
 
             <p className="text-white/80 mb-4">

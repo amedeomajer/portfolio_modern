@@ -44,11 +44,11 @@ const ProjectCard = ({
         <div className="absolute inset-0 bg-gradient-to-t from-bg-black/80 to-transparent" />
       </div>
 
-      <div className="p-5 md:p-6">
-        <h3 className="text-xl md:text-2xl font-bold mb-3 group-hover:text-glow transition-all">
+      <div className="p-space-5 md:p-space-6">
+        <h3 className="text-xl md:text-2xl font-bold mb-space-3 group-hover:text-glow transition-all">
           {project.name}
         </h3>
-        <p className="text-white/80 text-sm md:text-base line-clamp-3 mb-4">
+        <p className="text-white/80 text-sm md:text-base line-clamp-3 mb-space-4">
           {project.placeholderDescription}
         </p>
 
@@ -117,7 +117,7 @@ const Work = () => {
   return (
     <section
       id="work"
-      className="section flex flex-col items-center justify-center py-20"
+      className="section flex flex-col items-center justify-center py-20 px-space-5"
     >
       <Drawer
         open={!!selectedProject}
@@ -156,10 +156,10 @@ const Work = () => {
               onClick={() => setSelectedProject(null)}
             >
               <div
-                className="p-4 w-full container mx-auto lg:max-w-[50%]"
+                className="p-space-5 w-full container mx-auto lg:max-w-[50%]"
                 onClick={(e) => e.stopPropagation()}
               >
-                <div className="rounded-lg overflow-hidden border border-glass-border mb-6">
+                <div className="rounded-lg overflow-hidden border border-glass-border mb-space-6">
                   <Image
                     src={`/images/${selectedProject.image}`}
                     alt={selectedProject.name}
@@ -169,13 +169,13 @@ const Work = () => {
                   />
                 </div>
 
-                <div className="glass-card glass-card--secondary p-6 space-y-6">
+                <div className="glass-card glass-card--secondary p-space-6 space-y-space-6">
                   <p className="text-white/80 leading-relaxed">
                     {selectedProject.longDescription.intro}
                   </p>
 
                   <div>
-                    <h3 className="text-lg font-semibold mb-3">
+                    <h3 className="text-lg font-semibold mb-space-3">
                       My Contributions
                     </h3>
                     <ul className="space-y-3">
@@ -196,13 +196,13 @@ const Work = () => {
                   </div>
 
                   <div>
-                    <h3 className="text-lg font-semibold mb-3">Impact</h3>
+                    <h3 className="text-lg font-semibold mb-space-3">Impact</h3>
                     <p className="text-white/80 leading-relaxed">
                       {selectedProject.longDescription.impact}
                     </p>
                   </div>
 
-                  <div className="flex flex-wrap gap-2 pt-4 border-t border-glass-border">
+                  <div className="flex flex-wrap gap-2 pt-space-4 border-t border-glass-border">
                     {selectedProject.tech.map((tech) => (
                       <span
                         key={tech}
@@ -219,9 +219,9 @@ const Work = () => {
         )}
 
         {/* Section Content */}
-        <div className="relative z-10 w-full max-w-6xl mx-auto px-4">
+        <div className="relative z-10 w-full max-w-6xl mx-auto px-space-5">
           <motion.h2
-            className="type-section-title font-bold text-center mb-12"
+            className="type-section-title font-bold text-center mb-space-7"
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -238,7 +238,7 @@ const Work = () => {
                 {projectsData.map((project: Project) => (
                   <div
                     key={project.name}
-                    className="embla__slide flex-[0_0_100%] min-w-0 px-4 md:px-12"
+                    className="embla__slide flex-[0_0_100%] min-w-0 px-space-4 md:px-space-7"
                   >
                     <ProjectCard
                       project={project}
@@ -309,7 +309,7 @@ const Work = () => {
           </div>
 
           {/* Dot Indicators */}
-          <div className="flex justify-center gap-2 mt-8">
+          <div className="flex justify-center gap-2 mt-space-6">
             {projectsData.map((_, index) => (
               <button
                 key={index}

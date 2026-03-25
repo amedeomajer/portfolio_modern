@@ -10,16 +10,16 @@ const About = () => {
   return (
     <section
       id="about"
-      className="section flex items-center justify-center py-20 px-4"
+      className="section flex items-center justify-center py-20 px-space-5"
     >
       <motion.div
-        className="glass-card glass-card--primary glass-card-hover glass-glow effects-budget-soft p-8 md:p-12 max-w-4xl w-full"
+        className="glass-card glass-card--primary glass-card-hover glass-glow effects-budget-soft p-space-6 md:p-space-7 max-w-4xl w-full"
         initial={{ opacity: 0, y: 50 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-100px" }}
         transition={{ duration: 0.6 }}
       >
-        <div className="flex flex-col lg:flex-row items-center gap-8 lg:gap-12">
+        <div className="flex flex-col lg:flex-row items-center gap-space-6 lg:gap-space-7">
           {/* Profile Image */}
           <motion.div
             className="relative"
@@ -44,7 +44,7 @@ const About = () => {
           {/* Bio */}
           <div className="flex-1 text-center lg:text-left">
             <motion.h2
-              className="type-section-title font-bold mb-4"
+              className="type-section-title font-bold mb-space-4"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -68,7 +68,7 @@ const About = () => {
 
         {/* Extended bio */}
         <motion.div
-          className="mt-8 pt-8 border-t border-glass-border"
+          className="mt-space-6 pt-space-6 border-t border-glass-border"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -84,7 +84,7 @@ const About = () => {
 
         {/* Social Links */}
         <motion.div
-          className="flex justify-center lg:justify-start gap-4 mt-8"
+          className="flex justify-center lg:justify-start gap-space-4 mt-space-6"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -92,7 +92,7 @@ const About = () => {
         >
           <a
             href="mailto:amedeo.majer@gmail.com"
-            className="p-3 rounded-lg border border-glass-border hover:border-white/20 hover:bg-glass transition-all"
+            className="p-space-3 rounded-lg border border-glass-border hover:border-white/20 hover:bg-glass transition-all"
             aria-label="Send email to Amedeo"
           >
             <FontAwesomeIcon icon={faEnvelope} className="w-5 h-5" />
@@ -101,7 +101,7 @@ const About = () => {
             href="https://linkedin.com/in/amedeo-majer-5b80b1159"
             target="_blank"
             rel="noopener noreferrer"
-            className="p-3 rounded-lg border border-glass-border hover:border-white/20 hover:bg-glass transition-all"
+            className="p-space-3 rounded-lg border border-glass-border hover:border-white/20 hover:bg-glass transition-all"
             aria-label="Visit LinkedIn profile"
           >
             <FontAwesomeIcon icon={faLinkedin} className="w-5 h-5" />
@@ -110,7 +110,7 @@ const About = () => {
             href="https://github.com/amedeomajer"
             target="_blank"
             rel="noopener noreferrer"
-            className="p-3 rounded-lg border border-glass-border hover:border-white/20 hover:bg-glass transition-all"
+            className="p-space-3 rounded-lg border border-glass-border hover:border-white/20 hover:bg-glass transition-all"
             aria-label="Visit GitHub profile"
           >
             <FontAwesomeIcon icon={faGithub} className="w-5 h-5" />
