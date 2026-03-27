@@ -51,6 +51,8 @@ export default function Home() {
       {/* Grain overlay for texture */}
       <div className="grain-overlay" aria-hidden="true" />
 
+      <Navigation />
+
       <main className="relative z-10">
         <Hero />
         <About />
@@ -58,8 +60,6 @@ export default function Home() {
         <Experience />
         <Footer />
       </main>
-
-      <Navigation />
     </>
   );
 }

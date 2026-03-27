@@ -175,7 +175,7 @@ body {
   position: relative;
   scroll-snap-align: start;
   scroll-snap-stop: always;
-  scroll-margin-top: 2rem;
+  /* scroll-margin-top: 2rem; */
 }
 
 /* Grayscale to color hover effect for images */

@@ -30,6 +30,7 @@ interface DockItemProps {
   children: ReactNode;
   className?: string;
   onClick?: () => void;
+  focusable?: boolean;
   mouseX: MotionValue<number>;
   spring: { mass: number; stiffness: number; damping: number };
   distance: number;
@@ -41,6 +42,7 @@ function DockItem({
   children,
   className = "",
   onClick,
+  focusable = true,
   mouseX,
   spring,
   distance,
@@ -78,9 +80,9 @@ function DockItem({
       onBlur={() => isHovered.set(0)}
       onClick={onClick}
       className={`dock-item ${className}`}
-      tabIndex={0}
-      role="button"
-      aria-haspopup="true"
+      tabIndex={focusable ? 0 : -1}
+      role={focusable ? "button" : undefined}
+      aria-haspopup={focusable ? "true" : undefined}
     >
       {Children.map(children, (child) => {
         if (!child || typeof child !== "object" || !("type" in child))
@@ -249,6 +251,7 @@ export default function Dock({
               distance={distance}
               magnification={magnification}
               baseItemSize={baseItemSize}
+              focusable={false}
             >
               <BackgroundSwitcher />
               <DockLabel>Background</DockLabel>
@@ -259,6 +262,7 @@ export default function Dock({
               distance={distance}
               magnification={magnification}
               baseItemSize={baseItemSize}
+              focusable={false}
             >
               <AccessibilityToggle />
               <DockLabel>Accessibility</DockLabel>

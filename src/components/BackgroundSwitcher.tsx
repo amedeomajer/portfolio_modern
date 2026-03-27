@@ -63,7 +63,7 @@ const BackgroundSwitcher = ({ isHovered: _isHovered }: BackgroundSwitcherProps) 
     <div ref={menuRef} className="relative flex items-center justify-center w-full h-full">
       <button
         onClick={handleToggle}
-        className="flex items-center justify-center w-full h-full"
+        className="flex items-center justify-center w-full h-full rounded-full focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-text-muted"
         aria-label="Change background"
         aria-expanded={isOpen}
       >

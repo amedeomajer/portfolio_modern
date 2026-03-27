@@ -15,7 +15,7 @@ const AccessibilityToggle = ({ isHovered: _isHovered }: AccessibilityToggleProps
   return (
     <button
       onClick={toggleAccessibilityMode}
-      className={`flex items-center justify-center w-full h-full transition-colors ${
+      className={`flex items-center justify-center w-full h-full rounded-full focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-text-muted transition-colors ${
         accessibilityMode ? "text-green-400" : "text-white"
       }`}
       aria-label={accessibilityMode ? "Disable accessibility mode" : "Enable accessibility mode"}
