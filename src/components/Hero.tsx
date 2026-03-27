@@ -17,7 +17,7 @@ const _Logo3DViewer = dynamic(
         <div className="animate-pulse bg-white/5 rounded-full w-24 h-24" />
       </div>
     ),
-  }
+  },
 );
 
 const Hero = () => {
@@ -63,17 +63,17 @@ const Hero = () => {
 
         <div className="flex mb-4 glitch-group cursor-default">
           <GlitchText
-            speed={0.8}
+            speed={1.2}
             enableShadows={true}
-            enableOnHover={true}
+            enableOnHover={false}
             className="font-bricolage font-extrabold"
           >
             Amedeo
           </GlitchText>
           <GlitchText
-            speed={0.8}
+            speed={1.1}
             enableShadows={true}
-            enableOnHover={true}
+            enableOnHover={false}
             className="font-syne"
           >
             MAJER
