@@ -52,6 +52,13 @@ html {
   scroll-snap-type: y mandatory;
 }
 
+/* Reserve viewport bottom for fixed dock (bottom: ≤767px) or mobile menu (≤569px) */
+@media (max-width: 767px) {
+  html {
+    scroll-padding-bottom: calc(6.25rem + env(safe-area-inset-bottom, 0px));
+  }
+}
+
 body {
   color: var(--text-primary);
   background-color: var(--bg-black);
@@ -219,7 +226,6 @@ body {
   position: relative;
   scroll-snap-align: start;
   scroll-snap-stop: always;
-  /* scroll-margin-top: 2rem; */
 }
 
 /* Grayscale to color hover effect for images */
@@ -702,17 +708,14 @@ body {
 }
 
 /* Embla Carousel */
-.embla {
-  --slide-spacing: 1rem;
-}
-
 .embla__container {
   backface-visibility: hidden;
   touch-action: pan-y pinch-zoom;
 }
 
 .embla__slide {
-  padding-left: var(--slide-spacing);
+  /* Symmetric gutter so adjacent slides do not peek as vertical edge lines */
+  min-width: 0;
 }
 
 /* Accessibility Mode */
