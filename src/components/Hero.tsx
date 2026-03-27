@@ -81,7 +81,7 @@ const Hero = () => {
       className="section relative flex flex-col items-center justify-center overflow-hidden"
     >
       {/* Content */}
-      <div className="relative flex flex-col items-center justify-center text-center px-4">
+      <div className="relative flex flex-col items-center justify-center text-center px-8 md:px-10 lg:px-8">
         {/* <Logo3DViewer
           modelPath="/am_logo_2.glb"
           autoRotate={true}
@@ -98,7 +98,7 @@ const Hero = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: NAME_FADE_MS / 1000, ease: "easeOut" }}
-            className="flex mb-4 glitch-group cursor-default"
+            className="hero-name-lockup flex w-full justify-center mb-4 glitch-group cursor-default"
           >
             <GlitchText
               speed={1.2}
@@ -140,7 +140,7 @@ const Hero = () => {
       {showScrollCta && (
         <button
           onClick={scrollToAbout}
-          className={`absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2 text-text-muted hover:text-white transition-all duration-300 cursor-pointer ${
+          className={`absolute bottom-48 md:bottom-8 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2 text-text-muted hover:text-white transition-all duration-300 cursor-pointer ${
             showScrollIndicator ? "opacity-100" : "opacity-0 pointer-events-none"
           }`}
           aria-label="Scroll to about section"
