@@ -20,7 +20,7 @@ const Footer = () => {
 
         <a
           href="mailto:amedeo.majer@gmail.com"
-          className="inline-block px-space-6 py-space-3 border border-glass-border rounded-lg text-white font-medium hover:bg-glass hover:border-white/20 active:scale-[0.98] active:translate-y-px transition-all duration-200 mb-space-6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--text-muted)]"
+          className="inline-block px-space-6 py-space-3 border border-transparent rounded-lg text-white font-medium hover:bg-glass active:scale-[0.98] active:translate-y-px transition-all duration-200 mb-space-6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--text-muted)]"
         >
           amedeo.majer@gmail.com
         </a>
@@ -53,24 +53,6 @@ const Footer = () => {
           </a>
         </div>
       </div>
-
-      <nav
-        className="flex flex-wrap justify-center gap-x-6 gap-y-2 text-xs text-white/45 mt-space-6 mb-space-4"
-        aria-label="Legal"
-      >
-        <a
-          href="/privacy"
-          className="hover:text-white/80 transition-colors duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--text-muted)] rounded-sm"
-        >
-          Privacy
-        </a>
-        <a
-          href="/terms"
-          className="hover:text-white/80 transition-colors duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--text-muted)] rounded-sm"
-        >
-          Terms
-        </a>
-      </nav>
 
       <p className="text-white/70 text-sm mt-space-4 mb-24 md:mb-space-6">
         &copy; {new Date().getFullYear()} Amedeo Majer. All rights reserved.
