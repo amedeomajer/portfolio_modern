@@ -52,10 +52,17 @@ html {
   scroll-snap-type: y mandatory;
 }
 
-/* Reserve viewport bottom for fixed dock (bottom: ≤767px) or mobile menu (≤569px) */
-@media (max-width: 767px) {
+/* Reserve viewport bottom for fixed dock on small tablets */
+@media (min-width: 570px) and (max-width: 767px) {
   html {
     scroll-padding-bottom: calc(6.25rem + env(safe-area-inset-bottom, 0px));
+  }
+}
+
+/* Phones only need clearance for the compact hamburger FAB */
+@media (max-width: 569px) {
+  html {
+    scroll-padding-bottom: calc(3.5rem + env(safe-area-inset-bottom, 0px));
   }
 }
 
@@ -179,7 +186,7 @@ body {
 }
 
 .glass-card--primary {
-  background: color-mix(in srgb, #828282 12%, transparent);
+  background: color-mix(in srgb, #181818 80%, transparent);
 }
 
 .glass-card--secondary {
@@ -226,6 +233,12 @@ body {
   position: relative;
   scroll-snap-align: start;
   scroll-snap-stop: always;
+}
+
+@media (max-width: 569px) {
+  .section {
+    scroll-snap-align: center;
+  }
 }
 
 /* Grayscale to color hover effect for images */

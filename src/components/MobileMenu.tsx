@@ -159,9 +159,8 @@ const MobileMenu = () => {
               aria-label="Site menu"
               onClick={(e) => e.stopPropagation()}
             >
-            <div className={menuPanelClass}>
-              <div>
-                <div className="pb-1">
+              <div className={menuPanelClass}>
+                <div>
                   {navItems.map((item) => (
                     <button
                       key={item.label}
@@ -179,10 +178,8 @@ const MobileMenu = () => {
                     </button>
                   ))}
                 </div>
-              </div>
 
-              <div className="border-t border-b border-white/[0.06]">
-                <div className="pb-1">
+                <div className="border-t border-b border-white/[0.06]">
                   <button
                     type="button"
                     onClick={() => setShowBackgrounds(!showBackgrounds)}
@@ -254,10 +251,8 @@ const MobileMenu = () => {
                     )}
                   </AnimatePresence>
                 </div>
-              </div>
 
-              <div className="border-t border-white/[0.06]">
-                <div className="pb-1">
+                <div className="border-t border-white/[0.06]">
                   <button
                     type="button"
                     onClick={() => toggleAccessibilityMode()}
@@ -288,7 +283,6 @@ const MobileMenu = () => {
                   </button>
                 </div>
               </div>
-            </div>
             </motion.div>
           </motion.div>
         )}

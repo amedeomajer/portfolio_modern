@@ -222,7 +222,7 @@ const Work = () => {
   return (
     <section
       id="work"
-      className="section flex flex-col items-center justify-center max-md:justify-start px-space-5 pt-20 pb-20 max-md:pb-[calc(9.5rem+env(safe-area-inset-bottom,0px))] max-md:pt-16"
+      className="section flex flex-col items-center justify-center px-space-5 pt-20 pb-20 max-[569px]:pb-[calc(4.5rem+env(safe-area-inset-bottom,0px))] min-[570px]:max-md:justify-start min-[570px]:max-md:pb-[calc(9.5rem+env(safe-area-inset-bottom,0px))] min-[570px]:max-md:pt-16"
     >
       <Drawer
         open={drawerOpen}
