@@ -108,7 +108,7 @@ const Work = () => {
     (index: number) => {
       if (emblaApi) emblaApi.scrollTo(index);
     },
-    [emblaApi]
+    [emblaApi],
   );
 
   const onSelect = useCallback(() => {
@@ -139,7 +139,7 @@ const Work = () => {
         }}
       >
         {selectedProject && (
-          <DrawerContent className="max-h-full bg-bg-black/95 backdrop-blur-xl border-t border-glass-border container mx-auto min-h-[90%]">
+          <DrawerContent className="max-h-full bg-bg-black/95 backdrop-blur-xl border-t border-glass-border container mx-auto min-h-[90%] md:bottom-0 md:max-h-[calc(100vh-90px)]">
             <DrawerClose>
               <div className="w-full rounded-t-lg pt-4 bounce-once">
                 <FontAwesomeIcon icon={faChevronDown} className="w-4 h-4" />
@@ -203,7 +203,7 @@ const Work = () => {
                             </strong>{" "}
                             {contribution.description}
                           </li>
-                        )
+                        ),
                       )}
                     </ul>
                   </div>

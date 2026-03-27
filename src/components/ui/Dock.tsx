@@ -224,7 +224,7 @@ export default function Dock({
         }}
       >
         <GlassSurface
-          width="90vw"
+          width="fit-content"
           height={56}
           borderRadius={50}
           borderWidth={0.0}
