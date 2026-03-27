@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import dynamic from "next/dynamic";
 import { motion } from "framer-motion";
 import {
@@ -32,18 +32,24 @@ const Hero = () => {
   const [showName, setShowName] = useState(false);
   const [showSubtitle, setShowSubtitle] = useState(false);
   const [showScrollCta, setShowScrollCta] = useState(false);
+  const heroRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 50) {
-        setShowScrollIndicator(false);
-      } else {
-        setShowScrollIndicator(true);
-      }
-    };
+    if (!heroRef.current) return;
 
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        // Show CTA only when Hero is the predominant section in view.
+        setShowScrollIndicator(entry.intersectionRatio >= 0.6);
+      },
+      {
+        threshold: [0, 0.25, 0.5, 0.6, 0.75, 1],
+      },
+    );
+
+    observer.observe(heroRef.current);
+
+    return () => observer.disconnect();
   }, []);
 
   useEffect(() => {
@@ -70,6 +76,7 @@ const Hero = () => {
 
   return (
     <section
+      ref={heroRef}
       id="hero"
       className="section relative flex flex-col items-center justify-center overflow-hidden"
     >
