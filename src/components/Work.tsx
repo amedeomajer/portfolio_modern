@@ -44,9 +44,6 @@ const ProjectCard = ({
           className="object-cover grayscale"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent" />
-        <div className="absolute left-space-5 top-space-5 rounded-full bg-black/65 px-space-3 py-space-2 text-xs uppercase tracking-[0.16em] text-white/75">
-          Featured project
-        </div>
       </div>
 
       <div className="p-space-5 md:p-space-6">
