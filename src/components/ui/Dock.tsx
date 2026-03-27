@@ -61,7 +61,7 @@ function DockItem({
   const targetSize = useTransform(
     mouseDistance,
     [-distance, 0, distance],
-    [baseItemSize, magnification, baseItemSize]
+    [baseItemSize, magnification, baseItemSize],
   );
   const size = useSpring(targetSize, spring);
 
@@ -174,18 +174,18 @@ export default function Dock({
   items,
   className = "",
   spring = { mass: 0.1, stiffness: 150, damping: 12 },
-  magnification = 70,
+  magnification = 55,
   distance = 200,
   panelHeight = 80,
   dockHeight = 256,
-  baseItemSize = 60,
+  baseItemSize = 45,
 }: DockProps) {
   const mouseX = useMotionValue(Infinity);
   const isHovered = useMotionValue(0);
 
   const maxHeight = useMemo(
     () => Math.max(dockHeight, magnification + magnification / 2 + 4),
-    [magnification, dockHeight]
+    [magnification, dockHeight],
   );
   const heightRow = useTransform(isHovered, [0, 1], [panelHeight, maxHeight]);
   const height = useSpring(heightRow, spring);
@@ -208,7 +208,7 @@ export default function Dock({
       >
         <GlassSurface
           width="90vw"
-          height={80}
+          height={56}
           borderRadius={50}
           borderWidth={0.07}
           brightness={50}
