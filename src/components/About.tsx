@@ -51,15 +51,15 @@ const About = () => {
               About Me
             </motion.h2>
             <motion.p
-              className="type-body-md text-white/92"
+              className="text-body-md text-white/92"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 0.4 }}
             >
               I&apos;m a full-stack web developer who loves writing clean,
-              easy-to-read and maintainable code. I focus on making my work
-              accessible, so that anyone jumping in can understand it quickly.
+              easy-to-read and maintainable code, so that anyone jumping in can
+              understand it quickly.
             </motion.p>
           </div>
         </div>
@@ -72,11 +72,11 @@ const About = () => {
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.5 }}
         >
-          <p className="type-body-md text-white/82 text-center sm:text-left">
-            I put a lot of effort into clear communication—whether it&apos;s
-            sharing ideas, giving feedback, or just making sure we&apos;re all
-            on the same page. For me, clear code and good communication go hand
-            in hand to keep projects running smoothly.
+          <p className="text-body-md text-white/82 text-center sm:text-left">
+            I put effort into clear communication—whether it&apos;s sharing
+            ideas, giving feedback, or just making sure we&apos;re all on the
+            same page. For me, clear code and good communication go hand in hand
+            to keep projects running smoothly.
           </p>
         </motion.div>
 
