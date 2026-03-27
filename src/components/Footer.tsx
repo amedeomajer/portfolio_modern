@@ -1,21 +1,26 @@
-'use client';
+"use client";
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faLinkedin, faGithub } from '@fortawesome/free-brands-svg-icons';
-import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faLinkedin, faGithub } from "@fortawesome/free-brands-svg-icons";
+import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
 
 const Footer = () => {
   return (
-    <footer id="contact" className="section flex flex-col items-center justify-center py-20 px-space-5">
-      <div className="glass-card glass-card--secondary glass-card-hover effects-budget-soft p-space-6 md:p-space-7 max-w-2xl w-full text-center">
-        <h2 className="text-3xl md:text-4xl font-bold mb-space-4">Get in Touch</h2>
-        <p className="text-white/80 mb-space-6">
+    <footer
+      id="contact"
+      className="section flex flex-col items-center justify-center py-20 px-space-5"
+    >
+      <div className="glass-card glass-card--primary glass-card-hover effects-budget-soft p-space-6 md:p-space-7 max-w-2xl w-full text-center">
+        <h2 className="text-3xl md:text-4xl font-semibold tracking-tight text-balance mb-space-4">
+          Get in touch
+        </h2>
+        <p className="text-white/80 mb-space-6 max-w-prose mx-auto text-pretty">
           Interested in working together? Let&apos;s connect.
         </p>
 
         <a
           href="mailto:amedeo.majer@gmail.com"
-          className="inline-block px-space-6 py-space-3 border border-glass-border rounded-lg text-white hover:bg-glass hover:border-white/20 transition-all mb-space-6"
+          className="inline-block px-space-6 py-space-3 border border-glass-border rounded-lg text-white font-medium hover:bg-glass hover:border-white/20 active:scale-[0.98] active:translate-y-px transition-all duration-200 mb-space-6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--text-muted)]"
         >
           amedeo.majer@gmail.com
         </a>
@@ -23,7 +28,7 @@ const Footer = () => {
         <div className="flex justify-center gap-space-6">
           <a
             href="mailto:amedeo.majer@gmail.com"
-            className="text-white/75 hover:text-white transition-colors p-2"
+            className="text-white/75 hover:text-white transition-colors duration-200 p-2 rounded-md active:scale-95 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--text-muted)]"
             aria-label="Send email to Amedeo"
           >
             <FontAwesomeIcon icon={faEnvelope} className="w-6 h-6" />
@@ -32,7 +37,7 @@ const Footer = () => {
             href="https://linkedin.com/in/amedeo-majer-5b80b1159"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-white/75 hover:text-white transition-colors p-2"
+            className="text-white/75 hover:text-white transition-colors duration-200 p-2 rounded-md active:scale-95 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--text-muted)]"
             aria-label="Visit LinkedIn profile"
           >
             <FontAwesomeIcon icon={faLinkedin} className="w-6 h-6" />
@@ -41,7 +46,7 @@ const Footer = () => {
             href="https://github.com/amedeomajer"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-white/75 hover:text-white transition-colors p-2"
+            className="text-white/75 hover:text-white transition-colors duration-200 p-2 rounded-md active:scale-95 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--text-muted)]"
             aria-label="Visit GitHub profile"
           >
             <FontAwesomeIcon icon={faGithub} className="w-6 h-6" />
@@ -49,7 +54,25 @@ const Footer = () => {
         </div>
       </div>
 
-      <p className="text-white/70 text-sm mt-space-7 mb-24 md:mb-space-6">
+      <nav
+        className="flex flex-wrap justify-center gap-x-6 gap-y-2 text-xs text-white/45 mt-space-6 mb-space-4"
+        aria-label="Legal"
+      >
+        <a
+          href="/privacy"
+          className="hover:text-white/80 transition-colors duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--text-muted)] rounded-sm"
+        >
+          Privacy
+        </a>
+        <a
+          href="/terms"
+          className="hover:text-white/80 transition-colors duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--text-muted)] rounded-sm"
+        >
+          Terms
+        </a>
+      </nav>
+
+      <p className="text-white/70 text-sm mt-space-4 mb-24 md:mb-space-6">
         &copy; {new Date().getFullYear()} Amedeo Majer. All rights reserved.
       </p>
     </footer>

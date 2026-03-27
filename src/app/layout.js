@@ -5,7 +5,11 @@ import { Darker_Grotesque, Bricolage_Grotesque, Syne } from 'next/font/google';
 import { cn } from '@/lib/utils';
 import Providers from '@/components/Providers';
 
-const darkerGrotesque = Darker_Grotesque({ subsets: ['latin'] });
+const darkerGrotesque = Darker_Grotesque({
+  subsets: ['latin'],
+  variable: '--font-body',
+  display: 'swap',
+});
 const bricolageGrotesque = Bricolage_Grotesque({
   subsets: ['latin'],
   variable: '--font-bricolage'
@@ -78,9 +82,6 @@ export const metadata = {
       'max-snippet': -1,
     },
   },
-  verification: {
-    // google: 'your-google-verification-code', // Add your Google Search Console verification code
-  },
 };
 
 export default function RootLayout({ children }) {
@@ -100,12 +101,16 @@ export default function RootLayout({ children }) {
       <Suspense fallback={<Loading />}>
         <body
           className={cn(
+            darkerGrotesque.variable,
             darkerGrotesque.className,
             bricolageGrotesque.variable,
             syne.variable,
             'bg-bg-black'
           )}
         >
+          <a href="#main-content" className="skip-link">
+            Skip to content
+          </a>
           <Providers>{children}</Providers>
         </body>
       </Suspense>

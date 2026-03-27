@@ -6,118 +6,147 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLinkedin, faGithub } from "@fortawesome/free-brands-svg-icons";
 import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
 
+const springSoft = {
+  type: "spring" as const,
+  stiffness: 100,
+  damping: 24,
+  mass: 0.9,
+};
+const easeFluid = [0.32, 0.72, 0, 1] as const;
+
+const linkClass =
+  "inline-flex items-center gap-2 px-space-4 py-space-3 rounded-xl border border-glass-border text-white/90 font-medium hover:border-white/25 hover:bg-white/5 active:scale-[0.98] active:translate-y-px transition-all duration-300 ease-out-fluid text-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--text-muted)] group";
+
 const About = () => {
   return (
     <section
       id="about"
-      className="section flex items-center justify-center py-20 px-space-5"
+      className="section flex w-full items-center justify-center py-20 px-space-5 md:py-24"
     >
-      <motion.div
-        className="glass-card glass-card--primary effects-budget-soft p-space-6 md:p-space-7 max-w-3xl w-full shadow-[0_14px_40px_rgba(0,0,0,0.35)]"
-        initial={{ opacity: 0, y: 50 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "-100px" }}
-        transition={{ duration: 0.6 }}
-      >
-        <div className="flex flex-col sm:flex-row items-center sm:items-start gap-space-6">
-          {/* Profile Image */}
+      <div className="w-full max-w-3xl mx-auto">
+        {/* Double-bezel shell (outer) + glass core (inner) */}
+        <div className="rounded-[1.75rem] p-1.5 bg-white/[0.035] ring-1 ring-inset ring-white/[0.09] shadow-[0_28px_90px_-24px_rgba(4,6,10,0.65)] w-full">
           <motion.div
-            className="relative"
-            initial={{ opacity: 0, scale: 0.8 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.2 }}
+            className="glass-card glass-card--primary effects-budget-soft rounded-[calc(1.75rem-0.375rem)] p-space-6 md:p-space-8 w-full"
+            initial={{ opacity: 0, y: 36 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-80px" }}
+            transition={{ duration: 0.75, ease: easeFluid }}
           >
-            <div className="w-28 h-28 md:w-32 md:h-32 rounded-full overflow-hidden border border-glass-border">
-              <Image
-                alt="picture of the author"
-                src="/images/ame.webp"
-                width={200}
-                height={200}
-                className="w-full h-full object-cover grayscale"
-              />
+            <div className="flex flex-col sm:flex-row items-center sm:items-start gap-space-6 md:gap-space-8">
+              <motion.div
+                className="flex justify-center shrink-0"
+                initial={{ opacity: 0, y: 24, filter: "blur(8px)" }}
+                whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                viewport={{ once: true, margin: "-40px" }}
+                transition={{ ...springSoft, delay: 0.05 }}
+              >
+                <div className="rounded-2xl p-1 ring-1 ring-white/[0.08] bg-white/[0.03]">
+                  <div className="w-28 h-28 md:w-36 md:h-36 rounded-[0.85rem] overflow-hidden border border-white/[0.08]">
+                    <Image
+                      alt="Portrait of Amedeo Majer"
+                      src="/images/ame.webp"
+                      width={288}
+                      height={288}
+                      className="w-full h-full object-cover grayscale"
+                    />
+                  </div>
+                </div>
+              </motion.div>
+
+              <div className="flex-1 text-center sm:text-left min-w-0">
+                <motion.span
+                  className="inline-block rounded-full px-3 py-1 text-[10px] uppercase tracking-[0.2em] font-medium text-white/45 border border-white/10 mb-space-4"
+                  initial={{ opacity: 0, y: 12 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ ...springSoft, delay: 0.08 }}
+                >
+                  Profile
+                </motion.span>
+                <motion.h2
+                  className="type-section-title font-semibold tracking-tight text-white text-balance mb-space-4"
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ ...springSoft, delay: 0.12 }}
+                >
+                  About me
+                </motion.h2>
+                <motion.p
+                  className="type-body-md text-white/92 text-pretty max-w-[65ch] sm:max-w-none mx-auto sm:mx-0 leading-relaxed"
+                  initial={{ opacity: 0, y: 18 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ ...springSoft, delay: 0.16 }}
+                >
+                  I&apos;m a full-stack web developer who loves writing clean,
+                  easy-to-read and maintainable code, so that anyone jumping in
+                  can understand it quickly.
+                </motion.p>
+              </div>
             </div>
+
+            <motion.div
+              className="mt-space-7 pt-space-7 border-t border-glass-border"
+              initial={{ opacity: 0, y: 18 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ ...springSoft, delay: 0.2 }}
+            >
+              <p className="type-body-md text-white/82 text-center sm:text-left text-pretty max-w-[65ch] mx-auto sm:mx-0 leading-relaxed">
+                I put effort into clear communication—whether it&apos;s sharing
+                ideas, giving feedback, or just making sure we&apos;re all on
+                the same page. For me, clear code and good communication go
+                hand in hand to keep projects running smoothly.
+              </p>
+            </motion.div>
+
+            <motion.div
+              className="flex flex-wrap justify-center sm:justify-start gap-space-3 mt-space-7"
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ ...springSoft, delay: 0.26 }}
+            >
+              <a
+                href="mailto:amedeo.majer@gmail.com"
+                className={linkClass}
+                aria-label="Send email to Amedeo"
+              >
+                <span className="transition-transform duration-300 ease-out-fluid group-hover:-translate-y-px">
+                  <FontAwesomeIcon icon={faEnvelope} className="w-5 h-5" />
+                </span>
+                <span>Email</span>
+              </a>
+              <a
+                href="https://linkedin.com/in/amedeo-majer-5b80b1159"
+                target="_blank"
+                rel="noopener noreferrer"
+                className={linkClass}
+                aria-label="Visit LinkedIn profile"
+              >
+                <span className="transition-transform duration-300 ease-out-fluid group-hover:-translate-y-px">
+                  <FontAwesomeIcon icon={faLinkedin} className="w-5 h-5" />
+                </span>
+                <span>LinkedIn</span>
+              </a>
+              <a
+                href="https://github.com/amedeomajer"
+                target="_blank"
+                rel="noopener noreferrer"
+                className={linkClass}
+                aria-label="Visit GitHub profile"
+              >
+                <span className="transition-transform duration-300 ease-out-fluid group-hover:-translate-y-px">
+                  <FontAwesomeIcon icon={faGithub} className="w-5 h-5" />
+                </span>
+                <span>GitHub</span>
+              </a>
+            </motion.div>
           </motion.div>
-
-          {/* Bio */}
-          <div className="flex-1 text-center sm:text-left">
-            <motion.h2
-              className="type-section-title font-bold text-white mb-space-4"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.3 }}
-            >
-              About Me
-            </motion.h2>
-            <motion.p
-              className="text-body-md text-white/92"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.4 }}
-            >
-              I&apos;m a full-stack web developer who loves writing clean,
-              easy-to-read and maintainable code, so that anyone jumping in can
-              understand it quickly.
-            </motion.p>
-          </div>
         </div>
-
-        {/* Extended bio */}
-        <motion.div
-          className="mt-space-6 pt-space-6 border-t border-glass-border"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.5 }}
-        >
-          <p className="text-body-md text-white/82 text-center sm:text-left">
-            I put effort into clear communication—whether it&apos;s sharing
-            ideas, giving feedback, or just making sure we&apos;re all on the
-            same page. For me, clear code and good communication go hand in hand
-            to keep projects running smoothly.
-          </p>
-        </motion.div>
-
-        {/* Social Links */}
-        <motion.div
-          className="flex flex-wrap justify-center sm:justify-start gap-space-3 mt-space-6"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.6 }}
-        >
-          <a
-            href="mailto:amedeo.majer@gmail.com"
-            className="inline-flex items-center gap-2 px-space-4 py-space-3 rounded-lg border border-glass-border text-white/90 hover:border-white/25 hover:bg-white/5 transition-all text-sm"
-            aria-label="Send email to Amedeo"
-          >
-            <FontAwesomeIcon icon={faEnvelope} className="w-5 h-5" />
-            <span>Email</span>
-          </a>
-          <a
-            href="https://linkedin.com/in/amedeo-majer-5b80b1159"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-space-4 py-space-3 rounded-lg border border-glass-border text-white/90 hover:border-white/25 hover:bg-white/5 transition-all text-sm"
-            aria-label="Visit LinkedIn profile"
-          >
-            <FontAwesomeIcon icon={faLinkedin} className="w-5 h-5" />
-            <span>LinkedIn</span>
-          </a>
-          <a
-            href="https://github.com/amedeomajer"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-space-4 py-space-3 rounded-lg border border-glass-border text-white/90 hover:border-white/25 hover:bg-white/5 transition-all text-sm"
-            aria-label="Visit GitHub profile"
-          >
-            <FontAwesomeIcon icon={faGithub} className="w-5 h-5" />
-            <span>GitHub</span>
-          </a>
-        </motion.div>
-      </motion.div>
+      </div>
     </section>
   );
 };

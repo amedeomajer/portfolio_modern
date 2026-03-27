@@ -143,22 +143,20 @@ const Work = () => {
               </div>
             </DrawerClose>
             <DrawerHeader>
-              <DrawerTitle>
-                <h2 className="text-center text-xl md:text-2xl">
-                  {selectedProject.url ? (
-                    <a
-                      href={selectedProject.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="underline underline-offset-4 hover:text-glow transition-all"
-                    >
-                      {selectedProject.name}
-                      <FontAwesomeIcon icon={faLink} className="ml-2 w-4 h-4" />
-                    </a>
-                  ) : (
-                    selectedProject.name
-                  )}
-                </h2>
+              <DrawerTitle className="text-center text-xl md:text-2xl">
+                {selectedProject.url ? (
+                  <a
+                    href={selectedProject.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="underline underline-offset-4 hover:text-glow transition-all"
+                  >
+                    {selectedProject.name}
+                    <FontAwesomeIcon icon={faLink} className="ml-2 w-4 h-4" />
+                  </a>
+                ) : (
+                  selectedProject.name
+                )}
               </DrawerTitle>
             </DrawerHeader>
             <div

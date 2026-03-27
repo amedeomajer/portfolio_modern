@@ -10,7 +10,7 @@ const Experience = () => {
       className="section flex items-center justify-center py-20 px-space-5"
     >
       <motion.div
-        className="glass-card glass-card--secondary glass-card-hover effects-budget-soft p-space-6 md:p-space-7 max-w-4xl w-full"
+        className="glass-card glass-card--primary glass-card-hover effects-budget-soft p-space-6 md:p-space-7 max-w-4xl w-full"
         initial={{ opacity: 0, y: 50 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-100px" }}

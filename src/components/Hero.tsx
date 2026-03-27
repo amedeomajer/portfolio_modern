@@ -80,7 +80,6 @@ const Hero = () => {
       id="hero"
       className="section relative flex flex-col items-center justify-center overflow-hidden"
     >
-      {/* Content */}
       <div className="relative flex flex-col items-center justify-center text-center px-8 md:px-10 lg:px-8">
         {/* <Logo3DViewer
           modelPath="/am_logo_2.glb"
@@ -97,7 +96,12 @@ const Hero = () => {
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: NAME_FADE_MS / 1000, ease: "easeOut" }}
+            transition={{
+              type: "spring",
+              stiffness: 120,
+              damping: 26,
+              mass: 0.85,
+            }}
             className="hero-name-lockup flex w-full justify-center mb-4 glitch-group cursor-default"
           >
             <GlitchText
@@ -119,7 +123,7 @@ const Hero = () => {
           </motion.div>
         )}
 
-        <div className="mt-2 min-h-[2.5rem] md:min-h-[3rem] flex items-start justify-center">
+        <div className="mt-2 min-h-[2.5rem] md:min-h-[3rem] w-full flex items-start justify-center">
           {showSubtitle && (
             <BlurText
               text="Full-Stack Web Developer"
@@ -140,7 +144,7 @@ const Hero = () => {
       {showScrollCta && (
         <button
           onClick={scrollToAbout}
-          className={`absolute bottom-48 md:bottom-8 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2 text-text-muted hover:text-white transition-all duration-300 cursor-pointer ${
+          className={`absolute bottom-48 md:bottom-8 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2 text-text-muted hover:text-white transition-all duration-500 ease-out-fluid cursor-pointer ${
             showScrollIndicator ? "opacity-100" : "opacity-0 pointer-events-none"
           }`}
           aria-label="Scroll to about section"
@@ -155,7 +159,12 @@ const Hero = () => {
           <motion.div
             initial={{ filter: "blur(10px)", opacity: 0, y: -50 }}
             animate={{ filter: "blur(0px)", opacity: 1, y: 0 }}
-            transition={{ duration: 0.35, ease: "easeOut", delay: 0.15 }}
+            transition={{
+              type: "spring",
+              stiffness: 140,
+              damping: 28,
+              delay: 0.12,
+            }}
           >
             <FontAwesomeIcon
               icon={faChevronDown}

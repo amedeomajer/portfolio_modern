@@ -53,7 +53,7 @@ export default function Home() {
 
       <Navigation />
 
-      <main className="relative z-10">
+      <main id="main-content" className="relative z-10" tabIndex={-1}>
         <Hero />
         <About />
         <Work />

@@ -48,6 +48,9 @@ module.exports = {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic": "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
+      transitionTimingFunction: {
+        "out-fluid": "cubic-bezier(0.32, 0.72, 0, 1)",
+      },
     },
   },
   plugins: [],
