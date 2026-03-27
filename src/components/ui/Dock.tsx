@@ -31,6 +31,8 @@ interface DockItemProps {
   className?: string;
   onClick?: () => void;
   focusable?: boolean;
+  isActive?: boolean;
+  itemId?: string;
   mouseX: MotionValue<number>;
   spring: { mass: number; stiffness: number; damping: number };
   distance: number;
@@ -43,6 +45,8 @@ function DockItem({
   className = "",
   onClick,
   focusable = true,
+  isActive = false,
+  itemId,
   mouseX,
   spring,
   distance,
@@ -79,10 +83,13 @@ function DockItem({
       onFocus={() => isHovered.set(1)}
       onBlur={() => isHovered.set(0)}
       onClick={onClick}
-      className={`dock-item ${className}`}
+      className={`dock-item ${isActive ? "dock-item--active" : ""} ${className}`}
       tabIndex={focusable ? 0 : -1}
       role={focusable ? "button" : undefined}
       aria-haspopup={focusable ? "true" : undefined}
+      aria-current={isActive ? "location" : undefined}
+      data-active={isActive ? "true" : "false"}
+      data-item-id={itemId}
     >
       {Children.map(children, (child) => {
         if (!child || typeof child !== "object" || !("type" in child))
@@ -159,6 +166,8 @@ interface DockItemType {
   label: string;
   onClick?: () => void;
   className?: string;
+  isActive?: boolean;
+  sectionId?: string;
 }
 
 interface DockProps {
@@ -212,7 +221,7 @@ export default function Dock({
           width="90vw"
           height={56}
           borderRadius={50}
-          borderWidth={0.07}
+          borderWidth={0.0}
           brightness={50}
           opacity={0.93}
           blur={15}
@@ -235,6 +244,8 @@ export default function Dock({
                 key={index}
                 onClick={item.onClick}
                 className={item.className}
+                isActive={item.isActive}
+                itemId={item.sectionId}
                 mouseX={mouseX}
                 spring={spring}
                 distance={distance}

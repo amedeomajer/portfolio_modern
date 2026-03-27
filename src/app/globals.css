@@ -265,6 +265,7 @@ body {
 
 .dock-glass-panel {
   /* GlassSurface handles the styling */
+  --dock-glass-panel-hook: 1;
 }
 
 .dock-items-container {
@@ -303,6 +304,16 @@ body {
 .dock-item:focus-visible {
   outline: 2px solid var(--text-muted);
   outline-offset: 2px;
+}
+
+/* Active Dock item hook (intentionally unstyled). */
+.dock-item--active,
+.dock-item[data-active="true"] {
+  --dock-item-active-hook: 1;
+  box-shadow:
+    inset 0 3px 3px rgba(255 255 255 / 0.56),
+    0 0 20px rgba(255, 255, 255, 0.05);
+  transition: all 500ms ease-in-out;
 }
 
 .dock-icon {
