@@ -179,6 +179,7 @@ interface DockProps {
   panelHeight?: number;
   dockHeight?: number;
   baseItemSize?: number;
+  isVisible?: boolean;
 }
 
 export default function Dock({
@@ -190,6 +191,7 @@ export default function Dock({
   panelHeight = 80,
   dockHeight = 256,
   baseItemSize = 45,
+  isVisible = true,
 }: DockProps) {
   const mouseX = useMotionValue(Infinity);
   const isHovered = useMotionValue(0);
@@ -206,7 +208,11 @@ export default function Dock({
       style={{ height, scrollbarWidth: "none" }}
       className="dock-outer"
     >
-      <div
+      <motion.div
+        initial={false}
+        style={{ x: "-50%" }}
+        animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: -28 }}
+        transition={{ duration: 0.45, ease: "easeOut" }}
         className={`dock-panel-wrapper ${className}`}
         onMouseMove={(e) => {
           isHovered.set(1);
@@ -280,7 +286,7 @@ export default function Dock({
             </DockItem>
           </div>
         </GlassSurface>
-      </div>
+      </motion.div>
     </motion.div>
   );
 }

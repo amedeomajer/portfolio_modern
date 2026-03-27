@@ -2,6 +2,13 @@
 
 import { useState, useEffect } from "react";
 import dynamic from "next/dynamic";
+import { motion } from "framer-motion";
+import {
+  BG_FADE_MS,
+  HERO_INTRO_COMPLETE_EVENT,
+  INTRO_DARK_MS,
+  NAME_FADE_MS,
+} from "@/constants/introTimeline";
 import GlitchText from "./ui/GlitchText";
 import BlurText from "./ui/BlurText";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -22,6 +29,9 @@ const _Logo3DViewer = dynamic(
 
 const Hero = () => {
   const [showScrollIndicator, setShowScrollIndicator] = useState(true);
+  const [showName, setShowName] = useState(false);
+  const [showSubtitle, setShowSubtitle] = useState(false);
+  const [showScrollCta, setShowScrollCta] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -34,6 +44,21 @@ const Hero = () => {
 
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  useEffect(() => {
+    const nameTimer = window.setTimeout(() => {
+      setShowName(true);
+    }, INTRO_DARK_MS);
+
+    const subtitleTimer = window.setTimeout(() => {
+      setShowSubtitle(true);
+    }, INTRO_DARK_MS + NAME_FADE_MS + BG_FADE_MS);
+
+    return () => {
+      window.clearTimeout(nameTimer);
+      window.clearTimeout(subtitleTimer);
+    };
   }, []);
 
   const scrollToAbout = () => {
@@ -61,48 +86,77 @@ const Hero = () => {
           className="h-[200px] md:h-[280px] w-full max-w-[400px] mb-4"
         /> */}
 
-        <div className="flex mb-4 glitch-group cursor-default">
-          <GlitchText
-            speed={1.2}
-            enableShadows={true}
-            enableOnHover={false}
-            className="font-bricolage font-extrabold"
+        {showName && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: NAME_FADE_MS / 1000, ease: "easeOut" }}
+            className="flex mb-4 glitch-group cursor-default"
           >
-            Amedeo
-          </GlitchText>
-          <GlitchText
-            speed={1.1}
-            enableShadows={true}
-            enableOnHover={false}
-            className="font-syne"
-          >
-            MAJER
-          </GlitchText>
-        </div>
+            <GlitchText
+              speed={1.2}
+              enableShadows={true}
+              enableOnHover={true}
+              className="font-bricolage font-extrabold"
+            >
+              Amedeo
+            </GlitchText>
+            <GlitchText
+              speed={1.1}
+              enableShadows={true}
+              enableOnHover={true}
+              className="font-syne"
+            >
+              MAJER
+            </GlitchText>
+          </motion.div>
+        )}
 
-        <BlurText
-          text="Full-Stack Web Developer"
-          delay={100}
-          animateBy="words"
-          direction="top"
-          className="type-section-subtitle text-text-muted font-light tracking-wider"
-        />
+        <div className="mt-2 min-h-[2.5rem] md:min-h-[3rem] flex items-start justify-center">
+          {showSubtitle && (
+            <BlurText
+              text="Full-Stack Web Developer"
+              delay={100}
+              animateBy="words"
+              direction="top"
+              className="type-section-subtitle text-text-muted font-light tracking-wider"
+              onAnimationComplete={() => {
+                setShowScrollCta(true);
+                window.dispatchEvent(new Event(HERO_INTRO_COMPLETE_EVENT));
+              }}
+            />
+          )}
+        </div>
       </div>
 
       {/* Scroll Indicator */}
-      <button
-        onClick={scrollToAbout}
-        className={`absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2 text-text-muted hover:text-white transition-all duration-300 cursor-pointer ${
-          showScrollIndicator ? "opacity-100" : "opacity-0 pointer-events-none"
-        }`}
-        aria-label="Scroll to about section"
-      >
-        <span className="text-xs uppercase tracking-widest">Scroll</span>
-        <FontAwesomeIcon
-          icon={faChevronDown}
-          className="w-4 h-4 scroll-indicator"
-        />
-      </button>
+      {showScrollCta && (
+        <button
+          onClick={scrollToAbout}
+          className={`absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2 text-text-muted hover:text-white transition-all duration-300 cursor-pointer ${
+            showScrollIndicator ? "opacity-100" : "opacity-0 pointer-events-none"
+          }`}
+          aria-label="Scroll to about section"
+        >
+          <BlurText
+            text="Scroll"
+            delay={100}
+            animateBy="words"
+            direction="top"
+            className="text-xs uppercase tracking-widest"
+          />
+          <motion.div
+            initial={{ filter: "blur(10px)", opacity: 0, y: -50 }}
+            animate={{ filter: "blur(0px)", opacity: 1, y: 0 }}
+            transition={{ duration: 0.35, ease: "easeOut", delay: 0.15 }}
+          >
+            <FontAwesomeIcon
+              icon={faChevronDown}
+              className="w-4 h-4 scroll-indicator"
+            />
+          </motion.div>
+        </button>
+      )}
     </section>
   );
 };

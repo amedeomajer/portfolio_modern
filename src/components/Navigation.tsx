@@ -1,6 +1,13 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import {
+  BG_FADE_MS,
+  HERO_INTRO_COMPLETE_EVENT,
+  INTRO_DARK_MS,
+  NAME_FADE_MS,
+  SUBTITLE_REVEAL_ESTIMATE_MS,
+} from "@/constants/introTimeline";
 import Dock from "./ui/Dock";
 import MobileMenu from "./MobileMenu";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -17,6 +24,7 @@ const SECTION_IDS = ["hero", "about", "work", "experience", "contact"] as const;
 const Navigation = () => {
   const [activeSection, setActiveSection] =
     useState<(typeof SECTION_IDS)[number]>("hero");
+  const [showDock, setShowDock] = useState(false);
 
   const scrollToSection = (sectionId: string) => {
     const section = document.getElementById(sectionId);
@@ -69,6 +77,21 @@ const Navigation = () => {
     return () => observer.disconnect();
   }, []);
 
+  useEffect(() => {
+    const revealDock = () => setShowDock(true);
+
+    window.addEventListener(HERO_INTRO_COMPLETE_EVENT, revealDock);
+
+    const fallbackDelayMs =
+      INTRO_DARK_MS + NAME_FADE_MS + BG_FADE_MS + SUBTITLE_REVEAL_ESTIMATE_MS;
+    const fallbackTimer = window.setTimeout(revealDock, fallbackDelayMs);
+
+    return () => {
+      window.removeEventListener(HERO_INTRO_COMPLETE_EVENT, revealDock);
+      window.clearTimeout(fallbackTimer);
+    };
+  }, []);
+
   const dockItems = [
     {
       icon: <FontAwesomeIcon icon={faHome} className="w-5 h-5" />,
@@ -109,7 +132,7 @@ const Navigation = () => {
 
   return (
     <>
-      <Dock items={dockItems} />
+      <Dock items={dockItems} isVisible={showDock} />
       <MobileMenu />
     </>
   );

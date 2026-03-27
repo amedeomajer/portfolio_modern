@@ -1,6 +1,13 @@
 "use client";
 
+import { motion } from "framer-motion";
 import { useBackground, BackgroundType } from "@/context/BackgroundContext";
+import {
+  BG_FADE_MS,
+  BG_TARGET_OPACITY,
+  INTRO_DARK_MS,
+  NAME_FADE_MS,
+} from "@/constants/introTimeline";
 import Waves from "./ui/Waves";
 import Aurora from "./ui/Aurora";
 import { LiquidChrome } from "./ui/LiquidChrome";
@@ -76,7 +83,20 @@ const FixedBackground = () => {
     return null;
   }
 
-  return <div className="fixed inset-0 z-0 opacity-55">{backgrounds[background]}</div>;
+  return (
+    <motion.div
+      className="fixed inset-0 z-0"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: BG_TARGET_OPACITY }}
+      transition={{
+        delay: (INTRO_DARK_MS + NAME_FADE_MS) / 1000,
+        duration: BG_FADE_MS / 1000,
+        ease: "easeOut",
+      }}
+    >
+      {backgrounds[background]}
+    </motion.div>
+  );
 };
 
 export default FixedBackground;
