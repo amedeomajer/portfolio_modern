@@ -749,21 +749,9 @@ body {
   display: none;
 }
 
-/* Mobile Menu */
-.mobile-menu-wrapper {
-  position: fixed;
-  bottom: 1rem;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 1000;
-  display: none;
-}
+/* Mobile menu shell + FAB: layout in MobileMenu.tsx (.mobile-menu-root) */
 
 @media (max-width: 569px) {
-  .mobile-menu-wrapper {
-    display: block;
-  }
-
   .dock-panel-wrapper {
     display: none;
   }
@@ -780,46 +768,4 @@ body {
 
 .mobile-menu-toggle:hover {
   transform: scale(1.05);
-}
-
-.mobile-menu-dropdown {
-  position: absolute;
-  bottom: 100%;
-  left: 50%;
-  transform: translateX(-50%);
-  margin-bottom: 0.75rem;
-  min-width: 220px;
-}
-
-.mobile-menu-item {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  width: 100%;
-  padding: 0.75rem 1rem;
-  text-align: left;
-  font-size: 0.875rem;
-  color: var(--text-primary);
-  border-radius: 0.75rem;
-  transition: background-color 0.15s ease;
-}
-
-.mobile-menu-item:hover {
-  background: rgba(255, 255, 255, 0.08);
-}
-
-.mobile-menu-subitem {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  width: 100%;
-  padding: 0.5rem 0.75rem;
-  text-align: left;
-  font-size: 0.8125rem;
-  border-radius: 0.5rem;
-  transition: background-color 0.15s ease;
-}
-
-.mobile-menu-subitem:hover {
-  background: rgba(255, 255, 255, 0.05);
 }
