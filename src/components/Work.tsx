@@ -84,6 +84,7 @@ const ProjectCard = ({
 
 const Work = () => {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+  const [drawerOpen, setDrawerOpen] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(0);
 
   const [emblaRef, emblaApi] = useEmblaCarousel({
@@ -130,101 +131,106 @@ const Work = () => {
       className="section flex flex-col items-center justify-center py-20 px-space-5"
     >
       <Drawer
-        open={!!selectedProject}
-        onOpenChange={(open) => {
+        open={drawerOpen}
+        onOpenChange={setDrawerOpen}
+        onAnimationEnd={(open) => {
           if (!open) setSelectedProject(null);
         }}
       >
-        {selectedProject && (
-          <DrawerContent className="max-h-full bg-bg-black/95 backdrop-blur-xl border-t border-glass-border container mx-auto min-h-[90%] md:bottom-0 md:max-h-[calc(100vh-90px)]">
-            <DrawerClose>
-              <div className="w-full rounded-t-lg pt-4 bounce-once">
-                <FontAwesomeIcon icon={faChevronDown} className="w-4 h-4" />
-              </div>
-            </DrawerClose>
-            <DrawerHeader>
-              <DrawerTitle className="text-center text-xl md:text-2xl">
-                {selectedProject.url ? (
-                  <a
-                    href={selectedProject.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="underline underline-offset-4 hover:text-glow transition-all"
-                  >
-                    {selectedProject.name}
-                    <FontAwesomeIcon icon={faLink} className="ml-2 w-4 h-4" />
-                  </a>
-                ) : (
-                  selectedProject.name
-                )}
-              </DrawerTitle>
-            </DrawerHeader>
-            <div
-              className="overflow-y-auto flex-1 pb-20"
-              onClick={() => setSelectedProject(null)}
-            >
-              <div
-                className="p-space-5 w-full container mx-auto lg:max-w-[50%]"
-                onClick={(e) => e.stopPropagation()}
-              >
-                <div className="rounded-lg overflow-hidden border border-glass-border mb-space-6">
-                  <Image
-                    src={`/images/${selectedProject.image}`}
-                    alt={selectedProject.name}
-                    width={800}
-                    height={600}
-                    className="w-full h-auto grayscale"
-                  />
-                </div>
-
-                <div className="rounded-2xl bg-black/70 p-space-6 space-y-space-6 shadow-[0_12px_30px_rgba(0,0,0,0.35)]">
-                  <p className="text-white/80 leading-relaxed">
-                    {selectedProject.longDescription.intro}
-                  </p>
-
-                  <div>
-                    <h3 className="text-lg font-semibold mb-space-3">
-                      My Contributions
-                    </h3>
-                    <ul className="space-y-3">
-                      {selectedProject.longDescription.contributions.map(
-                        (contribution) => (
-                          <li
-                            key={contribution.title}
-                            className="text-white/80"
-                          >
-                            <strong className="text-white">
-                              {contribution.title}:
-                            </strong>{" "}
-                            {contribution.description}
-                          </li>
-                        ),
-                      )}
-                    </ul>
+        <DrawerContent className="max-h-full bg-bg-black/95 backdrop-blur-xl border-t border-glass-border container mx-auto min-h-[90%] md:bottom-0 md:max-h-[calc(100vh-90px)]">
+            {selectedProject ? (
+              <>
+                <DrawerClose>
+                  <div className="w-full rounded-t-lg pt-4 bounce-once">
+                    <FontAwesomeIcon icon={faChevronDown} className="w-4 h-4" />
                   </div>
-
-                  <div>
-                    <h3 className="text-lg font-semibold mb-space-3">Impact</h3>
-                    <p className="text-white/80 leading-relaxed">
-                      {selectedProject.longDescription.impact}
-                    </p>
-                  </div>
-
-                  <div className="flex flex-wrap gap-2 pt-space-4 border-t border-glass-border">
-                    {selectedProject.tech.map((tech) => (
-                      <span
-                        key={tech}
-                        className="text-sm px-3 py-1.5 rounded-md border border-glass-border bg-glass"
+                </DrawerClose>
+                <DrawerHeader>
+                  <DrawerTitle className="text-center text-xl md:text-2xl">
+                    {selectedProject.url ? (
+                      <a
+                        href={selectedProject.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="underline underline-offset-4 hover:text-glow transition-all"
                       >
-                        {tech}
-                      </span>
-                    ))}
+                        {selectedProject.name}
+                        <FontAwesomeIcon icon={faLink} className="ml-2 w-4 h-4" />
+                      </a>
+                    ) : (
+                      selectedProject.name
+                    )}
+                  </DrawerTitle>
+                </DrawerHeader>
+                <div
+                  className="overflow-y-auto flex-1 pb-20"
+                  onClick={() => setDrawerOpen(false)}
+                >
+                  <div
+                    className="p-space-5 w-full container mx-auto lg:max-w-[50%]"
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    <div className="rounded-lg overflow-hidden border border-glass-border mb-space-6">
+                      <Image
+                        src={`/images/${selectedProject.image}`}
+                        alt={selectedProject.name}
+                        width={800}
+                        height={600}
+                        className="w-full h-auto grayscale"
+                      />
+                    </div>
+
+                    <div className="rounded-2xl bg-black/70 p-space-6 space-y-space-6 shadow-[0_12px_30px_rgba(0,0,0,0.35)]">
+                      <p className="text-white/80 leading-relaxed">
+                        {selectedProject.longDescription.intro}
+                      </p>
+
+                      <div>
+                        <h3 className="text-lg font-semibold mb-space-3">
+                          My Contributions
+                        </h3>
+                        <ul className="space-y-3">
+                          {selectedProject.longDescription.contributions.map(
+                            (contribution) => (
+                              <li
+                                key={contribution.title}
+                                className="text-white/80"
+                              >
+                                <strong className="text-white">
+                                  {contribution.title}:
+                                </strong>{" "}
+                                {contribution.description}
+                              </li>
+                            ),
+                          )}
+                        </ul>
+                      </div>
+
+                      <div>
+                        <h3 className="text-lg font-semibold mb-space-3">
+                          Impact
+                        </h3>
+                        <p className="text-white/80 leading-relaxed">
+                          {selectedProject.longDescription.impact}
+                        </p>
+                      </div>
+
+                      <div className="flex flex-wrap gap-2 pt-space-4 border-t border-glass-border">
+                        {selectedProject.tech.map((tech) => (
+                          <span
+                            key={tech}
+                            className="text-sm px-3 py-1.5 rounded-md border border-glass-border bg-glass"
+                          >
+                            {tech}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </div>
+              </>
+            ) : null}
           </DrawerContent>
-        )}
 
         {/* Section Content */}
         <div className="relative z-10 w-full max-w-6xl mx-auto px-space-5">
@@ -250,7 +256,10 @@ const Work = () => {
                   >
                     <ProjectCard
                       project={project}
-                      onClick={() => setSelectedProject(project)}
+                      onClick={() => {
+                        setSelectedProject(project);
+                        setDrawerOpen(true);
+                      }}
                     />
                   </div>
                 ))}
