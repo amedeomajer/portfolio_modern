@@ -57,9 +57,7 @@ const BackgroundSwitcher = ({
   };
 
   // Menu position: above on mobile (dock at bottom), below on desktop (dock at top)
-  const menuPosition = isDesktop
-    ? "top-full mt-3 -left-[100%]"
-    : "bottom-full mb-3 left-[100%]";
+  const menuPosition = isDesktop ? "top-full mt-3" : "bottom-full mb-3";
 
   return (
     <div
@@ -90,7 +88,7 @@ const BackgroundSwitcher = ({
                   Background
                 </span>
               </div>
-              <div className="pb-1">
+              <div className="">
                 {backgroundOptions.map((option) => (
                   <button
                     key={option.value}
