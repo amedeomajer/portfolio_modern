@@ -29,7 +29,7 @@ const About = () => {
       <div className="w-full max-w-3xl mx-auto">
         {/* Double-bezel shell (outer) + glass core (inner) */}
         <motion.div
-          className="glass-card glass-card--primary effects-budget-soft rounded-[22px] p-space-6 md:p-space-8 w-full"
+          className="glass-card glass-card--primary effects-budget-soft glass-card-hover rounded-[22px] p-space-6 md:p-space-8 w-full"
           initial={{ opacity: 0, y: 36 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-80px" }}
