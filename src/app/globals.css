@@ -256,6 +256,18 @@ body {
   text-shadow: 0 0 8px rgba(255, 255, 255, 0.15);
 }
 
+/* Experience hover glow */
+.glow-hover {
+  box-shadow: 20px 0px 15px -25px rgba(255, 255, 255, 0) inset;
+  transition:
+    box-shadow 300ms ease-in-out,
+    border-color 300ms ease-in-out;
+}
+
+.glow-hover:hover {
+  box-shadow: 20px 0px 15px -25px rgba(255, 255, 255, 1) inset;
+}
+
 /* Hero name lockup responsiveness */
 .hero-name-lockup {
   max-width: calc(100vw - 4rem);
