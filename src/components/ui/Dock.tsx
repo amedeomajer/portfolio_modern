@@ -262,6 +262,7 @@ export default function Dock({
                 <DockLabel>{item.label}</DockLabel>
               </DockItem>
             ))}
+            <div className="h-full w-[0.1px] rounded-full border border-glass bg-glass"></div>
             <DockItem
               mouseX={mouseX}
               spring={spring}

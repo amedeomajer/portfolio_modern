@@ -57,9 +57,12 @@ const Hero = () => {
       setShowName(true);
     }, INTRO_DARK_MS);
 
-    const subtitleTimer = window.setTimeout(() => {
-      setShowSubtitle(true);
-    }, INTRO_DARK_MS + NAME_FADE_MS + BG_FADE_MS);
+    const subtitleTimer = window.setTimeout(
+      () => {
+        setShowSubtitle(true);
+      },
+      INTRO_DARK_MS + NAME_FADE_MS + BG_FADE_MS,
+    );
 
     return () => {
       window.clearTimeout(nameTimer);
@@ -105,8 +108,8 @@ const Hero = () => {
             className="hero-name-lockup flex w-full justify-center mb-4 glitch-group cursor-default"
           >
             <GlitchText
-              speed={1.2}
-              enableShadows={true}
+              speed={1}
+              enableShadows={false}
               enableOnHover={true}
               className="font-bricolage font-extrabold"
             >
@@ -145,7 +148,9 @@ const Hero = () => {
         <button
           onClick={scrollToAbout}
           className={`absolute bottom-48 md:bottom-8 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2 text-text-muted hover:text-white transition-all duration-500 ease-out-fluid cursor-pointer ${
-            showScrollIndicator ? "opacity-100" : "opacity-0 pointer-events-none"
+            showScrollIndicator
+              ? "opacity-100"
+              : "opacity-0 pointer-events-none"
           }`}
           aria-label="Scroll to about section"
         >

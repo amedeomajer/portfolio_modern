@@ -29,12 +29,12 @@ const carouselDotVisual = (active: boolean, size: "default" | "overlay") =>
     size === "overlay"
       ? active
         ? "h-1 w-1 scale-[1.65] bg-white shadow-[0_0_6px_rgba(255,255,255,0.55)]"
-        : "h-1 w-1 bg-white/22 ring-1 ring-inset ring-white/40 group-hover:bg-white/40 group-hover:ring-white/55"
+        : "h-1 w-1 bg-white/22 group-hover:bg-white/40"
       : "h-2.5 w-2.5 sm:h-3 sm:w-3",
     size === "default" &&
       (active
-        ? "scale-125 bg-white shadow-[0_0_14px_rgba(255,255,255,0.35)] ring-2 ring-white/25"
-        : "bg-white/[0.14] ring-1 ring-inset ring-white/55 group-hover:bg-white/25 group-hover:ring-white/70"),
+        ? "scale-125 bg-white shadow-[0_0_14px_rgba(255,255,255,0.35)]"
+        : "bg-white/[0.14] group-hover:bg-white/25 "),
   );
 
 const CarouselDot = ({
@@ -119,53 +119,46 @@ const ProjectCard = ({
   project: Project;
   onClick: () => void;
 }) => {
-  const projectContext = project.tech.slice(0, 2).join(" • ");
+  const projectContext =
+    project.tech.slice(0, 4).join(" • ") +
+    (project.tech.length > 4 ? ` • +${project.tech.length - 4}` : "");
 
   return (
     <div
-      className="cursor-pointer overflow-hidden group h-full rounded-2xl bg-zinc-950/90 ring-1 ring-white/[0.08] shadow-[0_16px_40px_rgba(0,0,0,0.45)] transition-[transform,box-shadow] duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:ring-white/[0.12] md:hover:scale-[1.008]"
+      className="cursor-pointer overflow-hidden group h-full rounded-2xl bg-transparent transition-[transform,box-shadow] duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:ring-white/[0.12] md:hover:scale-[1.008]"
       onClick={onClick}
     >
-      <div className="relative aspect-[4/3] sm:aspect-[16/10] md:aspect-auto md:h-72 lg:h-80 overflow-hidden rounded-t-2xl">
+      <div className="relative aspect-[4/3] sm:aspect-[16/10] md:aspect-auto md:h-72 lg:h-80 overflow-hidden rounded-t-2xl z-10">
         <Image
           src={`/images/${project.image}`}
           alt={project.imageAlt}
           fill
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 90vw, 72rem"
-          className="object-cover grayscale"
+          className="object-cover grayscale rounded-b-2xl"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/92 via-black/35 to-black/10" />
       </div>
 
-      <div className="border-t border-white/[0.06] bg-black/55 px-4 py-5 sm:px-5 sm:py-6 md:px-6 md:py-6 rounded-b-2xl">
-        <p className="mb-2.5 text-[10px] sm:text-xs uppercase tracking-[0.14em] sm:tracking-[0.16em] text-white/55">
-          {projectContext}
-        </p>
-        <h3 className="text-lg sm:text-xl md:text-2xl font-semibold tracking-tight mb-2.5 sm:mb-3 text-white group-hover:text-glow transition-[color,text-shadow] duration-500 ease-[cubic-bezier(0.32,0.72,0,1)]">
+      <div className="bg-black/80 pb-5 sm:pb-6 rounded-b-2xl">
+        <motion.div
+          initial={{ y: -45 }}
+          whileInView={{ y: -12 }}
+          viewport={{ once: true, amount: 0.55 }}
+          transition={{ duration: 0.55, ease: [0.32, 0.72, 0, 1], delay: 1 }}
+          className="relative h-11 md:px-6 sm:px-5 flex w-full px-4 py-2 rounded-b-2xl glass-card--primary z-0"
+        >
+          <p className="absolute bottom-2 text-[10px] sm:text-xs uppercase tracking-[0.14em] sm:tracking-[0.16em] text-white/55">
+            {projectContext}
+          </p>
+        </motion.div>
+        <h3 className="px-4 sm:px-5 md:px-6 text-lg sm:text-xl md:text-2xl font-semibold tracking-tight mb-2.5 sm:mb-3 text-white group-hover:text-glow transition-[color,text-shadow] duration-500 ease-[cubic-bezier(0.32,0.72,0,1)]">
           {project.name}
         </h3>
-        <p className="text-white/78 text-sm md:text-[0.9375rem] leading-relaxed line-clamp-3 sm:line-clamp-4 mb-4 sm:mb-5">
+        <p className="px-4 sm:px-5 md:px-6 text-white/78 text-sm md:text-[0.9375rem] leading-relaxed line-clamp-3 sm:line-clamp-4 mb-4 sm:mb-5">
           {project.placeholderDescription}
         </p>
 
-        <div className="flex flex-wrap gap-1.5 sm:gap-2 mb-4 sm:mb-5">
-          {project.tech.slice(0, 4).map((tech) => (
-            <span
-              key={tech}
-              className="text-[11px] sm:text-xs px-2 py-1 rounded-md bg-white/[0.08] text-white/75 ring-1 ring-white/[0.06]"
-            >
-              {tech}
-            </span>
-          ))}
-          {project.tech.length > 4 && (
-            <span className="text-[11px] sm:text-xs px-2 py-1 text-text-muted">
-              +{project.tech.length - 4}
-            </span>
-          )}
-        </div>
-
-        <div className="inline-flex items-center gap-2 text-sm font-medium text-white/88 pb-0.5">
-          <span>Open case study</span>
+        <div className="px-4 sm:px-5 md:px-6 inline-flex items-center gap-2 text-sm font-medium text-white/88 pb-0.5">
+          <span className="text-pretty mb-0.5">Open</span>
           <FontAwesomeIcon
             icon={faChevronRight}
             className="w-3 h-3 opacity-80 group-hover:translate-x-0.5 transition-transform duration-500 ease-[cubic-bezier(0.32,0.72,0,1)]"
@@ -313,7 +306,7 @@ const Work = () => {
                       {selectedProject.tech.map((tech) => (
                         <span
                           key={tech}
-                          className="text-sm px-3 py-1.5 rounded-md border border-glass-border bg-glass"
+                          className="text-sm px-3 py-1.5 rounded-md bg-glass"
                         >
                           {tech}
                         </span>
@@ -330,10 +323,14 @@ const Work = () => {
         <div className="relative z-10 w-full max-w-6xl mx-auto">
           <motion.h2
             className="type-section-title font-bold text-center mb-6 sm:mb-8 md:mb-10"
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: -10 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.55, ease: [0.32, 0.72, 0, 1] }}
+            transition={{
+              duration: 0.55,
+              ease: [0.32, 0.72, 0, 1],
+              delay: 0.5,
+            }}
           >
             My Work
           </motion.h2>
