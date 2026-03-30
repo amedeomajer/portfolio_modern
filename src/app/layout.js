@@ -1,10 +1,24 @@
 import './globals.css';
 import { Suspense } from 'react';
 import Loading from './loading';
-import { Darker_Grotesque } from 'next/font/google';
+import { Darker_Grotesque, Bricolage_Grotesque, Syne } from 'next/font/google';
 import { cn } from '@/lib/utils';
+import Providers from '@/components/Providers';
 
-const darkerGrotesque = Darker_Grotesque({ subsets: ['latin'] });
+const darkerGrotesque = Darker_Grotesque({
+  subsets: ['latin'],
+  variable: '--font-body',
+  display: 'swap',
+});
+const bricolageGrotesque = Bricolage_Grotesque({
+  subsets: ['latin'],
+  variable: '--font-bricolage'
+});
+const syne = Syne({
+  subsets: ['latin'],
+  weight: '800',
+  variable: '--font-syne'
+});
 
 export const metadata = {
   title: 'Amedeo Majer - Full-Stack Web Developer',
@@ -68,9 +82,6 @@ export const metadata = {
       'max-snippet': -1,
     },
   },
-  verification: {
-    // google: 'your-google-verification-code', // Add your Google Search Console verification code
-  },
 };
 
 export default function RootLayout({ children }) {
@@ -84,17 +95,23 @@ export default function RootLayout({ children }) {
         <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
         <link rel="manifest" href="/site.webmanifest" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta name="theme-color" content="#000000" />
+        <meta name="theme-color" content="#0a0a0a" />
         <meta name="color-scheme" content="dark" />
       </head>
       <Suspense fallback={<Loading />}>
         <body
           className={cn(
+            darkerGrotesque.variable,
             darkerGrotesque.className,
-            'bg-dark-holographic bg-cover bg-center bg-no-repeat bg-fixed'
+            bricolageGrotesque.variable,
+            syne.variable,
+            'bg-bg-black'
           )}
         >
-          {children}
+          <a href="#main-content" className="skip-link">
+            Skip to content
+          </a>
+          <Providers>{children}</Providers>
         </body>
       </Suspense>
     </html>

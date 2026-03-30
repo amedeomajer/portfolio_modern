@@ -1,0 +1,32 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(tree:*)",
+      "Bash(npm run lint:*)",
+      "Bash(npm run build:*)",
+      "WebFetch(domain:www.reactbits.dev)",
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "WebSearch",
+      "WebFetch(domain:cdn.jsdelivr.net)",
+      "Bash(npx jsrepo:*)",
+      "WebFetch(domain:api.github.com)",
+      "Bash(curl:*)",
+      "Bash(npm install:*)",
+      "Bash(npm ls:*)",
+      "WebFetch(domain:github.com)",
+      "Bash(npm uninstall:*)",
+      "Bash(pnpm ls:*)",
+      "Bash(pnpm install:*)",
+      "Bash(pnpm add:*)",
+      "Bash(pnpm remove:*)",
+      "WebFetch(domain:reactbits.dev)",
+      "mcp__plugin_playwright_playwright__browser_navigate",
+      "mcp__plugin_playwright_playwright__browser_press_key",
+      "WebFetch(domain:docs.fontawesome.com)",
+      "WebFetch(domain:motion.dev)",
+      "Bash(pnpm view:*)",
+      "Bash(pnpm build:*)",
+      "Bash(pnpm lint)"
+    ]
+  }
+}

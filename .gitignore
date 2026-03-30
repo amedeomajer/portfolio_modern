@@ -2,6 +2,7 @@
 
 # dependencies
 /node_modules
+/.pnpm-store/
 /.pnp
 .pnp.js
 .yarn/install-state.gz
@@ -36,3 +37,5 @@ yarn-error.log*
 next-env.d.ts
 
 .vscode
+
+*.personal.md
