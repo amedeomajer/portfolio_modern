@@ -138,7 +138,7 @@ const ProjectCard = ({
         />
       </div>
 
-      <div className="bg-black/80 pb-5 sm:pb-6 rounded-b-2xl">
+      <div className="bg-black/80 pb-5 sm:pb-6 rounded-b-2xl shadow-[0px_-19px_0px_0px_rgba(0,0,0,0.8)]">
         <motion.div
           initial={{ y: -45 }}
           whileInView={{ y: -12 }}
