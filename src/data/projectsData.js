@@ -1,5 +1,50 @@
 const projectsData = [
   {
+    name: "Pretty Sudoku",
+    placeholderDescription:
+      "A mobile Sudoku puzzle game with multiple difficulty levels, built with React Native and Expo.",
+    longDescription: {
+      intro:
+        "Pretty Sudoku is a mobile Sudoku app that generates puzzles across five difficulty levels — from Easy to Evil. It features a clean, customizable UI with light/dark themes, multiple font options, and haptic feedback for a polished mobile experience.",
+      contributions: [
+        {
+          title: "Puzzle Engine",
+          description:
+            "Built a Sudoku generation and solving engine using an AC3 constraint satisfaction algorithm, based on academic research, to generate and rate puzzle difficulty.",
+        },
+        {
+          title: "Game Persistence",
+          description:
+            "Implemented save/continue functionality, game history tracking, and statistics using AsyncStorage so players never lose progress.",
+        },
+        {
+          title: "Puzzle Caching",
+          description:
+            "Pre-generates puzzles per difficulty level using a caching system with React Context, ensuring instant puzzle availability without loading delays.",
+        },
+        {
+          title: "Theming System",
+          description:
+            "Created a full theme system supporting light and dark modes with multiple font options and consistent design tokens for colors, spacing, and typography.",
+        },
+      ],
+      impact:
+        "A fully functional mobile game published for iOS and Android, combining algorithmic puzzle generation with a smooth, customizable user experience.",
+    },
+    image: "pretty-sudoku.png",
+    imageAlt:
+      "Pretty Sudoku mobile app showing the app logo with hearts on its sides",
+    tech: [
+      "React Native",
+      "Expo",
+      "TypeScript",
+      "React Navigation",
+      "AsyncStorage",
+      "Jest",
+    ],
+    url: "https://apps.apple.com/fi/app/pretty-sudoku/id6760393246",
+  },
+  {
     name: "Hive Helsinki Alumni Certificates",
     placeholderDescription:
       "Official certificates, released to our alumni, that prove their graduation from Hive Helsinki.",
