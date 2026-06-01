@@ -1,4 +1,4 @@
-name: Dependabot CI
+name: CI
 
 on:
   pull_request:
@@ -8,8 +8,7 @@ permissions:
   contents: read
 
 jobs:
-  dependabot-checks:
-    if: github.actor == 'dependabot[bot]'
+  checks:
     runs-on: ubuntu-latest
     timeout-minutes: 20
 
