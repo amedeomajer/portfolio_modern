@@ -11,9 +11,9 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@fortawesome/fontawesome-svg-core": "^7.1.0",
-    "@fortawesome/free-brands-svg-icons": "^7.1.0",
-    "@fortawesome/free-solid-svg-icons": "^7.1.0",
+    "@fortawesome/fontawesome-svg-core": "^7.2.0",
+    "@fortawesome/free-brands-svg-icons": "^7.2.0",
+    "@fortawesome/free-solid-svg-icons": "^7.2.0",
     "@fortawesome/react-fontawesome": "^3.1.1",
     "@react-three/drei": "^10.7.7",
     "@react-three/fiber": "^9.5.0",
@@ -30,19 +30,19 @@
     "vaul": "^1.1.2"
   },
   "devDependencies": {
-    "@eslint/compat": "^2.0.1",
-    "@eslint/eslintrc": "^3.3.3",
-    "@types/node": "^22.19.7",
+    "@eslint/compat": "^2.1.0",
+    "@eslint/eslintrc": "^3.3.5",
+    "@types/node": "^25.6.2",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
     "@types/three": "^0.182.0",
-    "@typescript-eslint/eslint-plugin": "^8.53.0",
-    "@typescript-eslint/parser": "^8.53.0",
-    "autoprefixer": "^10.4.23",
+    "@typescript-eslint/eslint-plugin": "^8.59.2",
+    "@typescript-eslint/parser": "^8.59.2",
+    "autoprefixer": "^10.5.0",
     "eslint": "^9.39.2",
     "eslint-config-next": "15.5.9",
-    "jsrepo": "^3.0.11",
-    "postcss": "^8.5.10",
+    "jsrepo": "^3.7.0",
+    "postcss": "^8.5.14",
     "tailwindcss": "^3.4.19",
     "typescript": "^5.9.3"
   }
