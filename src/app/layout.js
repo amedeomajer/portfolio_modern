@@ -4,6 +4,7 @@ import Loading from './loading';
 import { Darker_Grotesque, Bricolage_Grotesque, Syne } from 'next/font/google';
 import { cn } from '@/lib/utils';
 import Providers from '@/components/Providers';
+import { Analytics } from "@vercel/analytics/next"
 
 const darkerGrotesque = Darker_Grotesque({
   subsets: ['latin'],
@@ -98,6 +99,7 @@ export default function RootLayout({ children }) {
         <meta name="theme-color" content="#0a0a0a" />
         <meta name="color-scheme" content="dark" />
       </head>
+      <Analytics />
       <Suspense fallback={<Loading />}>
         <body
           className={cn(
