@@ -1,29 +1,19 @@
-import { dirname } from "path";
-import { fileURLToPath } from "url";
-import { FlatCompat } from "@eslint/eslintrc";
-import { fixupConfigRules, fixupPluginRules } from "@eslint/compat";
-import tseslint from "@typescript-eslint/eslint-plugin";
-import tsparser from "@typescript-eslint/parser";
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-
-const compat = new FlatCompat({
-  baseDirectory: __dirname,
-});
+import nextCoreWebVitals from "eslint-config-next/core-web-vitals";
 
 const eslintConfig = [
-  ...fixupConfigRules(compat.extends("next/core-web-vitals")),
+  ...nextCoreWebVitals,
+  {
+    rules: {
+      // New in eslint-plugin-react-hooks v7; existing code predates these checks.
+      "react-hooks/set-state-in-effect": "off",
+      "react-hooks/refs": "off",
+      "react-hooks/purity": "off",
+      "react-hooks/immutability": "off",
+    },
+  },
   {
     files: ["**/*.ts", "**/*.tsx"],
-    plugins: {
-      "@typescript-eslint": fixupPluginRules(tseslint),
-    },
-    languageOptions: {
-      parser: tsparser,
-    },
     rules: {
-      // Warn about unused variables and functions
       "@typescript-eslint/no-unused-vars": [
         "warn",
         {
