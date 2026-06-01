@@ -7,7 +7,7 @@
     "dev": "next dev -H 0.0.0.0",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
+    "lint": "eslint . --ignore-pattern .next",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
@@ -20,7 +20,7 @@
     "clsx": "^2.1.1",
     "embla-carousel-react": "^8.6.0",
     "framer-motion": "^12.26.2",
-    "next": "^15.5.18",
+    "next": "^16.2.6",
     "ogl": "^1.0.11",
     "react": "^19.2.6",
     "react-dom": "^19.2.6",
