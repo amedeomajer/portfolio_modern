@@ -1,11 +1,666 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Detective</title>
-  </head>
-  <body>
-    <h1>Detective</h1>
-  </body>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>🕵️ Clue Detective Notepad</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: 'Georgia', 'Times New Roman', serif;
+            background: #2c1810;
+            /* Mahogany wood background */
+            background-image: 
+                repeating-linear-gradient(90deg, 
+                    rgba(60, 30, 20, 0.3) 0px, 
+                    rgba(40, 20, 15, 0.3) 2px, 
+                    rgba(80, 40, 30, 0.2) 4px, 
+                    rgba(40, 20, 15, 0.3) 6px,
+                    rgba(60, 30, 20, 0.3) 8px),
+                repeating-linear-gradient(0deg, 
+                    rgba(50, 25, 18, 0.2) 0px, 
+                    rgba(70, 35, 25, 0.2) 3px, 
+                    rgba(40, 20, 15, 0.2) 6px,
+                    rgba(70, 35, 25, 0.2) 9px);
+            background-color: #2c1810;
+            min-height: 100vh;
+            padding: 12px;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        /* Felt table edge effect */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(ellipse at center, 
+                    rgba(30, 80, 40, 0.15) 0%, 
+                    transparent 70%),
+                radial-gradient(ellipse at 20% 80%, 
+                    rgba(20, 60, 30, 0.1) 0%, 
+                    transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 26px;
+            letter-spacing: 4px;
+            color: #d4c9a8;
+            text-shadow: 
+                0 2px 4px rgba(0,0,0,0.8),
+                0 0 20px rgba(180, 150, 100, 0.15);
+            border-bottom: 3px solid #8b7355;
+            padding-bottom: 12px;
+            margin-bottom: 16px;
+            font-family: 'Georgia', serif;
+            position: relative;
+            z-index: 1;
+            background: linear-gradient(180deg, #d4c9a8, #b8a88a);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .grid-container {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            flex: 1;
+            position: relative;
+            z-index: 1;
+        }
+
+        .card {
+            background: #1a6b3a;
+            /* Rich green felt */
+            background-image: 
+                radial-gradient(ellipse at 30% 40%, rgba(40, 120, 60, 0.3) 0%, transparent 60%),
+                radial-gradient(ellipse at 70% 60%, rgba(30, 100, 50, 0.2) 0%, transparent 50%),
+                repeating-linear-gradient(45deg, 
+                    rgba(20, 80, 40, 0.05) 0px,
+                    rgba(20, 80, 40, 0.05) 2px,
+                    rgba(30, 100, 50, 0.03) 2px,
+                    rgba(30, 100, 50, 0.03) 4px);
+            background-color: #1a6b3a;
+            border-radius: 12px;
+            padding: 18px; /* Increased padding to give the content more space */
+            border: 4px solid #5a3a2a;
+            box-shadow: 
+                0 8px 32px rgba(0,0,0,0.7),
+                inset 0 1px 0 rgba(255,255,255,0.1),
+                inset 0 -2px 0 rgba(0,0,0,0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Felt texture overlay */
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                repeating-linear-gradient(0deg, 
+                    transparent 0px,
+                    transparent 3px,
+                    rgba(0,0,0,0.03) 3px,
+                    rgba(0,0,0,0.03) 4px);
+            pointer-events: none;
+            border-radius: 8px;
+            z-index: 0;
+        }
+
+        /* Wood trim on cards */
+        .card::after {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            border-radius: 14px;
+            background: linear-gradient(135deg, #6b4a3a, #3a2518, #6b4a3a);
+            z-index: -1;
+            opacity: 0.5;
+        }
+
+        .card h2 {
+            font-size: 17px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: #e8dcc8;
+            margin-bottom: 10px;
+            padding-left: 10px;
+            font-family: 'Georgia', serif;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+            position: relative;
+            z-index: 2; /* Ensures title stays above any shadows/corners */
+        }
+
+        .item-list {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .item-row {
+            display: flex;
+            align-items: center;
+            background: rgba(0,0,0,0.3);
+            border-radius: 8px;
+            padding: 8px 10px;
+            border: 1px solid rgba(255,255,255,0.08);
+            min-height: 48px;
+            transition: all 0.2s;
+            backdrop-filter: blur(2px);
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.05);
+        }
+
+        .item-row:active {
+            background: rgba(0,0,0,0.4);
+            transform: scale(0.99);
+        }
+
+        .item-name {
+            flex: 1;
+            font-size: 15px;
+            font-weight: bold;
+            letter-spacing: 0.5px;
+            padding-right: 8px;
+            min-width: 0;
+            word-break: break-word;
+            color: #f0e8d8;
+            text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+            font-family: 'Georgia', serif;
+        }
+
+        .check-grid {
+            display: flex;
+            gap: 6px;
+            flex-shrink: 0;
+        }
+
+        .check-cell {
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            background: rgba(0,0,0,0.4);
+            border: 2px solid rgba(200, 180, 140, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            font-weight: bold;
+            color: rgba(200, 180, 140, 0.2);
+            transition: all 0.15s ease;
+            cursor: pointer;
+            touch-action: manipulation;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.3);
+            text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+        }
+
+        .check-cell:active {
+            transform: scale(0.85);
+            background: rgba(0,0,0,0.6);
+        }
+
+        .check-cell.checked {
+            background: radial-gradient(circle at 40% 35%, #4a8a4a, #1a4a1a);
+            border-color: #d4a050;
+            color: #ffd700;
+            box-shadow: 
+                0 0 15px rgba(212, 160, 80, 0.3),
+                inset 0 2px 4px rgba(255,255,255,0.1);
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+        }
+
+        /* Different colored checkmarks for visual variety */
+        .item-row:nth-child(1) .check-cell.checked { border-color: #d4a050; }
+        .item-row:nth-child(2) .check-cell.checked { border-color: #d47050; }
+        .item-row:nth-child(3) .check-cell.checked { border-color: #50a0d4; }
+        .item-row:nth-child(4) .check-cell.checked { border-color: #80d450; }
+        .item-row:nth-child(5) .check-cell.checked { border-color: #d450a0; }
+        .item-row:nth-child(6) .check-cell.checked { border-color: #d4d050; }
+
+        .action-bar {
+            margin-top: 16px;
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            padding: 8px 0;
+            flex-wrap: wrap;
+            position: relative;
+            z-index: 1;
+        }
+
+        .action-btn {
+            background: linear-gradient(180deg, #3a2518, #2a1810);
+            border: 2px solid #6b4a3a;
+            color: #d4c9a8;
+            padding: 12px 20px;
+            border-radius: 30px;
+            font-family: 'Georgia', serif;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s;
+            letter-spacing: 1px;
+            flex: 1;
+            min-width: 100px;
+            max-width: 150px;
+            touch-action: manipulation;
+            text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+            box-shadow: 
+                0 4px 12px rgba(0,0,0,0.4),
+                inset 0 1px 0 rgba(255,255,255,0.1);
+        }
+
+        .action-btn:active {
+            transform: scale(0.95);
+            background: linear-gradient(180deg, #2a1810, #1a0e08);
+        }
+
+        .action-btn.danger {
+            border-color: #8b3a2a;
+            color: #d4a090;
+            background: linear-gradient(180deg, #4a2a1a, #2a1810);
+        }
+
+        .action-btn.danger:active {
+            background: linear-gradient(180deg, #2a1810, #1a0e08);
+        }
+
+        .footer-note {
+            margin-top: 12px;
+            text-align: center;
+            font-size: 11px;
+            color: #8b7355;
+            letter-spacing: 1px;
+            font-family: 'Georgia', serif;
+            text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ----- FIXED DECORATIVE CORNER ACCENTS ----- */
+        .card .corner {
+            position: absolute;
+            width: 18px;
+            height: 18px;
+            border-color: #d4a050;
+            border-style: solid;
+            border-width: 0;
+            opacity: 0.35;
+            pointer-events: none;
+            z-index: 3; /* Keeps corners above the felt overlay */
+        }
+
+        /* Moved corners to 12px to sit outside the content (which now starts at 18px) */
+        .card .corner.tl { top: 12px; left: 12px; border-top-width: 2px; border-left-width: 2px; }
+        .card .corner.tr { top: 12px; right: 12px; border-top-width: 2px; border-right-width: 2px; }
+        .card .corner.bl { bottom: 12px; left: 12px; border-bottom-width: 2px; border-left-width: 2px; }
+        .card .corner.br { bottom: 12px; right: 12px; border-bottom-width: 2px; border-right-width: 2px; }
+
+        /* Felt shadow on cards */
+        .card .felt-shadow {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(ellipse at 50% 100%, rgba(0,0,0,0.2) 0%, transparent 60%);
+            pointer-events: none;
+            border-radius: 8px;
+            z-index: 2;
+        }
+
+        ::-webkit-scrollbar {
+            width: 4px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #2c1810;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #6b4a3a;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>🕵️ CLUE NOTES</h1>
+
+    <div class="grid-container">
+        <!-- SUSPECTS CARD -->
+        <div class="card">
+            <div class="corner tl"></div>
+            <div class="corner tr"></div>
+            <div class="corner bl"></div>
+            <div class="corner br"></div>
+            <div class="felt-shadow"></div>
+            <h2>🔍 Suspects</h2>
+            <div class="item-list" id="suspectsList">
+                <!-- JS will fill this -->
+            </div>
+        </div>
+
+        <!-- WEAPONS CARD -->
+        <div class="card">
+            <div class="corner tl"></div>
+            <div class="corner tr"></div>
+            <div class="corner bl"></div>
+            <div class="corner br"></div>
+            <div class="felt-shadow"></div>
+            <h2>⚔️ Weapons</h2>
+            <div class="item-list" id="weaponsList">
+                <!-- JS will fill this -->
+            </div>
+        </div>
+
+        <!-- LOCATIONS CARD -->
+        <div class="card">
+            <div class="corner tl"></div>
+            <div class="corner tr"></div>
+            <div class="corner bl"></div>
+            <div class="corner br"></div>
+            <div class="felt-shadow"></div>
+            <h2>🏚️ Locations</h2>
+            <div class="item-list" id="locationsList">
+                <!-- JS will fill this -->
+            </div>
+        </div>
+    </div>
+
+    <!-- ACTION BUTTONS -->
+    <div class="action-bar">
+        <button class="action-btn" id="clearChecksBtn">🧹 Clear All</button>
+        <button class="action-btn danger" id="resetBtn">🔄 New Game</button>
+    </div>
+
+    <div class="footer-note">
+        ✦ Tap a circle to mark • Double-tap to clear row ✦
+    </div>
+
+    <script>
+        (function() {
+            // -------- CONFIGURATION --------
+            const DEFAULT_SUSPECTS = [
+                "Colonel Mustard",
+                "Professor Plum",
+                "Reverend Green",
+                "Mrs. Peacock",
+                "Miss Scarlett",
+                "Mrs. White"
+            ];
+
+            const DEFAULT_WEAPONS = [
+                "Dagger",
+                "Candlestick",
+                "Revolver",
+                "Rope",
+                "Lead Piping",
+                "Spanner"
+            ];
+            
+            const DEFAULT_LOCATIONS = [
+                "Hall",
+                "Lounge",
+                "Dining Room",
+                "Kitchen",
+                "Ballroom",
+                "Conservatory",
+                "Billiard Room",
+                "Library",
+                "Study"
+            ];
+
+            const NUM_CELLS = 4;
+
+            // -------- LOCAL STORAGE KEYS --------
+            const STORAGE_KEY_SUSPECTS = 'clue_grid_suspects';
+            const STORAGE_KEY_WEAPONS = 'clue_grid_weapons';
+            const STORAGE_KEY_LOCATIONS = 'clue_grid_locations';
+
+            // -------- STATE --------
+            let suspects = [];
+            let weapons = [];
+            let locations = [];
+
+            // -------- DOM REFERENCES --------
+            const suspectsList = document.getElementById('suspectsList');
+            const weaponsList = document.getElementById('weaponsList');
+            const locationsList = document.getElementById('locationsList');
+
+            // -------- HELPER FUNCTIONS --------
+            function createDefaultItem(name) {
+                return { name: name, checks: Array(NUM_CELLS).fill(false) };
+            }
+
+            function loadFromStorage() {
+                const storedSuspects = localStorage.getItem(STORAGE_KEY_SUSPECTS);
+                if (storedSuspects) {
+                    try {
+                        suspects = JSON.parse(storedSuspects);
+                    } catch (e) {
+                        suspects = DEFAULT_SUSPECTS.map(createDefaultItem);
+                    }
+                } else {
+                    suspects = DEFAULT_SUSPECTS.map(createDefaultItem);
+                }
+
+                const storedWeapons = localStorage.getItem(STORAGE_KEY_WEAPONS);
+                if (storedWeapons) {
+                    try {
+                        weapons = JSON.parse(storedWeapons);
+                    } catch (e) {
+                        weapons = DEFAULT_WEAPONS.map(createDefaultItem);
+                    }
+                } else {
+                    weapons = DEFAULT_WEAPONS.map(createDefaultItem);
+                }
+
+                const storedLocations = localStorage.getItem(STORAGE_KEY_LOCATIONS);
+                if (storedLocations) {
+                    try {
+                        locations = JSON.parse(storedLocations);
+                    } catch (e) {
+                        locations = DEFAULT_LOCATIONS.map(createDefaultItem);
+                    }
+                } else {
+                    locations = DEFAULT_LOCATIONS.map(createDefaultItem);
+                }
+            }
+
+            function saveToStorage() {
+                localStorage.setItem(STORAGE_KEY_SUSPECTS, JSON.stringify(suspects));
+                localStorage.setItem(STORAGE_KEY_WEAPONS, JSON.stringify(weapons));
+                localStorage.setItem(STORAGE_KEY_LOCATIONS, JSON.stringify(locations));
+            }
+
+            // -------- RENDER FUNCTIONS --------
+            function renderList(listElement, items, type) {
+                if (!listElement) return;
+
+                listElement.innerHTML = '';
+
+                items.forEach((item, index) => {
+                    if (!item.checks || item.checks.length !== NUM_CELLS) {
+                        item.checks = Array(NUM_CELLS).fill(false);
+                    }
+
+                    const row = document.createElement('div');
+                    row.className = 'item-row';
+
+                    const nameDiv = document.createElement('div');
+                    nameDiv.className = 'item-name';
+                    nameDiv.textContent = item.name || 'Unknown';
+                    row.appendChild(nameDiv);
+
+                    const checkGrid = document.createElement('div');
+                    checkGrid.className = 'check-grid';
+
+                    for (let i = 0; i < NUM_CELLS; i++) {
+                        const cell = document.createElement('div');
+                        cell.className = 'check-cell';
+                        if (item.checks[i]) {
+                            cell.classList.add('checked');
+                            cell.textContent = '✦';
+                        }
+                        cell.dataset.itemIndex = index;
+                        cell.dataset.cellIndex = i;
+
+                        cell.addEventListener('click', function(e) {
+                            e.stopPropagation();
+                            e.preventDefault();
+                            
+                            const itemIdx = parseInt(this.dataset.itemIndex);
+                            const cellIdx = parseInt(this.dataset.cellIndex);
+                            
+                            let targetItems;
+                            if (type === 'suspects') targetItems = suspects;
+                            else if (type === 'weapons') targetItems = weapons;
+                            else if (type === 'locations') targetItems = locations;
+                            
+                            if (targetItems && targetItems[itemIdx]) {
+                                targetItems[itemIdx].checks[cellIdx] = !targetItems[itemIdx].checks[cellIdx];
+                                saveToStorage();
+                                renderAll();
+                            }
+                        });
+
+                        let lastTap = 0;
+                        cell.addEventListener('touchstart', function(e) {
+                            const now = Date.now();
+                            if (now - lastTap < 300) {
+                                e.preventDefault();
+                                const itemIdx = parseInt(this.dataset.itemIndex);
+                                let targetItems;
+                                if (type === 'suspects') targetItems = suspects;
+                                else if (type === 'weapons') targetItems = weapons;
+                                else if (type === 'locations') targetItems = locations;
+                                
+                                if (targetItems && targetItems[itemIdx]) {
+                                    targetItems[itemIdx].checks = Array(NUM_CELLS).fill(false);
+                                    saveToStorage();
+                                    renderAll();
+                                }
+                                lastTap = 0;
+                            } else {
+                                lastTap = now;
+                            }
+                        }, { passive: false });
+
+                        cell.addEventListener('dblclick', function(e) {
+                            e.preventDefault();
+                            const itemIdx = parseInt(this.dataset.itemIndex);
+                            let targetItems;
+                            if (type === 'suspects') targetItems = suspects;
+                            else if (type === 'weapons') targetItems = weapons;
+                            else if (type === 'locations') targetItems = locations;
+                            
+                            if (targetItems && targetItems[itemIdx]) {
+                                targetItems[itemIdx].checks = Array(NUM_CELLS).fill(false);
+                                saveToStorage();
+                                renderAll();
+                            }
+                        });
+
+                        checkGrid.appendChild(cell);
+                    }
+
+                    row.appendChild(checkGrid);
+                    listElement.appendChild(row);
+                });
+            }
+
+            function renderAll() {
+                renderList(suspectsList, suspects, 'suspects');
+                renderList(weaponsList, weapons, 'weapons');
+                renderList(locationsList, locations, 'locations');
+            }
+
+            // -------- ACTION FUNCTIONS --------
+            function clearAllChecks() {
+                suspects = suspects.map(item => ({ ...item, checks: Array(NUM_CELLS).fill(false) }));
+                weapons = weapons.map(item => ({ ...item, checks: Array(NUM_CELLS).fill(false) }));
+                locations = locations.map(item => ({ ...item, checks: Array(NUM_CELLS).fill(false) }));
+                saveToStorage();
+                renderAll();
+            }
+
+            function resetToDefaults() {
+                suspects = DEFAULT_SUSPECTS.map(createDefaultItem);
+                weapons = DEFAULT_WEAPONS.map(createDefaultItem);
+                locations = DEFAULT_LOCATIONS.map(createDefaultItem);
+                saveToStorage();
+                renderAll();
+            }
+
+            // -------- INITIALIZATION --------
+            function init() {
+                loadFromStorage();
+
+                suspects = suspects.map(item => {
+                    if (!item.checks || item.checks.length !== NUM_CELLS) {
+                        return { name: item.name || 'Unknown', checks: Array(NUM_CELLS).fill(false) };
+                    }
+                    return item;
+                });
+                weapons = weapons.map(item => {
+                    if (!item.checks || item.checks.length !== NUM_CELLS) {
+                        return { name: item.name || 'Unknown', checks: Array(NUM_CELLS).fill(false) };
+                    }
+                    return item;
+                });
+                locations = locations.map(item => {
+                    if (!item.checks || item.checks.length !== NUM_CELLS) {
+                        return { name: item.name || 'Unknown', checks: Array(NUM_CELLS).fill(false) };
+                    }
+                    return item;
+                });
+
+                saveToStorage();
+                renderAll();
+
+                document.getElementById('clearChecksBtn').addEventListener('click', function(e) {
+                    if (confirm('Clear ALL checkmarks?')) {
+                        clearAllChecks();
+                    }
+                });
+
+                document.getElementById('resetBtn').addEventListener('click', function(e) {
+                    if (confirm('Start a new game?')) {
+                        resetToDefaults();
+                    }
+                });
+            }
+
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', init);
+            } else {
+                init();
+            }
+
+        })();
+    </script>
+
+</body>
 </html>
