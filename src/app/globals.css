@@ -49,7 +49,6 @@
 /* Base styles */
 html {
   scroll-behavior: smooth;
-  scroll-snap-type: y mandatory;
 }
 
 /* Reserve viewport bottom for fixed dock on small tablets */
@@ -231,13 +230,16 @@ body {
   min-height: 100vh;
   min-height: 100dvh;
   position: relative;
-  scroll-snap-align: start;
-  scroll-snap-stop: always;
 }
 
-@media (max-width: 569px) {
+@media (min-width: 768px) {
+  html {
+    scroll-snap-type: y mandatory;
+  }
+
   .section {
-    scroll-snap-align: center;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
   }
 }
 
