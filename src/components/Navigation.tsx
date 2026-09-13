@@ -11,17 +11,20 @@ import {
 import Dock from "./ui/Dock";
 import MobileMenu from "./MobileMenu";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useRouter } from "next/navigation";
 import {
   faUser,
   faBriefcase,
   faFileAlt,
   faEnvelope,
   faHome,
+  faCamera,
 } from "@fortawesome/free-solid-svg-icons";
 
 const SECTION_IDS = ["hero", "about", "work", "experience", "contact"] as const;
 
 const Navigation = () => {
+  const router = useRouter();
   const [activeSection, setActiveSection] =
     useState<(typeof SECTION_IDS)[number]>("hero");
   const [showDock, setShowDock] = useState(false);
@@ -113,6 +116,11 @@ const Navigation = () => {
       sectionId: "work",
       isActive: activeSection === "work",
       onClick: () => scrollToSection("work"),
+    },
+    {
+      icon: <FontAwesomeIcon icon={faCamera} className="w-5 h-5" />,
+      label: "Photography",
+      onClick: () => router.push("/photography"),
     },
     {
       icon: <FontAwesomeIcon icon={faFileAlt} className="w-5 h-5" />,

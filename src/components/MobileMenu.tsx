@@ -11,12 +11,14 @@ import {
   faFileAlt,
   faEnvelope,
   faHome,
+  faCamera,
   faPalette,
   faUniversalAccess,
   faCheck,
   faChevronDown,
   faChevronUp,
 } from "@fortawesome/free-solid-svg-icons";
+import { useRouter } from "next/navigation";
 import { useBackground, BackgroundType } from "@/context/BackgroundContext";
 import GlassSurface from "./ui/GlassSurface";
 import { cn } from "@/lib/utils";
@@ -39,6 +41,7 @@ const MobileMenu = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [showBackgrounds, setShowBackgrounds] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
+  const router = useRouter();
   const {
     background,
     setBackground,
@@ -86,6 +89,14 @@ const MobileMenu = () => {
     { icon: faHome, label: "Home", action: () => scrollToSection("hero") },
     { icon: faUser, label: "About", action: () => scrollToSection("about") },
     { icon: faBriefcase, label: "Work", action: () => scrollToSection("work") },
+    {
+      icon: faCamera,
+      label: "Photography",
+      action: () => {
+        setIsOpen(false);
+        router.push("/photography");
+      },
+    },
     {
       icon: faFileAlt,
       label: "Experience",
