@@ -33,6 +33,13 @@ function Lightbox({ items, index, onClose, onNavigate }: LightboxProps) {
   const item = items[index];
   const dragStartX = useRef<number | null>(null);
   const [dragOffset, setDragOffset] = useState(0);
+  const [closing, setClosing] = useState(false);
+
+  // Animate out before actually unmounting
+  const requestClose = useCallback(() => {
+    setClosing(true);
+    setTimeout(onClose, 200);
+  }, [onClose]);
 
   const goPrev = useCallback(() => {
     onNavigate((index - 1 + items.length) % items.length);
@@ -45,13 +52,13 @@ function Lightbox({ items, index, onClose, onNavigate }: LightboxProps) {
   // Keyboard navigation
   useEffect(() => {
     const onKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') onClose();
+      if (e.key === 'Escape') requestClose();
       if (e.key === 'ArrowLeft') goPrev();
       if (e.key === 'ArrowRight') goNext();
     };
     window.addEventListener('keydown', onKeyDown);
     return () => window.removeEventListener('keydown', onKeyDown);
-  }, [onClose, goPrev, goNext]);
+  }, [requestClose, goPrev, goNext]);
 
   // Lock body scroll while open
   useEffect(() => {
@@ -97,7 +104,8 @@ function Lightbox({ items, index, onClose, onNavigate }: LightboxProps) {
   return (
     <div
       className="fixed inset-0 z-50 bg-black/95 flex items-center justify-center select-none touch-none"
-      onClick={onClose}
+      style={{ animation: closing ? 'lightboxFadeOut 0.2s ease forwards' : 'lightboxFadeIn 0.25s ease' }}
+      onClick={requestClose}
       onPointerDown={onPointerDown}
       onPointerMove={onPointerMove}
       onPointerUp={onPointerUp}
@@ -106,7 +114,7 @@ function Lightbox({ items, index, onClose, onNavigate }: LightboxProps) {
       {/* Close */}
       <button
         className="absolute top-4 right-4 text-white hover:scale-110 transition z-50"
-        onClick={onClose}
+        onClick={requestClose}
         aria-label="Close"
       >
         <X className="h-8 w-8" />
@@ -140,8 +148,12 @@ function Lightbox({ items, index, onClose, onNavigate }: LightboxProps) {
 
       {/* Image */}
       <div
-        className="relative max-w-5xl max-h-[90vh] w-full h-full transition-transform duration-150"
-        style={{ transform: `translateX(${dragOffset}px)` }}
+        className="relative max-w-5xl max-h-[90vh] w-full h-full"
+        style={{
+          transform: `translateX(${dragOffset}px)`,
+          transition: dragStartX.current !== null ? 'none' : 'transform 0.15s ease-out',
+          animation: 'lightboxZoomIn 0.3s cubic-bezier(0.22, 1, 0.36, 1)',
+        }}
         onClick={(e) => e.stopPropagation()}
       >
         <Image
@@ -150,6 +162,7 @@ function Lightbox({ items, index, onClose, onNavigate }: LightboxProps) {
           alt={item.title || 'Gallery image'}
           fill
           className="object-contain"
+          style={{ animation: 'slideCrossfade 0.3s ease' }}
           sizes="(max-width: 768px) 100vw, 80vw"
           priority
           draggable={false}
