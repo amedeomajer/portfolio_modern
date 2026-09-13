@@ -309,6 +309,16 @@ body {
   animation: fadeIn 0.6s ease forwards;
 }
 
+/* Gallery skeleton shimmer */
+@keyframes shimmer {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(100%);
+  }
+}
+
 /* Stagger animation delays */
 .stagger-1 {
   animation-delay: 0.1s;
