@@ -38,10 +38,22 @@ export async function saveItems(items: GalleryItem[]) {
   });
 }
 
-export async function addItem(item: GalleryItem) {
+// Add one or more items in a SINGLE read-append-write, assigning order numbers
+// from the current max. This avoids the lost-update race where many sequential
+// read-modify-writes each clobber the prior write (Vercel Blob has no locking /
+// transactions). Callers pass items with a placeholder order; it's reassigned.
+export async function addItems(newItems: GalleryItem[]) {
+  if (newItems.length === 0) return [];
   const items = await getItems();
-  items.push(item);
+  let next = items.reduce((max, item) => Math.max(max, item.order ?? 0), -1) + 1;
+  for (const item of newItems) item.order = next++;
+  items.push(...newItems);
   await saveItems(items);
+  return newItems;
+}
+
+export async function addItem(item: GalleryItem) {
+  await addItems([item]);
   return item;
 }
 

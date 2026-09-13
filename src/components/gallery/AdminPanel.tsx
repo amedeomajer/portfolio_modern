@@ -73,9 +73,9 @@ export function AdminPanel({ initialItems, onLogout }: AdminPanelProps) {
   };
 
   const handleUpload = (item: GalleryItem) => {
-    // Upload route already persisted the item — only update local UI
+    // Upload route already persisted the item — only update local UI.
+    // Modal stays open so bulk uploads can report progress per file.
     setItems((prev) => [...prev, item].sort((a, b) => (a.order ?? 0) - (b.order ?? 0)));
-    setIsAdding(false);
   };
 
   return (
@@ -101,7 +101,7 @@ export function AdminPanel({ initialItems, onLogout }: AdminPanelProps) {
 
       {isAdding && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
-          <div className="bg-zinc-900 p-6 rounded-xl max-w-lg w-full border border-zinc-800">
+          <div className="bg-zinc-900 p-6 rounded-xl max-w-2xl w-full border border-zinc-800 max-h-[90vh] overflow-y-auto">
             <div className="flex justify-between items-center mb-4">
               <h3 className="text-lg font-bold text-white">Add New Artwork</h3>
               <button onClick={() => setIsAdding(false)} className="text-white">
