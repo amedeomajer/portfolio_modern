@@ -186,7 +186,9 @@ function Lightbox({ items, index, onClose, onNavigate }: LightboxProps) {
       aria-modal="true"
       aria-label={item?.title ? `Photo: ${item.title}` : `Photo ${index + 1} of ${items.length}`}
       className="fixed inset-0 z-50 bg-black/95 flex items-center justify-center select-none touch-none"
-      style={{ animation: closing ? 'lightboxFadeOut 0.2s ease forwards' : 'lightboxFadeIn 0.25s ease' }}
+      style={{
+        animation: closing ? 'lightboxFadeOut 0.2s ease forwards' : 'lightboxFadeIn 0.25s ease',
+      }}
       onClick={onBackdropClick}
       onPointerDown={onPointerDown}
       onPointerMove={onPointerMove}
@@ -238,7 +240,10 @@ function Lightbox({ items, index, onClose, onNavigate }: LightboxProps) {
         style={{
           transform: `translate(${dragOffset.x}px, ${dragOffset.y}px)`,
           opacity: dragOffset.y > 0 ? Math.max(0.3, 1 - dragOffset.y / 400) : 1,
-          transition: dragStart.current !== null ? 'none' : 'transform 0.15s ease-out, opacity 0.15s ease-out',
+          transition:
+            dragStart.current !== null
+              ? 'none'
+              : 'transform 0.15s ease-out, opacity 0.15s ease-out',
           animation: 'lightboxZoomIn 0.3s cubic-bezier(0.22, 1, 0.36, 1)',
         }}
         onClick={(e) => e.stopPropagation()}
@@ -255,7 +260,6 @@ function Lightbox({ items, index, onClose, onNavigate }: LightboxProps) {
           draggable={false}
         />
         <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-6 text-white pointer-events-none">
-          {item.title && <h2 className="text-2xl font-bold">{item.title}</h2>}
           {item.description && <p className="text-white/80">{item.description}</p>}
           {item.exif && (
             <div className="flex flex-wrap gap-x-4 gap-y-1 mt-3 text-xs text-white/70">
