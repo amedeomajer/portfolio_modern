@@ -1,73 +1,102 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import { DragDropContext, Droppable, Draggable } from '@hello-pangea/dnd';
+import { useState } from 'react';
+import { DragDropContext, Droppable, Draggable, DropResult } from '@hello-pangea/dnd';
 import { GalleryItem } from '@/types/gallery';
 import { ImageUploader } from './ImageUploader';
 import ImageNext from 'next/image';
-import { Plus, GripVertical, X } from 'lucide-react';
+import { Plus, GripVertical, X, LogOut } from 'lucide-react';
 
-export function AdminPanel({ initialItems }: { initialItems: GalleryItem[] }) {
+interface AdminPanelProps {
+  initialItems: GalleryItem[];
+  onLogout: () => void;
+}
+
+export function AdminPanel({ initialItems, onLogout }: AdminPanelProps) {
   const [items, setItems] = useState<GalleryItem[]>(initialItems);
   const [isAdding, setIsAdding] = useState(false);
+  const [saving, setSaving] = useState(false);
 
-  useEffect(() => {
-    const loadItems = async () => {
-      const response = await fetch('/api/gallery');
-      const data = await response.json();
-      setItems(data);
-    };
-    loadItems();
-  }, []);
-
-  const saveToServer = async (updatedItems: GalleryItem[]) => {
+  const saveOrder = async (updatedItems: GalleryItem[]) => {
+    setSaving(true);
     try {
-      await fetch('/api/gallery', {
+      const response = await fetch('/api/gallery', {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ items: updatedItems }),
       });
+      if (!response.ok) {
+        const data = await response.json().catch(() => ({}));
+        throw new Error(data.error || 'Failed to save order');
+      }
     } catch (error) {
       console.error('Failed to save', error);
+      alert(error instanceof Error ? error.message : 'Failed to save order');
+    } finally {
+      setSaving(false);
     }
   };
 
-  const handleDragEnd = async (result: any) => {
+  const handleDragEnd = async (result: DropResult) => {
     if (!result.destination) return;
     const reordered = Array.from(items);
     const [removed] = reordered.splice(result.source.index, 1);
     reordered.splice(result.destination.index, 0, removed);
     const updated = reordered.map((item, index) => ({ ...item, order: index }));
     setItems(updated);
-    await saveToServer(updated);
+    await saveOrder(updated);
   };
 
   const handleDelete = async (id: string) => {
-    if (!confirm('Are youbard sure?')) return;
+    if (!confirm('Are you sure?')) return;
+
+    const previous = items;
+    const updated = items.filter((item) => item.id !== id);
+    setItems(updated); // optimistic
+
     try {
-      await fetch('/api/gallery', {
+      const response = await fetch('/api/gallery', {
         method: 'DELETE',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ id }),
       });
-      const updated = items.filter(item => item.id !== id);
-      setItems(updated);
-      await saveToServer(updated);
+      if (!response.ok) {
+        const data = await response.json().catch(() => ({}));
+        throw new Error(data.error || 'Delete failed');
+      }
+      // DELETE already persists + removes Cloudinary asset — no second PUT
     } catch (error) {
       console.error('Delete failed', error);
+      setItems(previous);
+      alert(error instanceof Error ? error.message : 'Delete failed');
     }
+  };
+
+  const handleUpload = (item: GalleryItem) => {
+    // Upload route already persisted the item — only update local UI
+    setItems((prev) => [...prev, item].sort((a, b) => (a.order ?? 0) - (b.order ?? 0)));
+    setIsAdding(false);
   };
 
   return (
     <div className="space-y-6">
-      <div className="flex justify-between items-center">
+      <div className="flex justify-between items-center gap-3 flex-wrap">
         <h2 className="text-xl font-bold text-white">Manage Gallery</h2>
-        <button 
-          className="px-4 py-2 bg-blue-600 text-white rounded-md flex items-center"
-          onClick={() => setIsAdding(true)}
-        >
-          <Plus className="mr-2 h-4 w-4" /> Add Image
-        </button>
+        <div className="flex items-center gap-2">
+          {saving && <span className="text-xs text-zinc-500">Saving…</span>}
+          <button
+            className="px-4 py-2 bg-blue-600 text-white rounded-md flex items-center"
+            onClick={() => setIsAdding(true)}
+          >
+            <Plus className="mr-2 h-4 w-4" /> Add Image
+          </button>
+          <button
+            className="px-4 py-2 bg-zinc-800 text-white rounded-md flex items-center border border-zinc-700"
+            onClick={onLogout}
+          >
+            <LogOut className="mr-2 h-4 w-4" /> Log out
+          </button>
+        </div>
       </div>
 
       {isAdding && (
@@ -75,16 +104,11 @@ export function AdminPanel({ initialItems }: { initialItems: GalleryItem[] }) {
           <div className="bg-zinc-900 p-6 rounded-xl max-w-lg w-full border border-zinc-800">
             <div className="flex justify-between items-center mb-4">
               <h3 className="text-lg font-bold text-white">Add New Artwork</h3>
-              <button onClick={() => setIsAdding(false)} className="text-white"><X /></button>
+              <button onClick={() => setIsAdding(false)} className="text-white">
+                <X />
+              </button>
             </div>
-            <ImageUploader 
-              onUpload={(item) => {
-                setItems([...items, item]);
-                setIsAdding(false);
-                saveToServer([...items, item]);
-              }}
-              onCancel={() => setIsAdding(false)}
-            />
+            <ImageUploader onUpload={handleUpload} onCancel={() => setIsAdding(false)} />
           </div>
         </div>
       )}
@@ -105,20 +129,30 @@ export function AdminPanel({ initialItems }: { initialItems: GalleryItem[] }) {
                       {...provided.draggableProps}
                       className="group relative bg-zinc-900 overflow-hidden border border-zinc-800"
                     >
-                      <div {...provided.dragHandleProps} className="absolute top-2 left-2 z-10 p-1 bg-black/50 rounded text-white opacity-0 group-hover:opacity-100 transition-opacity">
-                        <GripVertical className="h-4 w-int" />
+                      <div
+                        {...provided.dragHandleProps}
+                        className="absolute top-2 left-2 z-10 p-1 bg-black/50 rounded text-white opacity-0 group-hover:opacity-100 transition-opacity"
+                      >
+                        <GripVertical className="h-4 w-4" />
                       </div>
-                      <button 
+                      <button
                         className="absolute top-2 right-2 z-10 p-1 bg-red-500 text-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
                         onClick={() => handleDelete(item.id)}
                       >
                         <X className="h-4 w-4" />
                       </button>
                       <div className="relative aspect-square">
-                        <ImageNext src={item.thumbnailUrl || item.imageUrl} alt={item.title} fill className="object-cover" />
+                        <ImageNext
+                          src={item.thumbnailUrl || item.imageUrl}
+                          alt={item.title || 'Gallery image'}
+                          fill
+                          className="object-cover"
+                        />
                       </div>
                       <div className="p-3">
-                        <p className="text-sm font-semibold text-white truncate">{item.title || <span className="text-zinc-500 italic">Untitled</span>}</p>
+                        <p className="text-sm font-semibold text-white truncate">
+                          {item.title || <span className="text-zinc-500 italic">Untitled</span>}
+                        </p>
                       </div>
                     </div>
                   )}

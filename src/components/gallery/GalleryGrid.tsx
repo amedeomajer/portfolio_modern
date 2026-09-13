@@ -29,17 +29,34 @@ interface LightboxProps {
   onNavigate: (index: number) => void;
 }
 
+const CLOSE_ANIMATION_MS = 200;
+const SWIPE_THRESHOLD_PX = 60;
+const CLOSE_DRAG_THRESHOLD_PX = 100;
+
 function Lightbox({ items, index, onClose, onNavigate }: LightboxProps) {
   const item = items[index];
-  const dragStartX = useRef<number | null>(null);
-  const [dragOffset, setDragOffset] = useState(0);
+  const dragStart = useRef<{ x: number; y: number } | null>(null);
+  const dragDelta = useRef({ x: 0, y: 0 }); // live values; state would be stale in pointer handlers
+  const dragAxis = useRef<'x' | 'y' | null>(null); // locked once the dominant axis is clear
+  const didDrag = useRef(false); // suppress the click-close that follows a drag release
+  const closeTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 });
   const [closing, setClosing] = useState(false);
 
-  // Animate out before actually unmounting
+  // Animate out before actually unmounting; guard against double-trigger
+  // (close button click also bubbles to the backdrop onClick)
   const requestClose = useCallback(() => {
+    if (closeTimeout.current !== null) return;
     setClosing(true);
-    setTimeout(onClose, 200);
+    closeTimeout.current = setTimeout(onClose, CLOSE_ANIMATION_MS);
   }, [onClose]);
+
+  // Cancel pending close on unmount so a fast reopen isn't killed by a stale timer
+  useEffect(() => {
+    return () => {
+      if (closeTimeout.current !== null) clearTimeout(closeTimeout.current);
+    };
+  }, []);
 
   const goPrev = useCallback(() => {
     onNavigate((index - 1 + items.length) % items.length);
@@ -77,35 +94,70 @@ function Lightbox({ items, index, onClose, onNavigate }: LightboxProps) {
     );
   }, [index, items]);
 
-  // Drag / swipe handling
+  // Drag handling: horizontal swipe navigates, pulling down closes
   const onPointerDown = (e: React.PointerEvent) => {
-    dragStartX.current = e.clientX;
+    // Don't start a drag from interactive controls (arrows, close button)
+    if ((e.target as HTMLElement).closest('button')) return;
+    dragStart.current = { x: e.clientX, y: e.clientY };
+    dragDelta.current = { x: 0, y: 0 };
+    dragAxis.current = null;
   };
 
   const onPointerMove = (e: React.PointerEvent) => {
-    if (dragStartX.current !== null) {
-      setDragOffset(e.clientX - dragStartX.current);
+    if (!dragStart.current) return;
+    const delta = {
+      x: e.clientX - dragStart.current.x,
+      y: e.clientY - dragStart.current.y,
+    };
+    dragDelta.current = delta;
+
+    // Lock onto an axis once movement is unambiguous
+    if (!dragAxis.current && (Math.abs(delta.x) > 10 || Math.abs(delta.y) > 10)) {
+      dragAxis.current = Math.abs(delta.x) >= Math.abs(delta.y) ? 'x' : 'y';
+    }
+    if (Math.abs(delta.x) > 5 || Math.abs(delta.y) > 5) didDrag.current = true;
+
+    if (dragAxis.current === 'y') {
+      // Downward pull only; upward does nothing
+      setDragOffset({ x: 0, y: Math.max(0, delta.y) });
+    } else {
+      setDragOffset({ x: delta.x, y: 0 });
     }
   };
 
   const onPointerUp = () => {
-    if (dragStartX.current === null) return;
-    const delta = dragOffset;
-    dragStartX.current = null;
-    setDragOffset(0);
-    if (Math.abs(delta) > 60) {
-      if (delta > 0) goPrev();
+    if (!dragStart.current) return;
+    const delta = dragDelta.current;
+    const axis = dragAxis.current;
+    dragStart.current = null;
+    dragDelta.current = { x: 0, y: 0 };
+    dragAxis.current = null;
+    setDragOffset({ x: 0, y: 0 });
+
+    if (axis === 'y' && delta.y > CLOSE_DRAG_THRESHOLD_PX) {
+      requestClose();
+    } else if (axis === 'x' && Math.abs(delta.x) > SWIPE_THRESHOLD_PX) {
+      if (delta.x > 0) goPrev();
       else goNext();
     }
   };
 
   if (!item) return null;
 
+  // Backdrop click closes — but not if it was the tail end of a drag
+  const onBackdropClick = () => {
+    if (didDrag.current) {
+      didDrag.current = false;
+      return;
+    }
+    requestClose();
+  };
+
   return (
     <div
       className="fixed inset-0 z-50 bg-black/95 flex items-center justify-center select-none touch-none"
       style={{ animation: closing ? 'lightboxFadeOut 0.2s ease forwards' : 'lightboxFadeIn 0.25s ease' }}
-      onClick={requestClose}
+      onClick={onBackdropClick}
       onPointerDown={onPointerDown}
       onPointerMove={onPointerMove}
       onPointerUp={onPointerUp}
@@ -114,7 +166,10 @@ function Lightbox({ items, index, onClose, onNavigate }: LightboxProps) {
       {/* Close */}
       <button
         className="absolute top-4 right-4 text-white hover:scale-110 transition z-50"
-        onClick={requestClose}
+        onClick={(e) => {
+          e.stopPropagation();
+          requestClose();
+        }}
         aria-label="Close"
       >
         <X className="h-8 w-8" />
@@ -150,8 +205,9 @@ function Lightbox({ items, index, onClose, onNavigate }: LightboxProps) {
       <div
         className="relative max-w-5xl max-h-[90vh] w-full h-full"
         style={{
-          transform: `translateX(${dragOffset}px)`,
-          transition: dragStartX.current !== null ? 'none' : 'transform 0.15s ease-out',
+          transform: `translate(${dragOffset.x}px, ${dragOffset.y}px)`,
+          opacity: dragOffset.y > 0 ? Math.max(0.3, 1 - dragOffset.y / 400) : 1,
+          transition: dragStart.current !== null ? 'none' : 'transform 0.15s ease-out, opacity 0.15s ease-out',
           animation: 'lightboxZoomIn 0.3s cubic-bezier(0.22, 1, 0.36, 1)',
         }}
         onClick={(e) => e.stopPropagation()}

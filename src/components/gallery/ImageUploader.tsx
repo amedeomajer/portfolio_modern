@@ -5,10 +5,12 @@ import { useDropzone } from 'react-dropzone';
 import { ImagePlus, X } from 'lucide-react';
 import ImageNext from 'next/image';
 import exifr from 'exifr';
+import { ExifData, GalleryItem } from '@/types/gallery';
+import { normalizeExif } from '@/lib/exif';
 
-// Extract the EXIF fields we care about before any canvas compression,
-// which would otherwise strip them.
-async function extractExif(file: File) {
+// Extract EXIF before any canvas compression, which would otherwise strip it.
+// exifr returns Dates/numbers; normalizeExif shapes them like Cloudinary's output.
+async function extractExif(file: File): Promise<ExifData | null> {
   try {
     const data = await exifr.parse(file, {
       pick: [
@@ -17,34 +19,14 @@ async function extractExif(file: File) {
       ],
     });
     if (!data) return null;
-    const str = (v: unknown) => (typeof v === 'string' && v.trim() ? v.trim() : undefined);
-    return {
-      dateTaken:
-        data.DateTimeOriginal instanceof Date
-          ? data.DateTimeOriginal.toISOString()
-          : str(data.DateTimeOriginal),
-      camera: [str(data.Make), str(data.Model)].filter(Boolean).join(' ') || undefined,
-      lens: str(data.LensModel),
-      aperture: data.FNumber != null ? String(data.FNumber) : undefined,
-      shutterSpeed: data.ExposureTime != null
-        ? data.ExposureTime < 1
-          ? `1/${Math.round(1 / data.ExposureTime)}`
-          : String(data.ExposureTime)
-        : undefined,
-      iso: data.ISO != null ? String(data.ISO) : undefined,
-      focalLength: data.FocalLength != null ? `${data.FocalLength} mm` : undefined,
-      location:
-        data.latitude != null && data.longitude != null
-          ? `${data.latitude.toFixed(5)}, ${data.longitude.toFixed(5)}`
-          : undefined,
-    };
+    return normalizeExif(data as Record<string, unknown>);
   } catch {
     return null;
   }
 }
 
 interface ImageUploaderProps {
-  onUpload: (item: any) => void;
+  onUpload: (item: GalleryItem) => void;
   onCancel: () => void;
 }
 
@@ -81,7 +63,7 @@ export function ImageUploader({ onUpload, onCancel }: ImageUploaderProps) {
   const [preview, setPreview] = useState('');
   const [uploading, setUploading] = useState(false);
   const [willCompress, setWillCompress] = useState(false);
-  const [exifData, setExifData] = useState<any>(null);
+  const [exifData, setExifData] = useState<ExifData | null>(null);
   const [formData, setFormData] = useState({
     title: '',
     description: '',
@@ -127,8 +109,8 @@ export function ImageUploader({ onUpload, onCancel }: ImageUploaderProps) {
       if (!response.ok) throw new Error(data.error || 'Upload failed');
       
       onUpload(data);
-    } catch (error: any) {
-      alert(error.message || 'Upload failed');
+    } catch (error: unknown) {
+      alert(error instanceof Error ? error.message : 'Upload failed');
     } finally {
       setUploading(false);
     }
