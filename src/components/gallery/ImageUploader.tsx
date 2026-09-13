@@ -121,9 +121,11 @@ export function ImageUploader({ onUpload, onCancel }: ImageUploaderProps) {
 
   const pendingCount = queue.filter((q) => q.status === 'pending' || q.status === 'error').length;
 
-  // Send the whole queue to /api/upload/batch in ONE request. The server builds
-  // every item, then persists them in a single storage write — this avoids the
-  // read-modify-write race that caused bulk uploads to clobber each other.
+  // Upload flow (avoids Vercel's 4.5MB function payload limit):
+  //   1. GET a signed upload token from /api/upload/sign (tiny request)
+  //   2. Upload each file DIRECTLY to Cloudinary from the browser
+  //   3. Register all results in ONE JSON call to /api/upload/register,
+  //      which persists them in a single storage write (no race).
   const handleSubmit = async () => {
     const toUpload = queue.filter((q) => q.status === 'pending' || q.status === 'error');
     if (toUpload.length === 0) {
@@ -133,54 +135,103 @@ export function ImageUploader({ onUpload, onCancel }: ImageUploaderProps) {
 
     setUploading(true);
     try {
-      // Mark everything uploading, then compress oversized files client-side.
-      const prepared: { item: QueuedFile; file: File }[] = [];
-      for (const item of toUpload) {
-        updateItem(item.id, { status: 'uploading', error: undefined });
-        try {
-          const file =
-            item.file.size > MAX_UPLOAD_BYTES ? await compressImage(item.file) : item.file;
-          prepared.push({ item, file });
-        } catch (error: unknown) {
+      // 1. Mint one signature — reusable for all files in this batch.
+      const signRes = await fetch('/api/upload/sign', { method: 'POST' });
+      const signData = await signRes.json().catch(() => ({}));
+      if (!signRes.ok) throw new Error(signData.error || 'Failed to get upload signature');
+      const sig = signData as {
+        signature: string;
+        timestamp: number;
+        apiKey: string;
+        cloudName: string;
+        folder: string;
+        imageMetadata: string;
+        responsiveBreakpoints: string;
+      };
+
+      // 2. Compress oversized files, then upload each directly to Cloudinary.
+      interface CloudinaryResult {
+        public_id: string;
+        secure_url: string;
+        width?: number;
+        height?: number;
+        image_metadata?: Record<string, unknown>;
+      }
+      const uploadOne = async (item: QueuedFile): Promise<CloudinaryResult> => {
+        const file =
+          item.file.size > MAX_UPLOAD_BYTES ? await compressImage(item.file) : item.file;
+        const form = new FormData();
+        form.append('file', file);
+        form.append('api_key', sig.apiKey);
+        form.append('timestamp', String(sig.timestamp));
+        form.append('signature', sig.signature);
+        form.append('folder', sig.folder);
+        form.append('image_metadata', sig.imageMetadata);
+        form.append('responsive_breakpoints', sig.responsiveBreakpoints);
+        const res = await fetch(
+          `https://api.cloudinary.com/v1_1/${sig.cloudName}/image/upload`,
+          { method: 'POST', body: form }
+        );
+        const data = await res.json().catch(() => ({}));
+        if (!res.ok) throw new Error(data.error?.message || 'Cloudinary upload failed');
+        return data as CloudinaryResult;
+      };
+
+      // Run all direct uploads in parallel; allSettled preserves input order.
+      for (const item of toUpload) updateItem(item.id, { status: 'uploading', error: undefined });
+      const settled = await Promise.allSettled(toUpload.map((item) => uploadOne(item)));
+
+      const succeeded: { item: QueuedFile; result: CloudinaryResult }[] = [];
+      settled.forEach((outcome, i) => {
+        const item = toUpload[i];
+        if (outcome.status === 'fulfilled') {
+          succeeded.push({ item, result: outcome.value });
+        } else {
           updateItem(item.id, {
             status: 'error',
-            error: error instanceof Error ? error.message : 'Compression failed',
+            error:
+              outcome.reason instanceof Error ? outcome.reason.message : 'Cloudinary upload failed',
           });
         }
-      }
+      });
 
-      if (prepared.length === 0) return;
+      if (succeeded.length === 0) return;
 
-      // Parallel repeated fields matched by index on the server.
-      const formData = new FormData();
-      for (const { item, file } of prepared) {
-        formData.append('file', file);
-        formData.append('title', item.title);
-        formData.append('description', item.description);
-        formData.append('exif', item.exif ? JSON.stringify(item.exif) : '');
-      }
-
-      const response = await fetch('/api/upload/batch', { method: 'POST', body: formData });
-      const data = await response.json().catch(() => ({}));
+      // 3. Register all successful uploads in one JSON call (single write).
+      const registerRes = await fetch('/api/upload/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          uploads: succeeded.map(({ item, result }) => ({
+            publicId: result.public_id,
+            url: result.secure_url,
+            width: result.width,
+            height: result.height,
+            metadata: result.image_metadata ?? {},
+            title: item.title,
+            description: item.description,
+            exif: item.exif,
+          })),
+        }),
+      });
+      const registerData = await registerRes.json().catch(() => ({}));
       const results: { ok: boolean; index: number; item?: GalleryItem; error?: string }[] =
-        Array.isArray(data.results) ? data.results : [];
+        Array.isArray(registerData.results) ? registerData.results : [];
 
-      // Map each result back to its queued file via the batch index.
+      if (results.length === 0) {
+        const message = registerData.error || 'Failed to save uploads';
+        for (const { item } of succeeded) updateItem(item.id, { status: 'error', error: message });
+        return;
+      }
+
       for (const result of results) {
-        const queued = prepared[result.index]?.item;
+        const queued = succeeded[result.index]?.item;
         if (!queued) continue;
         if (result.ok && result.item) {
           updateItem(queued.id, { status: 'done' });
           onUpload(result.item);
         } else {
-          updateItem(queued.id, { status: 'error', error: result.error || 'Upload failed' });
-        }
-      }
-
-      // If the server returned no per-file results at all, surface a generic error.
-      if (results.length === 0) {
-        for (const { item } of prepared) {
-          updateItem(item.id, { status: 'error', error: data.error || 'Upload failed' });
+          updateItem(queued.id, { status: 'error', error: result.error || 'Failed to save' });
         }
       }
     } catch (error: unknown) {
