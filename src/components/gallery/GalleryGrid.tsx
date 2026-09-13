@@ -34,6 +34,9 @@ const SWIPE_THRESHOLD_PX = 60;
 const CLOSE_DRAG_THRESHOLD_PX = 100;
 
 function Lightbox({ items, index, onClose, onNavigate }: LightboxProps) {
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
+  const dialogRef = useRef<HTMLDivElement>(null);
+  const previouslyFocused = useRef<HTMLElement | null>(null);
   const item = items[index];
   const dragStart = useRef<{ x: number; y: number } | null>(null);
   const dragDelta = useRef({ x: 0, y: 0 }); // live values; state would be stale in pointer handlers
@@ -66,12 +69,28 @@ function Lightbox({ items, index, onClose, onNavigate }: LightboxProps) {
     onNavigate((index + 1) % items.length);
   }, [index, items.length, onNavigate]);
 
-  // Keyboard navigation
+  // Keyboard navigation + focus trap (Tab cycles within the dialog)
   useEffect(() => {
     const onKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') requestClose();
       if (e.key === 'ArrowLeft') goPrev();
       if (e.key === 'ArrowRight') goNext();
+
+      if (e.key === 'Tab' && dialogRef.current) {
+        const focusables = dialogRef.current.querySelectorAll<HTMLElement>(
+          'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+        );
+        if (focusables.length === 0) return;
+        const first = focusables[0];
+        const last = focusables[focusables.length - 1];
+        if (e.shiftKey && document.activeElement === first) {
+          e.preventDefault();
+          last.focus();
+        } else if (!e.shiftKey && document.activeElement === last) {
+          e.preventDefault();
+          first.focus();
+        }
+      }
     };
     window.addEventListener('keydown', onKeyDown);
     return () => window.removeEventListener('keydown', onKeyDown);
@@ -83,6 +102,13 @@ function Lightbox({ items, index, onClose, onNavigate }: LightboxProps) {
     return () => {
       document.body.style.overflow = '';
     };
+  }, []);
+
+  // Focus management: move focus into the lightbox, restore on close
+  useEffect(() => {
+    previouslyFocused.current = document.activeElement as HTMLElement | null;
+    closeButtonRef.current?.focus();
+    return () => previouslyFocused.current?.focus();
   }, []);
 
   // Preload neighbors for instant navigation
@@ -155,6 +181,10 @@ function Lightbox({ items, index, onClose, onNavigate }: LightboxProps) {
 
   return (
     <div
+      ref={dialogRef}
+      role="dialog"
+      aria-modal="true"
+      aria-label={item?.title ? `Photo: ${item.title}` : `Photo ${index + 1} of ${items.length}`}
       className="fixed inset-0 z-50 bg-black/95 flex items-center justify-center select-none touch-none"
       style={{ animation: closing ? 'lightboxFadeOut 0.2s ease forwards' : 'lightboxFadeIn 0.25s ease' }}
       onClick={onBackdropClick}
@@ -165,6 +195,7 @@ function Lightbox({ items, index, onClose, onNavigate }: LightboxProps) {
     >
       {/* Close */}
       <button
+        ref={closeButtonRef}
         className="absolute top-4 right-4 text-white hover:scale-110 transition z-50"
         onClick={(e) => {
           e.stopPropagation();
@@ -274,11 +305,13 @@ export function GalleryGrid({ items }: { items: GalleryItem[] }) {
     <>
       <div className="columns-1 sm:columns-2 lg:columns-3 gap-6 [column-fill:_balance]">
         {items.map((item, index) => (
-          <div
+          <button
             key={item.id}
-            className="group cursor-pointer relative overflow-hidden bg-zinc-900 mb-6 break-inside-avoid"
+            type="button"
+            className="group cursor-pointer relative overflow-hidden bg-zinc-900 mb-6 break-inside-avoid block w-full text-left"
             onClick={() => setSelectedIndex(index)}
             onMouseEnter={() => prefetchImage(item.imageUrl)}
+            aria-label={item.title ? `Open photo: ${item.title}` : `Open photo ${index + 1}`}
           >
             <Image
               src={item.thumbnailUrl || item.imageUrl}
@@ -288,7 +321,7 @@ export function GalleryGrid({ items }: { items: GalleryItem[] }) {
               className="w-full h-auto object-cover group-hover:scale-110 transition-transform duration-500"
               sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
             />
-          </div>
+          </button>
         ))}
       </div>
 
