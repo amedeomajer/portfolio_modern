@@ -65,10 +65,7 @@ function Lightbox({ items, index, onClose, onNavigate }: LightboxProps) {
   useEffect(() => {
     [items[(index + 1) % items.length], items[(index - 1 + items.length) % items.length]].forEach(
       (neighbor) => {
-        if (neighbor) {
-          const img = new window.Image();
-          img.src = neighbor.imageUrl;
-        }
+        if (neighbor) prefetchImage(neighbor.imageUrl);
       }
     );
   }, [index, items]);
@@ -183,6 +180,16 @@ function Lightbox({ items, index, onClose, onNavigate }: LightboxProps) {
   );
 }
 
+// Cache so we don't create duplicate prefetch requests on repeated hovers
+const prefetched = new Set<string>();
+
+function prefetchImage(src: string) {
+  if (prefetched.has(src)) return;
+  prefetched.add(src);
+  const img = new window.Image();
+  img.src = src;
+}
+
 export function GalleryGrid({ items }: { items: GalleryItem[] }) {
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
 
@@ -202,6 +209,7 @@ export function GalleryGrid({ items }: { items: GalleryItem[] }) {
             key={item.id}
             className="group cursor-pointer relative overflow-hidden bg-zinc-900 mb-6 break-inside-avoid"
             onClick={() => setSelectedIndex(index)}
+            onMouseEnter={() => prefetchImage(item.imageUrl)}
           >
             <Image
               src={item.thumbnailUrl || item.imageUrl}
