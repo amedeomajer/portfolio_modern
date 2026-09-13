@@ -1,42 +1,44 @@
-"use client";
+'use client';
 
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 import {
   BG_FADE_MS,
   HERO_INTRO_COMPLETE_EVENT,
   INTRO_DARK_MS,
   NAME_FADE_MS,
   SUBTITLE_REVEAL_ESTIMATE_MS,
-} from "@/constants/introTimeline";
-import Dock from "./ui/Dock";
-import MobileMenu from "./MobileMenu";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+} from '@/constants/introTimeline';
+import Dock from './ui/Dock';
+import MobileMenu from './MobileMenu';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useRouter } from 'next/navigation';
 import {
   faUser,
   faBriefcase,
   faFileAlt,
   faEnvelope,
   faHome,
-} from "@fortawesome/free-solid-svg-icons";
+  faCamera,
+} from '@fortawesome/free-solid-svg-icons';
 
-const SECTION_IDS = ["hero", "about", "work", "experience", "contact"] as const;
+const SECTION_IDS = ['hero', 'about', 'work', 'experience', 'contact'] as const;
 
 const Navigation = () => {
-  const [activeSection, setActiveSection] =
-    useState<(typeof SECTION_IDS)[number]>("hero");
+  const router = useRouter();
+  const [activeSection, setActiveSection] = useState<(typeof SECTION_IDS)[number]>('hero');
   const [showDock, setShowDock] = useState(false);
 
   const scrollToSection = (sectionId: string) => {
     const section = document.getElementById(sectionId);
     if (section) {
-      section.scrollIntoView({ behavior: "smooth" });
+      section.scrollIntoView({ behavior: 'smooth' });
     }
   };
 
   useEffect(() => {
-    const sectionElements = SECTION_IDS.map((id) =>
-      document.getElementById(id),
-    ).filter((element): element is HTMLElement => element !== null);
+    const sectionElements = SECTION_IDS.map((id) => document.getElementById(id)).filter(
+      (element): element is HTMLElement => element !== null
+    );
 
     if (sectionElements.length === 0) return;
 
@@ -58,7 +60,7 @@ const Navigation = () => {
         if (visibilityBySection.size === 0) return;
 
         const nextActiveSection = [...visibilityBySection.entries()].sort(
-          (a, b) => b[1] - a[1],
+          (a, b) => b[1] - a[1]
         )[0]?.[0] as (typeof SECTION_IDS)[number] | undefined;
 
         if (nextActiveSection) {
@@ -67,9 +69,9 @@ const Navigation = () => {
       },
       {
         root: null,
-        rootMargin: "-45% 0px -45% 0px",
+        rootMargin: '-45% 0px -45% 0px',
         threshold: [0, 0.2, 0.4, 0.6, 0.8, 1],
-      },
+      }
     );
 
     sectionElements.forEach((element) => observer.observe(element));
@@ -82,8 +84,7 @@ const Navigation = () => {
 
     window.addEventListener(HERO_INTRO_COMPLETE_EVENT, revealDock);
 
-    const fallbackDelayMs =
-      INTRO_DARK_MS + NAME_FADE_MS + BG_FADE_MS + SUBTITLE_REVEAL_ESTIMATE_MS;
+    const fallbackDelayMs = INTRO_DARK_MS + NAME_FADE_MS + BG_FADE_MS + SUBTITLE_REVEAL_ESTIMATE_MS;
     const fallbackTimer = window.setTimeout(revealDock, fallbackDelayMs);
 
     return () => {
@@ -95,38 +96,43 @@ const Navigation = () => {
   const dockItems = [
     {
       icon: <FontAwesomeIcon icon={faHome} className="w-5 h-5" />,
-      label: "Home",
-      sectionId: "hero",
-      isActive: activeSection === "hero",
-      onClick: () => scrollToSection("hero"),
+      label: 'Home',
+      sectionId: 'hero',
+      isActive: activeSection === 'hero',
+      onClick: () => scrollToSection('hero'),
     },
     {
       icon: <FontAwesomeIcon icon={faUser} className="w-5 h-5" />,
-      label: "About",
-      sectionId: "about",
-      isActive: activeSection === "about",
-      onClick: () => scrollToSection("about"),
+      label: 'About',
+      sectionId: 'about',
+      isActive: activeSection === 'about',
+      onClick: () => scrollToSection('about'),
     },
     {
       icon: <FontAwesomeIcon icon={faBriefcase} className="w-5 h-5" />,
-      label: "Work",
-      sectionId: "work",
-      isActive: activeSection === "work",
-      onClick: () => scrollToSection("work"),
+      label: 'Work',
+      sectionId: 'work',
+      isActive: activeSection === 'work',
+      onClick: () => scrollToSection('work'),
     },
     {
       icon: <FontAwesomeIcon icon={faFileAlt} className="w-5 h-5" />,
-      label: "Experience",
-      sectionId: "experience",
-      isActive: activeSection === "experience",
-      onClick: () => scrollToSection("experience"),
+      label: 'Experience',
+      sectionId: 'experience',
+      isActive: activeSection === 'experience',
+      onClick: () => scrollToSection('experience'),
     },
     {
       icon: <FontAwesomeIcon icon={faEnvelope} className="w-5 h-5" />,
-      label: "Contact",
-      sectionId: "contact",
-      isActive: activeSection === "contact",
-      onClick: () => scrollToSection("contact"),
+      label: 'Contact',
+      sectionId: 'contact',
+      isActive: activeSection === 'contact',
+      onClick: () => scrollToSection('contact'),
+    },
+    {
+      icon: <FontAwesomeIcon icon={faCamera} className="w-5 h-5" />,
+      label: 'Photography',
+      onClick: () => router.push('/photography'),
     },
   ];
 
