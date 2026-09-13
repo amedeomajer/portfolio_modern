@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { useDropzone } from 'react-dropzone';
-import { ImagePlus, X } from 'lucide-react';
+import { ImagePlus, X, Check, AlertCircle, Loader2 } from 'lucide-react';
 import ImageNext from 'next/image';
 import exifr from 'exifr';
 import { ExifData, GalleryItem } from '@/types/gallery';
@@ -58,117 +58,242 @@ async function compressImage(file: File): Promise<File> {
   throw new Error('Could not compress image below 10MB');
 }
 
+type QueueStatus = 'pending' | 'uploading' | 'done' | 'error';
+
+interface QueuedFile {
+  id: string;
+  file: File;
+  preview: string;
+  exif: ExifData | null;
+  willCompress: boolean;
+  title: string;
+  description: string;
+  status: QueueStatus;
+  error?: string;
+}
+
+let queueId = 0;
+const nextId = () => `q${++queueId}`;
+
+// Default title from filename: "IMG_2041.jpg" -> "IMG_2041"
+function titleFromFilename(name: string): string {
+  return name.replace(/\.[^.]+$/, '');
+}
+
 export function ImageUploader({ onUpload, onCancel }: ImageUploaderProps) {
-  const [file, setFile] = useState<File | null>(null);
-  const [preview, setPreview] = useState('');
+  const [queue, setQueue] = useState<QueuedFile[]>([]);
   const [uploading, setUploading] = useState(false);
-  const [willCompress, setWillCompress] = useState(false);
-  const [exifData, setExifData] = useState<ExifData | null>(null);
-  const [formData, setFormData] = useState({
-    title: '',
-    description: '',
-  });
+
+  const updateItem = (id: string, patch: Partial<QueuedFile>) => {
+    setQueue((prev) => prev.map((q) => (q.id === id ? { ...q, ...patch } : q)));
+  };
+
+  const removeItem = (id: string) => {
+    setQueue((prev) => prev.filter((q) => q.id !== id));
+  };
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop: (acceptedFiles) => {
-      const file = acceptedFiles[0];
-      if (file) {
-        setFile(file);
-        setWillCompress(file.size > MAX_UPLOAD_BYTES);
-        extractExif(file).then(setExifData);
+      for (const file of acceptedFiles) {
+        const id = nextId();
+        const queued: QueuedFile = {
+          id,
+          file,
+          preview: '',
+          exif: null,
+          willCompress: file.size > MAX_UPLOAD_BYTES,
+          title: titleFromFilename(file.name),
+          description: '',
+          status: 'pending',
+        };
+        setQueue((prev) => [...prev, queued]);
+
+        // Preview + EXIF load in the background so dropping many files stays snappy.
         const reader = new FileReader();
-        reader.onloadend = () => setPreview(reader.result as string);
+        reader.onloadend = () => updateItem(id, { preview: reader.result as string });
         reader.readAsDataURL(file);
+        extractExif(file).then((exif) => updateItem(id, { exif }));
       }
     },
     accept: { 'image/*': ['.jpeg', '.jpg', '.png', '.webp'] },
-    maxFiles: 1,
+    // No maxFiles — bulk upload
   });
 
+  const pendingCount = queue.filter((q) => q.status === 'pending' || q.status === 'error').length;
+
+  // Send the whole queue to /api/upload/batch in ONE request. The server builds
+  // every item, then persists them in a single storage write — this avoids the
+  // read-modify-write race that caused bulk uploads to clobber each other.
   const handleSubmit = async () => {
-    if (!file) {
-      alert('Please select an image');
+    const toUpload = queue.filter((q) => q.status === 'pending' || q.status === 'error');
+    if (toUpload.length === 0) {
+      alert('Please select at least one image');
       return;
     }
 
     setUploading(true);
-    const uploadFormData = new FormData();
-    const fileToUpload = file.size > MAX_UPLOAD_BYTES ? await compressImage(file) : file;
-    uploadFormData.append('file', fileToUpload);
-    if (exifData) uploadFormData.append('exif', JSON.stringify(exifData));
-    uploadFormData.append('title', formData.title);
-    uploadFormData.append('description', formData.description);
-
     try {
-      const response = await fetch('/api/upload', {
-        method: 'POST',
-        body: uploadFormData,
-      });
-      
-      const data = await response.json();
-      if (!response.ok) throw new Error(data.error || 'Upload failed');
-      
-      onUpload(data);
+      // Mark everything uploading, then compress oversized files client-side.
+      const prepared: { item: QueuedFile; file: File }[] = [];
+      for (const item of toUpload) {
+        updateItem(item.id, { status: 'uploading', error: undefined });
+        try {
+          const file =
+            item.file.size > MAX_UPLOAD_BYTES ? await compressImage(item.file) : item.file;
+          prepared.push({ item, file });
+        } catch (error: unknown) {
+          updateItem(item.id, {
+            status: 'error',
+            error: error instanceof Error ? error.message : 'Compression failed',
+          });
+        }
+      }
+
+      if (prepared.length === 0) return;
+
+      // Parallel repeated fields matched by index on the server.
+      const formData = new FormData();
+      for (const { item, file } of prepared) {
+        formData.append('file', file);
+        formData.append('title', item.title);
+        formData.append('description', item.description);
+        formData.append('exif', item.exif ? JSON.stringify(item.exif) : '');
+      }
+
+      const response = await fetch('/api/upload/batch', { method: 'POST', body: formData });
+      const data = await response.json().catch(() => ({}));
+      const results: { ok: boolean; index: number; item?: GalleryItem; error?: string }[] =
+        Array.isArray(data.results) ? data.results : [];
+
+      // Map each result back to its queued file via the batch index.
+      for (const result of results) {
+        const queued = prepared[result.index]?.item;
+        if (!queued) continue;
+        if (result.ok && result.item) {
+          updateItem(queued.id, { status: 'done' });
+          onUpload(result.item);
+        } else {
+          updateItem(queued.id, { status: 'error', error: result.error || 'Upload failed' });
+        }
+      }
+
+      // If the server returned no per-file results at all, surface a generic error.
+      if (results.length === 0) {
+        for (const { item } of prepared) {
+          updateItem(item.id, { status: 'error', error: data.error || 'Upload failed' });
+        }
+      }
     } catch (error: unknown) {
-      alert(error instanceof Error ? error.message : 'Upload failed');
+      const message = error instanceof Error ? error.message : 'Upload failed';
+      for (const item of toUpload) {
+        updateItem(item.id, { status: 'error', error: message });
+      }
     } finally {
       setUploading(false);
     }
   };
 
-  return (
-    <div className="space-y-4 p-4 bg-zinc-900 rounded-xl border border-zinc-800">
-      {!preview ? (
-        <div 
-          {...getRootProps()} 
-          className={`border-2 border-dashed rounded-lg p-12 text-center cursor-pointer transition-colors
-            ${isDragActive ? 'border-blue-500 bg-blue-500/10' : 'border-zinc-700 hover:border-zinc-500'}`}
-        >
-          <input {...getInputProps()} />
-          <ImagePlus className="mx-auto h-12 w-12 text-zinc-500" />
-          <p className="mt-2 text-sm text-zinc-400">Drop an image here, or click to select</p>
-          <p className="text-xs text-zinc-500 mt-1">Files over 10MB are automatically compressed</p>
-        </div>
-      ) : (
-        <div className="relative aspect-video bg-black rounded-lg overflow-hidden">
-          <ImageNext src={preview} alt="Preview" fill className="object-contain" />
-          <button 
-            className="absolute top-2 right-2 bg-red-500 text-white p-1 rounded-full"
-            onClick={() => { setFile(null); setPreview(''); setWillCompress(false); }}
-          >
-            <X className="h-4 w-4" />
-          </button>
-        </div>
-      )}
+  const allDone = queue.length > 0 && queue.every((q) => q.status === 'done');
 
-      <div className="space-y-3">
-        <input 
-          className="w-full bg-zinc-800 border-zinc-700 rounded-md p-2 text-white"
-          placeholder="Title (optional)" 
-          value={formData.title}
-          onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-        />
-        {willCompress && (
-          <p className="text-xs text-amber-400">
-            ⚠️ This file is over 10MB and will be compressed on upload. EXIF metadata will still be preserved.
-          </p>
-        )}
-        <textarea 
-          className="w-full bg-zinc-800 border-zinc-700 rounded-md p-2 text-white"
-          placeholder="Description (optional)" 
-          value={formData.description}
-          onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-        />
+  return (
+    <div className="space-y-4">
+      <div
+        {...getRootProps()}
+        className={`border-2 border-dashed rounded-lg p-8 text-center cursor-pointer transition-colors
+          ${isDragActive ? 'border-blue-500 bg-blue-500/10' : 'border-zinc-700 hover:border-zinc-500'}`}
+      >
+        <input {...getInputProps()} />
+        <ImagePlus className="mx-auto h-10 w-10 text-zinc-500" />
+        <p className="mt-2 text-sm text-zinc-400">
+          Drop images here, or click to select — multiple files supported
+        </p>
+        <p className="text-xs text-zinc-500 mt-1">Files over 10MB are automatically compressed</p>
       </div>
 
+      {queue.length > 0 && (
+        <ul className="space-y-3 max-h-[50vh] overflow-y-auto pr-1">
+          {queue.map((item) => (
+            <li
+              key={item.id}
+              className="flex gap-3 p-3 bg-zinc-800/50 rounded-lg border border-zinc-800"
+            >
+              <div className="relative h-20 w-20 shrink-0 bg-black rounded overflow-hidden">
+                {item.preview && (
+                  <ImageNext src={item.preview} alt={item.file.name} fill className="object-cover" />
+                )}
+                {item.status === 'done' && (
+                  <div className="absolute inset-0 bg-green-500/30 flex items-center justify-center">
+                    <Check className="h-6 w-6 text-green-400" />
+                  </div>
+                )}
+                {item.status === 'uploading' && (
+                  <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
+                    <Loader2 className="h-6 w-6 text-blue-400 animate-spin" />
+                  </div>
+                )}
+              </div>
+
+              <div className="flex-1 min-w-0 space-y-2">
+                <div className="flex items-center justify-between gap-2">
+                  <p className="text-xs text-zinc-500 truncate">{item.file.name}</p>
+                  {item.status !== 'uploading' && (
+                    <button
+                      className="text-zinc-500 hover:text-red-400 shrink-0"
+                      onClick={() => removeItem(item.id)}
+                      title="Remove"
+                    >
+                      <X className="h-4 w-4" />
+                    </button>
+                  )}
+                </div>
+                <input
+                  className="w-full bg-zinc-800 border border-zinc-700 rounded-md px-2 py-1 text-sm text-white disabled:opacity-50"
+                  placeholder="Title (optional)"
+                  value={item.title}
+                  disabled={item.status === 'uploading' || item.status === 'done'}
+                  onChange={(e) => updateItem(item.id, { title: e.target.value })}
+                />
+                <input
+                  className="w-full bg-zinc-800 border border-zinc-700 rounded-md px-2 py-1 text-sm text-white disabled:opacity-50"
+                  placeholder="Description (optional)"
+                  value={item.description}
+                  disabled={item.status === 'uploading' || item.status === 'done'}
+                  onChange={(e) => updateItem(item.id, { description: e.target.value })}
+                />
+                {item.willCompress && item.status === 'pending' && (
+                  <p className="text-xs text-amber-400">
+                    ⚠️ Over 10MB — will be compressed on upload. EXIF is still preserved.
+                  </p>
+                )}
+                {item.status === 'error' && (
+                  <p className="text-xs text-red-400 flex items-center gap-1">
+                    <AlertCircle className="h-3 w-3" /> {item.error}
+                  </p>
+                )}
+              </div>
+            </li>
+          ))}
+        </ul>
+      )}
+
       <div className="flex gap-2 justify-end">
-        <button className="px-4 py-2 bg-zinc-700 text-white rounded-md" onClick={onCancel}>Cancel</button>
-        <button 
-          className="px-4 py-2 bg-blue-600 text-white rounded-md disabled:opacity-50" 
-          onClick={handleSubmit}
-          disabled={uploading || !file}
+        <button
+          className="px-4 py-2 bg-zinc-700 text-white rounded-md disabled:opacity-50"
+          onClick={onCancel}
+          disabled={uploading}
         >
-          {uploading ? 'Uploading...' : 'Upload'}
+          {allDone ? 'Close' : 'Cancel'}
+        </button>
+        <button
+          className="px-4 py-2 bg-blue-600 text-white rounded-md disabled:opacity-50"
+          onClick={handleSubmit}
+          disabled={uploading || pendingCount === 0}
+        >
+          {uploading
+            ? `Uploading ${pendingCount} image${pendingCount === 1 ? '' : 's'}...`
+            : pendingCount > 1
+              ? `Upload ${pendingCount} images`
+              : 'Upload'}
         </button>
       </div>
     </div>
