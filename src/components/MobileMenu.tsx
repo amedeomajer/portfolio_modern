@@ -1,8 +1,8 @@
-"use client";
+'use client';
 
-import { useState, useEffect, useRef } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useState, useEffect, useRef } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faBars,
   faTimes,
@@ -17,42 +17,37 @@ import {
   faCheck,
   faChevronDown,
   faChevronUp,
-} from "@fortawesome/free-solid-svg-icons";
-import { useRouter } from "next/navigation";
-import { useBackground, BackgroundType } from "@/context/BackgroundContext";
-import GlassSurface from "./ui/GlassSurface";
-import { cn } from "@/lib/utils";
+} from '@fortawesome/free-solid-svg-icons';
+import { useRouter } from 'next/navigation';
+import { useBackground, BackgroundType } from '@/context/BackgroundContext';
+import GlassSurface from './ui/GlassSurface';
+import { cn } from '@/lib/utils';
 
 const backgroundOptions: { value: BackgroundType; label: string }[] = [
-  { value: "waves", label: "Waves" },
-  { value: "aurora", label: "Aurora" },
-  { value: "liquidChrome", label: "Liquid Chrome" },
-  { value: "lightRays", label: "Light Rays" },
-  { value: "gradientBlinds", label: "Gradient Blinds" },
+  { value: 'waves', label: 'Waves' },
+  { value: 'aurora', label: 'Aurora' },
+  { value: 'liquidChrome', label: 'Liquid Chrome' },
+  { value: 'lightRays', label: 'Light Rays' },
+  { value: 'gradientBlinds', label: 'Gradient Blinds' },
 ];
 
 /* Match BackgroundSwitcher flyout (desktop dock) */
 const menuPanelClass =
-  "bg-bg-black backdrop-blur-xl rounded-xl overflow-hidden shadow-2xl min-w-[220px]";
+  'bg-bg-black backdrop-blur-xl rounded-xl overflow-hidden shadow-2xl min-w-[220px]';
 const menuRowClass =
-  "w-full px-4 py-2.5 text-left text-sm flex items-center justify-between gap-3 hover:bg-white/5 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--text-muted)]";
+  'w-full px-4 py-2.5 text-left text-sm flex items-center justify-between gap-3 hover:bg-white/5 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--text-muted)]';
 
 const MobileMenu = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [showBackgrounds, setShowBackgrounds] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
-  const {
-    background,
-    setBackground,
-    accessibilityMode,
-    toggleAccessibilityMode,
-  } = useBackground();
+  const { background, setBackground, accessibilityMode, toggleAccessibilityMode } = useBackground();
 
   const scrollToSection = (sectionId: string) => {
     const section = document.getElementById(sectionId);
     if (section) {
-      section.scrollIntoView({ behavior: "smooth" });
+      section.scrollIntoView({ behavior: 'smooth' });
     }
     setIsOpen(false);
   };
@@ -74,38 +69,37 @@ const MobileMenu = () => {
       }
     };
 
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
   useEffect(() => {
     if (!isOpen) setShowBackgrounds(false);
   }, [isOpen]);
 
-  const currentBackgroundLabel =
-    backgroundOptions.find((o) => o.value === background)?.label ?? "";
+  const currentBackgroundLabel = backgroundOptions.find((o) => o.value === background)?.label ?? '';
 
   const navItems = [
-    { icon: faHome, label: "Home", action: () => scrollToSection("hero") },
-    { icon: faUser, label: "About", action: () => scrollToSection("about") },
-    { icon: faBriefcase, label: "Work", action: () => scrollToSection("work") },
-    {
-      icon: faCamera,
-      label: "Photography",
-      action: () => {
-        setIsOpen(false);
-        router.push("/photography");
-      },
-    },
+    { icon: faHome, label: 'Home', action: () => scrollToSection('hero') },
+    { icon: faUser, label: 'About', action: () => scrollToSection('about') },
+    { icon: faBriefcase, label: 'Work', action: () => scrollToSection('work') },
     {
       icon: faFileAlt,
-      label: "Experience",
-      action: () => scrollToSection("experience"),
+      label: 'Experience',
+      action: () => scrollToSection('experience'),
     },
     {
       icon: faEnvelope,
-      label: "Contact",
-      action: () => scrollToSection("contact"),
+      label: 'Contact',
+      action: () => scrollToSection('contact'),
+    },
+    {
+      icon: faCamera,
+      label: 'Photography',
+      action: () => {
+        setIsOpen(false);
+        router.push('/photography');
+      },
     },
   ];
 
@@ -119,7 +113,7 @@ const MobileMenu = () => {
           type="button"
           onClick={() => setIsOpen(!isOpen)}
           className="mobile-menu-toggle"
-          aria-label={isOpen ? "Close menu" : "Open menu"}
+          aria-label={isOpen ? 'Close menu' : 'Open menu'}
           aria-expanded={isOpen}
           aria-haspopup="dialog"
         >
@@ -140,10 +134,7 @@ const MobileMenu = () => {
             saturation={1}
             className="flex items-center justify-center"
           >
-            <FontAwesomeIcon
-              icon={isOpen ? faTimes : faBars}
-              className="w-4 h-4 text-white"
-            />
+            <FontAwesomeIcon icon={isOpen ? faTimes : faBars} className="w-4 h-4 text-white" />
           </GlassSurface>
         </button>
       </div>
@@ -177,13 +168,10 @@ const MobileMenu = () => {
                       key={item.label}
                       type="button"
                       onClick={item.action}
-                      className={cn(menuRowClass, "text-white")}
+                      className={cn(menuRowClass, 'text-white')}
                     >
                       <span className="flex items-center gap-3">
-                        <FontAwesomeIcon
-                          icon={item.icon}
-                          className="w-4 h-4 text-text-muted"
-                        />
+                        <FontAwesomeIcon icon={item.icon} className="w-4 h-4 text-text-muted" />
                         {item.label}
                       </span>
                     </button>
@@ -194,7 +182,7 @@ const MobileMenu = () => {
                   <button
                     type="button"
                     onClick={() => setShowBackgrounds(!showBackgrounds)}
-                    className={cn(menuRowClass, "text-white")}
+                    className={cn(menuRowClass, 'text-white')}
                     aria-expanded={showBackgrounds}
                     aria-controls="mobile-menu-background-options"
                     id="mobile-menu-background-trigger"
@@ -208,7 +196,7 @@ const MobileMenu = () => {
                     </span>
                     <span className="flex items-center gap-2 shrink-0 text-text-muted">
                       <span className="max-w-[7.5rem] truncate text-xs text-right">
-                        {showBackgrounds ? "" : currentBackgroundLabel}
+                        {showBackgrounds ? '' : currentBackgroundLabel}
                       </span>
                       <FontAwesomeIcon
                         icon={showBackgrounds ? faChevronUp : faChevronDown}
@@ -225,7 +213,7 @@ const MobileMenu = () => {
                         role="region"
                         aria-labelledby="mobile-menu-background-trigger"
                         initial={{ height: 0, opacity: 0 }}
-                        animate={{ height: "auto", opacity: 1 }}
+                        animate={{ height: 'auto', opacity: 1 }}
                         exit={{ height: 0, opacity: 0 }}
                         transition={{
                           duration: 0.2,
@@ -238,22 +226,15 @@ const MobileMenu = () => {
                             <button
                               key={option.value}
                               type="button"
-                              onClick={() =>
-                                handleBackgroundSelect(option.value)
-                              }
+                              onClick={() => handleBackgroundSelect(option.value)}
                               className={cn(
                                 menuRowClass,
-                                background === option.value
-                                  ? "text-white"
-                                  : "text-text-muted",
+                                background === option.value ? 'text-white' : 'text-text-muted'
                               )}
                             >
                               <span>{option.label}</span>
                               {background === option.value && (
-                                <FontAwesomeIcon
-                                  icon={faCheck}
-                                  className="w-3 h-3 shrink-0"
-                                />
+                                <FontAwesomeIcon icon={faCheck} className="w-3 h-3 shrink-0" />
                               )}
                             </button>
                           ))}
@@ -267,29 +248,25 @@ const MobileMenu = () => {
                   <button
                     type="button"
                     onClick={() => toggleAccessibilityMode()}
-                    className={cn(menuRowClass, "text-white")}
+                    className={cn(menuRowClass, 'text-white')}
                   >
                     <span className="flex items-center gap-3">
                       <FontAwesomeIcon
                         icon={faUniversalAccess}
                         className={cn(
-                          "w-4 h-4 shrink-0",
-                          accessibilityMode
-                            ? "text-green-400"
-                            : "text-text-muted",
+                          'w-4 h-4 shrink-0',
+                          accessibilityMode ? 'text-green-400' : 'text-text-muted'
                         )}
                       />
                       Accessibility
                     </span>
                     <span
                       className={cn(
-                        "text-xs shrink-0",
-                        accessibilityMode
-                          ? "text-green-400"
-                          : "text-text-muted",
+                        'text-xs shrink-0',
+                        accessibilityMode ? 'text-green-400' : 'text-text-muted'
                       )}
                     >
-                      {accessibilityMode ? "On" : "Off"}
+                      {accessibilityMode ? 'On' : 'Off'}
                     </span>
                   </button>
                 </div>
