@@ -1,20 +1,28 @@
 import { v2 as cloudinary } from 'cloudinary';
 
-// Explicit config — fail fast at startup if credentials are missing/misnamed,
-// instead of relying on CLOUDINARY_URL auto-discovery.
-const { CLOUDINARY_CLOUD_NAME, CLOUDINARY_API_KEY, CLOUDINARY_API_SECRET } = process.env;
-if (!CLOUDINARY_CLOUD_NAME || !CLOUDINARY_API_KEY || !CLOUDINARY_API_SECRET) {
-  throw new Error(
-    'Missing Cloudinary env vars: CLOUDINARY_CLOUD_NAME, CLOUDINARY_API_KEY, CLOUDINARY_API_SECRET'
-  );
+// Lazy explicit config — throwing at import time breaks `next build`, which
+// imports route modules during page-data collection (no env vars in CI).
+// So we validate on first use instead: fail fast on the first actual call.
+let configured = false;
+
+function ensureConfigured() {
+  if (configured) return;
+  const { CLOUDINARY_CLOUD_NAME, CLOUDINARY_API_KEY, CLOUDINARY_API_SECRET } = process.env;
+  if (!CLOUDINARY_CLOUD_NAME || !CLOUDINARY_API_KEY || !CLOUDINARY_API_SECRET) {
+    throw new Error(
+      'Missing Cloudinary env vars: CLOUDINARY_CLOUD_NAME, CLOUDINARY_API_KEY, CLOUDINARY_API_SECRET'
+    );
+  }
+  cloudinary.config({
+    cloud_name: CLOUDINARY_CLOUD_NAME,
+    api_key: CLOUDINARY_API_KEY,
+    api_secret: CLOUDINARY_API_SECRET,
+  });
+  configured = true;
 }
-cloudinary.config({
-  cloud_name: CLOUDINARY_CLOUD_NAME,
-  api_key: CLOUDINARY_API_KEY,
-  api_secret: CLOUDINARY_API_SECRET,
-});
 
 export async function uploadImage(file: string, folder: string = 'gallery') {
+  ensureConfigured();
   const result = await cloudinary.uploader.upload(file, {
     folder: folder,
     image_metadata: true,
@@ -46,5 +54,6 @@ export async function uploadImage(file: string, folder: string = 'gallery') {
 }
 
 export async function deleteImage(publicId: string) {
+  ensureConfigured();
   await cloudinary.uploader.destroy(publicId);
 }
