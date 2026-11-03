@@ -30,7 +30,7 @@
     "ogl": "^1.0.11",
     "react": "^19.2.7",
     "react-dom": "^19.2.7",
-    "react-dropzone": "^20.1.1",
+    "react-dropzone": "^20.1.2",
     "react-fast-marquee": "^1.6.5",
     "tailwind-merge": "^2.6.0",
     "three": "^0.182.0",
