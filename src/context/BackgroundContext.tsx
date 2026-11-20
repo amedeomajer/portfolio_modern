@@ -3,9 +3,9 @@
 import { createContext, useContext, useState, useEffect, ReactNode } from "react";
 
 export type BackgroundType =
+  | "liquidChrome"
   | "waves"
   | "aurora"
-  | "liquidChrome"
   | "lightRays"
   | "gradientBlinds";
 
@@ -21,7 +21,7 @@ const BackgroundContext = createContext<BackgroundContextType | undefined>(
 );
 
 export const BackgroundProvider = ({ children }: { children: ReactNode }) => {
-  const [background, setBackground] = useState<BackgroundType>("waves");
+  const [background, setBackground] = useState<BackgroundType>("liquidChrome");
   const [accessibilityMode, setAccessibilityMode] = useState(false);
 
   const toggleAccessibilityMode = () => {
