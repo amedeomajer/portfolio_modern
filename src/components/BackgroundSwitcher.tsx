@@ -7,9 +7,9 @@ import { faPalette, faCheck } from "@fortawesome/free-solid-svg-icons";
 import { useBackground, BackgroundType } from "@/context/BackgroundContext";
 
 const backgroundOptions: { value: BackgroundType; label: string }[] = [
+  { value: "liquidChrome", label: "Liquid Chrome" },
   { value: "waves", label: "Waves" },
   { value: "aurora", label: "Aurora" },
-  { value: "liquidChrome", label: "Liquid Chrome" },
   { value: "lightRays", label: "Light Rays" },
   { value: "gradientBlinds", label: "Gradient Blinds" },
 ];
