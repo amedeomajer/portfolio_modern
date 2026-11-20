@@ -3,9 +3,9 @@
 import { createContext, useContext, useState, useEffect, ReactNode } from "react";
 
 export type BackgroundType =
+  | "liquidChrome"
   | "waves"
   | "aurora"
-  | "liquidChrome"
   | "lightRays"
   | "gradientBlinds";
 
