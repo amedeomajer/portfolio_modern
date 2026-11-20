@@ -15,6 +15,14 @@ import LightRays from "./ui/LightRays";
 import GradientBlinds from "./ui/GradientBlinds";
 
 const backgrounds: Record<BackgroundType, React.ReactNode> = {
+  liquidChrome: (
+    <LiquidChrome
+      baseColor={[0.05, 0.05, 0.05]}
+      speed={0.1}
+      amplitude={0.24}
+      interactive={false}
+    />
+  ),
   waves: (
     <Waves
       lineColor="rgba(255, 255, 255, 0.08)"
@@ -35,14 +43,6 @@ const backgrounds: Record<BackgroundType, React.ReactNode> = {
       colorStops={["#0a0a0a", "#111726", "#0f1a2d"]}
       amplitude={0.85}
       blend={0.5}
-    />
-  ),
-  liquidChrome: (
-    <LiquidChrome
-      baseColor={[0.05, 0.05, 0.05]}
-      speed={0.1}
-      amplitude={0.24}
-      interactive={false}
     />
   ),
   lightRays: (
